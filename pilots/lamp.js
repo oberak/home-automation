@@ -1,3 +1,13 @@
+/**
+ * Lamp on/off with button
+ *
+ * components: LED, registor 220, button
+ * Connect:
+ *   - led (+): GPIO 4
+ *   - led (-): registor - GND
+ * @type {[type]}
+ */
+
 var Gpio = require('onoff').Gpio;
 
 var LED = new Gpio(17, 'out');
