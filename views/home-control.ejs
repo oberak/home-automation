@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap-toggle.min.css' />
     <link rel="stylesheet" href="/lib/jquery-ui.min.css"/>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css"/>
@@ -19,6 +20,7 @@
     <script src="/dist/js/lobipanel.js"></script>
 
     <script src="/lib/highlight/highlight.pack.js"></script>
+    <script src="/javascripts/bootstrap-toggle.min.js"></script>
 
   </head>
   <body>
@@ -39,13 +41,50 @@
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE0LjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                                    </a>
+                                  <img src="/images/home.png" alt="" width="50px">
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading">Media heading</h4>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                    <h4 class="media-heading">Guest Room</h4>
+
+                                </div>
+                                <div class="media-right">
+                                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="info">
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/bed.png" alt="" width="50px">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"> Bed Room</h4>
+
+                                </div>
+                                <div class="media-right">
+                                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="info">
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/kitchen.png" alt="" width="50px">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Kitchen</h4>
+
+                                </div>
+                                <div class="media-right">
+                                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="info">
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/garden.png" alt="" width="50px">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Garden</h4>
+
+                                </div>
+                                <div class="media-right">
+                                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="info">
                                 </div>
                             </div>
                         </div>
