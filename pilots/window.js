@@ -3,24 +3,24 @@
 # Components
     * MC-38
 # Connections
-    * Ground
-    * GPIO 27
+    * (1) - 3.3v
+    * (2) - GPIO 27
+    * (2) - 1K Ohm - GND
 */
 
 var Gpio = require('onoff').Gpio;
+var door = new Gpio(27, 'in', 'both');
 
-var door = new Gpio(27, 'in', 'falling');
-
-console.log('The door is '+ (door.readSync()?'opened':'closed') );
+console.log('The door is '+ (door.readSync()?'closed':'opened') );
 door.watch(function(err, value){
     if(err){
         console.error('There was an error!', err);
         return;
     }
     if(value){
-        console.log('The door is opened');
-    }else {
         console.log('The door is closed');
+    }else {
+        console.log('The door is opened');
     }
 });
 
