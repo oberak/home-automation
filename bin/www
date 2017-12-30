@@ -20,6 +20,20 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function (socket) {// WebSocket Connection
+  var lightvalue = 0; //static variable for current status
+  socket.emit('cl-lamp-gu', lightvalue); //send button status to client
+  if (lightvalue) {
+    console.log('light on');
+  }else {
+    console.log('light off');
+  }
+  socket.on('sv-lamp-gu', function(data) { //get light switch status from client
+    lightvalue = data;
+    console.log(lightvalue);
+  });
+});
 
 /**
  * Listen on provided port, on all network interfaces.

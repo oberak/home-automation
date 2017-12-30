@@ -10,4 +10,6 @@ router.get('/control',function (req,res) {
   res.render('home-control',{title: 'Home Control System'});
 });
 
+
+
 module.exports = router;

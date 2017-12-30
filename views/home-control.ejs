@@ -21,6 +21,7 @@
 
     <script src="/lib/highlight/highlight.pack.js"></script>
     <script src="/javascripts/bootstrap-toggle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
   </head>
   <body>
@@ -37,6 +38,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
+
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -70,7 +72,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="lamp-gu" data-toggle="toggle"  data-width="70" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                             <div class="media">
@@ -82,7 +84,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="lamp-be" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                             <div class="media">
@@ -94,7 +96,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="lamp-ki"d data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                             <div class="media">
@@ -106,7 +108,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="lamp-ga" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                         </div>
@@ -179,7 +181,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="win-gu" data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                             <div class="media">
@@ -191,7 +193,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="win-be" data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
                             <div class="media">
@@ -203,7 +205,7 @@
 
                                 </div>
                                 <div class="media-right">
-                                  <input type="checkbox" checked data-toggle="toggle"data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
+                                  <input type="checkbox" id="win-ki" data-toggle="toggle"data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
                                 </div>
                             </div>
 
@@ -226,8 +228,8 @@
                               </div>
 
                               <div class="media-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
-                                    <input type="checkbox" checked data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
+                                    <input type="checkbox" id="door-onoff"data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
+                                    <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
                               </div>
 
 
@@ -255,7 +257,7 @@
                               </div>
 
                               <div class="media-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                    <input type="checkbox" id="ss-door" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
                               </div>
                           </div>
                           <div class="media">
@@ -267,7 +269,7 @@
                               </div>
 
                               <div class="media-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                    <input type="checkbox" id="ss-motion" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
                               </div>
                           </div>
                         </div>
@@ -291,7 +293,7 @@
                               </div>
 
                               <div class="media-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                    <input type="checkbox" id="flame" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
                               </div>
                           </div>
                           <div class="media">
@@ -318,12 +320,11 @@
                               </div>
 
                               <div class="media-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                    <input type="checkbox" id="smoke" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+
                               </div>
                           </div>
-                          <div class="media">
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -408,6 +409,24 @@
                   }
               }
           });
+      });
+
+      var socket = io(); //load socket.io-client and connect to the host that serves the page
+      window.addEventListener("load", function(){ //when page loads
+
+
+        $('#lamp-gu').change(function() {
+          var lightbox = this.checked;
+          console.log(lightbox);
+          socket.emit("sv-lamp-gu", Number(lightbox));
+    });
+
+      });
+      socket.on('cl-lamp-gu', function (data) { //get button status from client
+        console.log('receive form server: ',data);
+        document.getElementById("lamp-gu").checked = data; //change checkbox according to push button on Raspberry Pi
+        socket.emit("lamp-gu", data); //send push button status to back to server
+        console.log('send to server:',data);
       });
   </script>
 </html>
