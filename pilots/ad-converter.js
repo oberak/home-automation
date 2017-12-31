@@ -35,7 +35,12 @@ board.on("ready", function() {
     });
 
     gas.on("change", function() {
-        console.log('gas level:', this.value);
+        if(this.value > 500){
+            console.log("Gas is detected!!", this.value);
+        }else{
+            console.log('gas level:', this.value);
+        }
+
     });
 
     var flame = new five.Sensor({
@@ -44,44 +49,10 @@ board.on("ready", function() {
     });
 
     flame.on("change", function() {
-        console.log('flame level:', this.value);
+        if(this.value < 900){
+            console.log('Flame detected!!', this.value);
+        }else{
+            console.log('flame level:', this.value);
+        }
     });
 });
- /*
-var PCF8591 = require('pcf8591');
-
-// Constructor: PCF8591(device, slaveAddress, controlByte),
-// defaults to: '/dev/i2c-1', 0x48, 0x00.
-var pcf8591 = new PCF8591();
-
-// Reconfigure control register following the Datasheet.
-pcf8591.configure(0x45);
-
-// Discard first reading after POR or read mode change.
-pcf8591.read(function(error, sample) {
-    console.log('Discarded sample: 0x' + sample.toString(16));
-});
-pcf8591.readBytes(4, function(error, buffer) {
-    console.log('Discarded samples: ' +
-                '0x' + buffer[0].toString(16) + ' ' +
-                '0x' + buffer[1].toString(16) + ' ' +
-                '0x' + buffer[2].toString(16) + ' ' +
-                '0x' + buffer[3].toString(16)
-               );
-});
-/*
-var output = 0x00;
-setInterval(function() {
-    // Toggle output.
-    output ^= 0xff;
-    pcf8591.write(output);
-    // Read all channels at once.
-    pcf8591.readBytes(4, function(error, buffer) {
-        console.log('0x' + buffer[0].toString(16) + ' ' +
-                    '0x' + buffer[1].toString(16) + ' ' +
-                    '0x' + buffer[2].toString(16) + ' ' +
-                    '0x' + buffer[3].toString(16)
-                   );
-    });
-}, 500);
-*/
