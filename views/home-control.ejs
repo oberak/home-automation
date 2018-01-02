@@ -1,338 +1,300 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/bootstrap-toggle.min.css' />
-    <link rel="stylesheet" href="/lib/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="css/lobipanel.css"/>
-
-    <link rel="stylesheet" href="lib/highlight/github.css"/>
-    <link rel="stylesheet" href="demo/documentation.css"/>
-    <link rel="stylesheet" href="demo/demo.css"/>
-    <script src="/lib/jquery.1.11.min.js"></script>
-    <script src="/lib/jquery-ui.min.js"></script>
-    <script src="/lib/jquery.ui.touch-punch.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/dist/js/lobipanel.js"></script>
-
-    <script src="/lib/highlight/highlight.pack.js"></script>
-    <script src="/javascripts/bootstrap-toggle.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <% include ./partials/head.ejs %>
 
   </head>
   <body>
-    <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
+    <% include ./partials/nav.ejs %>
 
+      <div id="lobipanel">
 
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-    <div id="lobipanel">
+              <p></p>
+      <div id="lobipanel-multiple">
 
-            <p></p>
-    <div id="lobipanel-multiple">
-
-        <div class="bs-example">
-            <div class="row">
-                <div id="lobipanel-parent" class="col-md-4 lobipanel-parent">
-                    <div class="panel panel-default" data-stateful="true" data-inner-id="lobipanel-parent-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Lamps</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/home.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Guest Room</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="lamp-gu" data-toggle="toggle"  data-width="70" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/bed.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading"> Bed Room</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="lamp-be" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/kitchen.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Kitchen</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="lamp-ki"d data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/garden.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Garden</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="lamp-ga" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-primary" data-stateful="true"  data-inner-id="lobipanel-parent-primary">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Humanity Sensor</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/tem.png" alt="" width="90px">
-                                <h4>Humanity</h4>
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-
-                                </div>
-                              </div>
-
-                              <div class="media-right">
-                                    <img src="/images/tem.png" alt="" width="90px">
-                                    <h4>Temperature</h4>
-                              </div>
-
-                          </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>CCTV</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/cctv.png" alt="" width="50px">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-
-                                </div>
-                              </div>
-
-                              <div class="media-right">
-                                    <input type="button" name="cctv" value=" Enter" class="btn btn-primary">
-                              </div>
-
-                          </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Windows</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/window.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Guest Room</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="win-gu" data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/window.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading"> Bed Room</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="win-be" data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/window.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Kitchen</h4>
-
-                                </div>
-                                <div class="media-right">
-                                  <input type="checkbox" id="win-ki" data-toggle="toggle"data-on="open" data-width="70" data-off="close" data-onstyle="success" data-size="small">
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Door</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/door.png" alt="" width="50px">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-
-                                </div>
-                              </div>
-
-                              <div class="media-right">
-                                    <input type="checkbox" id="door-onoff"data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
-                                    <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
-                              </div>
-
-
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Security Sensor</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/thief.png" alt="" width="50px">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-                                </div>
-                              </div>
-                              <div class="media-body">
-                                  <h4 class="media-heading">Door</h4>
-                              </div>
-
-                              <div class="media-right">
-                                    <input type="checkbox" id="ss-door" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+          <div class="bs-example">
+              <div class="row">
+                  <div id="lobipanel-parent" class="col-md-4 lobipanel-parent">
+                      <div class="panel panel-default" data-stateful="true" data-inner-id="lobipanel-parent-default">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Lamps</h4>
                               </div>
                           </div>
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/people.png" alt="" width="50px">
-                              </div>
-                              <div class="media-body">
-                                  <h4 class="media-heading">Inside Home</h4>
-                              </div>
+                          <div class="panel-body">
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/home.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading">Guest Room</h4>
 
-                              <div class="media-right">
-                                    <input type="checkbox" id="ss-motion" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="lamp-gu" data-toggle="toggle"  data-width="70" data-onstyle="success" data-size="small">
+                                  </div>
+                              </div>
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/bed.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading"> Bed Room</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="lamp-be" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  </div>
+                              </div>
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/kitchen.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading">Kitchen</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="lamp-ki"d data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  </div>
+                              </div>
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/garden.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading">Garden</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="lamp-ga" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                                  </div>
                               </div>
                           </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Flame Sensor</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/fire.png" alt="" width="50px">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
+                      </div>
+                      <div class="panel panel-primary" data-stateful="true"  data-inner-id="lobipanel-parent-primary">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Humanity Sensor</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/tem.png" alt="" width="90px">
+                                  <h4>Humanity</h4>
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
+
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="media-body">
-                                  <h4 class="media-heading">Flame</h4>
-                              </div>
 
-                              <div class="media-right">
-                                    <input type="checkbox" id="flame" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                              </div>
+                                <div class="media-right">
+                                      <img src="/images/tem.png" alt="" width="90px">
+                                      <h4>Temperature</h4>
+                                </div>
+
+                            </div>
                           </div>
-                          <div class="media">
+                      </div>
 
-                        </div>
-                    </div>
                   </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Smoke Sensor</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="media">
-                              <div class="media-left">
-                                <img src="/images/smoke.png" alt="" width="50px">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-                                </div>
-                              </div>
-                              <div class="media-body">
-                                  <h4 class="media-heading">Smoke</h4>
-                              </div>
 
-                              <div class="media-right">
-                                    <input type="checkbox" id="smoke" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-
+                  <div class="col-md-4">
+                      <div class="panel panel-success">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>CCTV</h4>
                               </div>
                           </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/cctv.png" alt="" width="50px">
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
 
+                                  </div>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="button" name="cctv" value=" Enter" class="btn btn-primary">
+                                </div>
+
+                            </div>
+                          </div>
+                      </div>
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Windows</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/window.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading">Guest Room</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="win-gu" disabled data-toggle="toggle" data-on="open" data-width="70"  data-off="close" data-onstyle="danger" data-offstyle="success" data-size="small">
+                                  </div>
+                              </div>
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/window.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading"> Bed Room</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="win-be" disabled data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="danger" data-offstyle="success"  data-size="small">
+                                  </div>
+                              </div>
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="/images/window.png" alt="" width="50px">
+                                  </div>
+                                  <div class="media-body">
+                                      <h4 class="media-heading">Kitchen</h4>
+
+                                  </div>
+                                  <div class="media-right">
+                                    <input type="checkbox" id="win-ki" disabled data-toggle="toggle"data-on="open" data-width="70" data-off="close" data-onstyle="danger" data-offstyle="success"  data-size="small">
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                      <div class="panel panel-success">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Door</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/door.png" alt="" width="50px">
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
+
+                                  </div>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="checkbox" id="door-onoff"data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
+                                      <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
+                                </div>
+
+
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="panel panel-success">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Security Sensor</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/thief.png" alt="" width="50px">
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
+                                  </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Door</h4>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="checkbox" id="ss-door" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/people.png" alt="" width="50px">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Inside Home</h4>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="checkbox" id="ss-motion" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Flame Sensor</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/fire.png" alt="" width="50px">
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
+                                  </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Flame</h4>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="checkbox" id="flame" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                </div>
+                            </div>
+                            <div class="media">
+
+                          </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <div class="panel-title">
+                                  <h4>Gas Sensor</h4>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left">
+                                  <img src="/images/smoke.png" alt="" width="50px">
+                                  <div class="media-body">
+                                      <h4 class="media-heading"></h4>
+                                  </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Gas</h4>
+                                </div>
+
+                                <div class="media-right">
+                                      <input type="checkbox" id="gas" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+
+                                </div>
+                            </div>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
 
 
+    </div>
   </div>
-</div>
+
+
+
   </body>
   <script>
       $(function(){
@@ -413,20 +375,116 @@
 
       var socket = io(); //load socket.io-client and connect to the host that serves the page
       window.addEventListener("load", function(){ //when page loads
+        var sData = {};
+
+    $('#lamp-gu').change(function() {
+      sData.type = 'lamp';
+      sData.no = 0;
+      sData.flag = this.checked;
+      socket.emit('control', sData);
+});
+    $('#lamp-be').change(function() {
+      sData.type = 'lamp';
+      sData.no = 1;
+      sData.flag = this.checked;
+      socket.emit('control', sData);
+});
+        $('#lamp-ki').change(function() {
+        sData.type = 'lamp';
+        sData.no = 2;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#lamp-ga').change(function() {
+        sData.type = 'lamp';
+        sData.no = 3;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#door-onoff').change(function() {
+        sData.type = 'door';
+        sData.no = 0;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+  });
+        $('#door-lock').change(function() {
+        sData.type = 'door';
+        sData.no = 1;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#ss-door').change(function() {
+        sData.type = 'security';
+        sData.no = 0;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#ss-motion').change(function() {
+        sData.type = 'security';
+        sData.no = 1;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#flame').change(function() {
+        sData.type = 'flame';
+        sData.no = 0;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
+        $('#gas').change(function() {
+        sData.type = 'gas';
+        sData.no = 0;
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+});
 
 
-        $('#lamp-gu').change(function() {
-          var lightbox = this.checked;
-          console.log(lightbox);
-          socket.emit("sv-lamp-gu", Number(lightbox));
-    });
-
+socket.on('control', function (data) { //get button status from client
+  console.log('call////a/a/a/bsbsbs',data);
+  switch(data.type){
+    case 'lamp':
+          if(data.no == 0){
+            document.getElementById('lamp-gu').checked = data.flag;
+        }else if (data.no == 1) {
+              document.getElementById('lamp-be').checked = data.flag;
+        } else if (data.no == 2) {
+              document.getElementById('lamp-ki').checked = data.flag;
+        } else {
+              document.getElementById('lamp-ga').checked = data.flag;
+        }
+        break;
+    case 'door':
+          if(data.no == 0){
+              document.getElementById('door-onoff').checked = data.flag;
+        }else{
+              document.getElementById('door-lock').checked = data.flag;
+      }
+      break;
+      case 'security':
+            if(data.no == 0){
+                document.getElementById('ss-door').checked = data.flag;
+          }else {
+                document.getElementById('ss-motion').checked = data.flag;
+          }
+        break;
+        case 'flame':
+                  document.getElementById('flame').checked = data.flag;
+          break;
+        case 'gas':
+                  document.getElementById('gas').checked = data.flag;
+          break;
+          case 'window':
+                if(data.no == 0){
+                  document.getElementById('win-gu').checked = data.flag;
+              }else if (data.no == 1) {
+                    document.getElementById('win-be').checked = data.flag;
+              } else {
+                    document.getElementById('win-ki').checked = data.flag;
+              }
+              break;
+}
       });
-      socket.on('cl-lamp-gu', function (data) { //get button status from client
-        console.log('receive form server: ',data);
-        document.getElementById("lamp-gu").checked = data; //change checkbox according to push button on Raspberry Pi
-        socket.emit("lamp-gu", data); //send push button status to back to server
-        console.log('send to server:',data);
+
       });
   </script>
 </html>

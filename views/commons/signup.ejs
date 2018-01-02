@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ../partials/head.ejs %>
+      <link rel="stylesheet" href="/stylesheets/bg.css">
+  </head>
+  <body>
+        <% include ../partials/nav.ejs %>
+
+        <br />
+<div class="container">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <form name="signup" action="/commons/signup" method="post">
+
+
+         <div class="row myborder">
+             <h3 style="color: #72c02c; font-weight: bold; margin: initial; margin-bottom: 10px;">Sign Up </h3><hr>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="User Name" name="name"id="name" type="text">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="	glyphicon glyphicon-envelope mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="Your Email" name="email" id="email" type="email">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="Password" name="password" id="password" type="password">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-check mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="Ref Code" name="ref_code" id="ref_code" type="text">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="Address" name="address" id="address" type="text">
+             </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-phone mycolor"></i></span>
+                <input size="70" maxlength="255" class="form-control" placeholder="Contact Number" name="phone" id="phone" type="tel">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn-u pull-right" type="submit">Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+        </form>
+    </div>
+      </div>
+  </body>
+  <script type="text/javascript">
+  <% if(msg) {%>
+                       alert('<%= msg %>')
+  <%}%>
+  </script>
+</html>

@@ -22,16 +22,103 @@ app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {// WebSocket Connection
-  var lightvalue = 0; //static variable for current status
-  socket.emit('cl-lamp-gu', lightvalue); //send button status to client
-  if (lightvalue) {
-    console.log('light on');
-  }else {
-    console.log('light off');
+
+  var sData = [];
+   function set() {
+     sData.type = 'lamp';
+     sData.no = 0;
+     sData.flag = true;
+     sData.type = 'lamp';
+     sData.no = 1;
+     sData.flag = true;
+     sData.type = 'lamp';
+     sData.no = 2;
+     sData.flag = true;
+     sData.type = 'lamp';
+     sData.no = 3;
+     sData.flag = true;
+
+     sData.type = 'humanity';
+     sData.no = 0;
+     sData.flag = true;
+     sData.type = 'humanity';
+     sData.no = 1;
+     sData.flag = true;
+
+     sData.type = 'window';
+     sData.no = 0;
+     sData.flag = false;
+     sData.type = 'window';
+     sData.no = 1;
+     sData.flag = true;
+     sData.type = 'window';
+     sData.no = 2;
+     sData.flag = true;
+
+     sData.type = 'door';
+     sData.no = 0;
+     sData.flag = true;
+     sData.type = 'door';
+     sData.no = 1;
+     sData.flag = true;
+
+     sData.type = 'security';
+     sData.no = 0;
+     sData.flag = true;
+     sData.type = 'security';
+     sData.no = 1;
+     sData.flag = true;
+
+     sData.type = 'flame';
+     sData.no = 0;
+     sData.flag = true;
+
+     sData.type = 'gas';
+     sData.no = 0;
+     sData.flag = true;
+     console.log('Seeeeee it', sData.type);
+   }
+    set();
+    console.log('go to',sData);
+    socket.emit('control', sData); //send button status to client
+
+
+  socket.on('control', function(data) { //get light switch status from client
+    console.log('//a/a/a',data);
+    switch(data.type){
+      case 'lamp':
+            if(data.no == 0){
+                console.log('lamp 0 is ', data.flag);
+          }else if (data.no == 1) {
+                console.log('lamp 1 is ', data.flag);
+          } else if (data.no == 2) {
+                console.log('lamp 2 is ', data.flag);
+          } else {
+                console.log('lamp 3 is ', data.flag);
+          }
+          break;
+      case 'door':
+            if(data.no == 0){
+                console.log(' Door On is  ', data.flag);
+          }else{
+                console.log('Door lock is ', data.flag);
+        }
+        break;
+        case 'security':
+              if(data.no == 0){
+                  console.log('Door Security is ', data.flag);
+            }else {
+                  console.log('Motion Security is ', data.flag);
+            }
+          break;
+          case 'flame':
+                    console.log('Flame Sensor is ', data.flag);
+            break;
+          case 'gas':
+                    console.log('Gas Sensor is ', data.flag);
+            break;
   }
-  socket.on('sv-lamp-gu', function(data) { //get light switch status from client
-    lightvalue = data;
-    console.log(lightvalue);
+
   });
 });
 

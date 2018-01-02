@@ -1,0 +1,13 @@
+body{
+     background: url(../images/bg.jpg);
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+    background-size: cover;
+}
+
+.vertical-offset-100{
+    padding-top:100px;
+}
+.header{
+  color: cyan;
+}
