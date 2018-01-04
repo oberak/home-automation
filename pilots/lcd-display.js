@@ -1,10 +1,10 @@
 /*
 # 16x2 Display Output
 # Components
-    -
+    - 1602ZFA LCD 16x2 line
 # Connections
     * (1) VSS - Ground
-    * (2) VDD - 5v (not 3.3v)
+    * (2) VDD - 3.3v
     * (3) VO - 5K Ohm - Ground
       - Contrast adjustment from potentiometer
     * (4) RS(Register Select) - GPIO12 (Pin 32)
@@ -21,7 +21,7 @@
     * (12) D5(Bit 5) - GPIO6 (Pin 31)
     * (13) D6(Bit 6) - GPIO13 (Pin 33)
     * (14) D7(Bit 7) - GPIO19 (Pin 35)
-    * (15) A(Backlight LED Anode. +) - 5V
+    * (15) A(Backlight LED Anode. +) - 3.3v
     * (16) K(Backlight LED Cathode. -) - Ground
  */
 
