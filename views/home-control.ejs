@@ -81,12 +81,7 @@
                           <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                  <img src="/images/tem.png" alt="" width="90px">
-                                  <h4>Humanity</h4>
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
-
-                                  </div>
+                                        <div id="humanity"></div>
                                 </div>
 
                                 <div class="media-right">
@@ -481,7 +476,7 @@ socket.on('control', function (data) { //get button status from client
         type: 'thermometer',
         renderAt: 'chart-container',
         id  : 'myThm',
-        width: '240',
+        width: '160',
         height: '210',
         dataFormat: 'json',
         dataSource: {
@@ -559,6 +554,23 @@ socket.on('control', function (data) { //get button status from client
       })
       .render();
     });
+
+    var humanity = new JustGage({
+      id: "humanity",
+      value: getRandomInt(0, 100),
+      min: 0,
+      max: 100,
+      title: "Humanity temperature",
+      label: "Celsius",
+      startAnimationTime: 2000,
+      startAnimationType: ">",
+      refreshAnimationTime: 1000,
+      refreshAnimationType: "bounce"
+    });
+
+    setInterval(function() {
+            g5.refresh(getRandomInt(0, 100));
+          }, 2500);
 
   </script>
 </html>
