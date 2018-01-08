@@ -90,8 +90,7 @@
                                 </div>
 
                                 <div class="media-right">
-                                      <img src="/images/tem.png" alt="" width="90px">
-                                      <h4>Temperature</h4>
+                                      <div id="chart-container">FusionCharts will render here</div>
                                 </div>
 
                             </div>
@@ -139,8 +138,10 @@
                                       <h4 class="media-heading">Guest Room</h4>
 
                                   </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="win-gu" disabled data-toggle="toggle" data-on="open" data-width="70"  data-off="close" data-onstyle="danger" data-offstyle="success" data-size="small">
+                                  <div class="media-body">
+                                        <div class="win-gu">
+
+                                        </div>
                                   </div>
                               </div>
                               <div class="media">
@@ -151,8 +152,10 @@
                                       <h4 class="media-heading"> Bed Room</h4>
 
                                   </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="win-be" disabled data-toggle="toggle" data-on="open" data-width="70" data-off="close" data-onstyle="danger" data-offstyle="success"  data-size="small">
+                                  <div class="media-body">
+                                        <div class="win-be">
+
+                                        </div>
                                   </div>
                               </div>
                               <div class="media">
@@ -163,8 +166,10 @@
                                       <h4 class="media-heading">Kitchen</h4>
 
                                   </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="win-ki" disabled data-toggle="toggle"data-on="open" data-width="70" data-off="close" data-onstyle="danger" data-offstyle="success"  data-size="small">
+                                  <div class="media-body">
+                                        <div class="win-ki">
+
+                                        </div>
                                   </div>
                               </div>
 
@@ -197,102 +202,85 @@
                       </div>
                   </div>
                   <div class="col-md-4">
-                      <div class="panel panel-success">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Security Sensor</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/thief.png" alt="" width="50px">
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
+                                  <div class="panel panel-info">
+                                      <div class="panel-heading">
+                                          <div class="panel-title">
+                                              <h4>Security</h4>
+                                          </div>
+                                      </div>
+                                      <div class="panel-body">
+                                        <div class="media">
+                                            <div class="media-left">
+                                              <img src="/images/thief.png" alt="" width="50px">
+                                              <div class="media-body">
+                                                  <h4 class="media-heading"></h4>
+                                              </div>
+                                            </div>
+
+                                              <div class="media-right">
+                                                    <input type="checkbox" id="security" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                              </div>
+
                                   </div>
                                 </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Door</h4>
-                                </div>
-
-                                <div class="media-right">
-                                      <input type="checkbox" id="ss-door" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/people.png" alt="" width="50px">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Inside Home</h4>
-                                </div>
-
-                                <div class="media-right">
-                                      <input type="checkbox" id="ss-motion" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                      <div class="panel panel-info">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Flame Sensor</h4>
                               </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/fire.png" alt="" width="50px">
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
+                          <div class="panel panel-info lobipanel">
+                              <div class="panel-heading">
+                                  <div class="panel-title">
+                                      <h4>Alert</h4>
                                   </div>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Flame</h4>
-                                </div>
 
+                              </div>
+                              <div class="panel-body">
                                 <div class="media-right">
-                                      <input type="checkbox" id="flame" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                                      <input type="checkbox" id="alert" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
                                 </div>
-                            </div>
-                            <div class="media">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <h4>Flame Sensor</h4>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                      <div class="media">
+                                          <div class="media-left">
+                                            <img src="/images/fire.png" alt="" width="50px">
+                                            <div class="media-body">
+                                                <h4 class="media-heading"></h4>
+                                            </div>
+                                          </div>
+                                          <div class="media-body">
+                                              <h4 class="media-heading">Flame</h4>
+                                          </div>
+                                      </div>
 
-                          </div>
+                                </div>
+                              </div>
+                                  <div class="panel panel-info">
+                                      <div class="panel-heading">
+                                          <div class="panel-title">
+                                              <h4>Gas Sensor</h4>
+                                          </div>
+                                      </div>
+                                      <div class="panel-body">
+                                        <div class="media">
+                                            <div class="media-left">
+                                              <img src="/images/smoke.png" alt="" width="50px">
+                                              <div class="media-body">
+                                                  <h4 class="media-heading"></h4>
+                                              </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Gas</h4>
+                                            </div>
+                                        </div>
+
+                                  </div>
+                              </div>
                       </div>
                     </div>
-                      <div class="panel panel-info">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Gas Sensor</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/smoke.png" alt="" width="50px">
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
-                                  </div>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Gas</h4>
-                                </div>
-
-                                <div class="media-right">
-                                      <input type="checkbox" id="gas" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-
-                                </div>
-                            </div>
-
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-
-    </div>
-  </div>
-
+</div>
+</div>
 
 
   </body>
@@ -377,6 +365,10 @@
       window.addEventListener("load", function(){ //when page loads
         var sData = {};
 
+         var lamp = $('#lamp-gu').first().val();
+        console.log('//////////',lamp);
+        var status = {lamp1 : lamp}
+
     $('#lamp-gu').change(function() {
       sData.type = 'lamp';
       sData.no = 0;
@@ -413,78 +405,160 @@
         sData.flag = this.checked;
         socket.emit('control', sData);
 });
-        $('#ss-door').change(function() {
+        $('#security').change(function() {
         sData.type = 'security';
         sData.no = 0;
         sData.flag = this.checked;
         socket.emit('control', sData);
 });
-        $('#ss-motion').change(function() {
+        $('#alert').change(function() {
         sData.type = 'security';
         sData.no = 1;
         sData.flag = this.checked;
         socket.emit('control', sData);
 });
-        $('#flame').change(function() {
-        sData.type = 'flame';
-        sData.no = 0;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
-        $('#gas').change(function() {
-        sData.type = 'gas';
-        sData.no = 0;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
+
+var data = 'key';
+
+$.ajax({
+  url:"/control/status",
+  data: data, type:'POST' ,
+  success: function (result) {
+    console.log('ajax call',result.status);
+    var data = result.status;
+    $('#lamp-gu').prop('checked', data.lamps[0]).change();
+    $('#lamp-be').prop('checked', data.lamps[1]).change();
+    $('#lamp-ki').prop('checked', data.lamps[2]).change();
+    $('#lamp-ga').prop('checked', data.lamps[3]).change();
+
+    $('#door-onoff').prop('checked', data.door.status).change();
+    $('#door-lock').prop('checked', data.door.isLock).change();
+    $('#security').prop('checked', data.security.isSet).change();
+    $('#alert').prop('checked', data.fire.alarm).change();
+
+    if(data.windows[0]){
+      $(".win-gu").notify(
+        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
+      );
+    }else {
+        $(".win-gu").notify(
+        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
+        );
+    }
+
+    if(data.windows[1]){
+      $(".win-be").notify(
+        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
+      );
+    }else {
+      $(".win-be").notify(
+        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
+        );
+    }
+
+    if(data.windows[2]){
+      $(".win-ki").notify(
+        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
+      );
+    }else {
+      $(".win-ki").notify(
+        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
+        );
+    }
+    }
 });
 
 
 socket.on('control', function (data) { //get button status from client
-  console.log('call////a/a/a/bsbsbs',data);
-  switch(data.type){
-    case 'lamp':
-          if(data.no == 0){
-            document.getElementById('lamp-gu').checked = data.flag;
-        }else if (data.no == 1) {
-              document.getElementById('lamp-be').checked = data.flag;
-        } else if (data.no == 2) {
-              document.getElementById('lamp-ki').checked = data.flag;
-        } else {
-              document.getElementById('lamp-ga').checked = data.flag;
-        }
-        break;
-    case 'door':
-          if(data.no == 0){
-              document.getElementById('door-onoff').checked = data.flag;
-        }else{
-              document.getElementById('door-lock').checked = data.flag;
-      }
-      break;
-      case 'security':
-            if(data.no == 0){
-                document.getElementById('ss-door').checked = data.flag;
-          }else {
-                document.getElementById('ss-motion').checked = data.flag;
-          }
-        break;
-        case 'flame':
-                  document.getElementById('flame').checked = data.flag;
-          break;
-        case 'gas':
-                  document.getElementById('gas').checked = data.flag;
-          break;
-          case 'window':
-                if(data.no == 0){
-                  document.getElementById('win-gu').checked = data.flag;
-              }else if (data.no == 1) {
-                    document.getElementById('win-be').checked = data.flag;
-              } else {
-                    document.getElementById('win-ki').checked = data.flag;
-              }
-              break;
-}
+
       });
 
       });
+
+      FusionCharts.ready(function () {
+        var updateAnnotation,
+        chart = new FusionCharts({
+        type: 'thermometer',
+        renderAt: 'chart-container',
+        id  : 'myThm',
+        width: '240',
+        height: '210',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Temperature",
+                "subcaption": "In Your Home",
+                "showhovereffect": "1",
+                "thmFillColor": "#008ee4",
+                "showGaugeBorder" : "1",
+                "gaugeBorderColor" :  "#008ee4",
+                "gaugeBorderThickness" :  "2",
+                "gaugeBorderAlpha" :  "30",
+                "thmOriginX": "100",
+                "chartBottomMargin" : "20",
+                "valueFontColor" : "#000000",
+                "theme" : "fint"
+            },
+            "value": "-6",
+            //All annotations are grouped under this element
+            "annotations": {
+                "showbelow": "0",
+                "groups": [
+                    {
+                        //Each group needs a unique ID
+                        "id": "indicator",
+                        "items": [
+                            //Showing Annotation
+                            {
+                                "id": "background",
+                                //Rectangle item
+                                "type": "rectangle",
+                                "alpha" : "50",
+                                "fillColor": "#AABBCC",
+                                "x" : "$gaugeEndX-40",
+                                "tox" : "$gaugeEndX",
+                                "y" : "$gaugeEndY+54",
+                                "toy" : "$gaugeEndY+72"
+                            }
+                        ]
+                    }
+                ]
+
+            },
+        },
+        "events" :{
+            "initialized": function (evt, arg) {
+                var dataUpdate = setInterval(function () {
+                      //your temperature is here insert and remove math.random
+                      mainTemp = (Math.random()*100),
+                    FusionCharts.items["myThm"].feedData("&value="+mainTemp);
+                }, 1000);
+                updateAnnotation = function (evtObj, argObj){
+                    var code,
+                        chartObj = evtObj.sender,
+                        val = chartObj.getData(),
+                        annotations = chartObj.annotations;
+
+                    if(val >= -4.5){
+                        code = "#00FF00";
+                    }else if(val < - 4.5 && val > -6){
+                        code = "#ff9900";
+                    }else{
+                        code = "#ff0000";
+                    }
+                    annotations.update("background", {"fillColor": code});
+                };
+            },
+            "renderComplete" : function (evt, arg) {
+                updateAnnotation(evt, arg);
+            },
+            "realtimeUpdateComplete" : function (evt, arg) {
+                updateAnnotation(evt, arg);
+            }
+        }
+      })
+      .render();
+    });
+
   </script>
 </html>

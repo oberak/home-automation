@@ -11,8 +11,8 @@ a {
 }
 .myborder{
     padding: 20px;;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+
     -webkit-box-shadow: 0px 0px 3px 0px #72c02c;
     -moz-box-shadow:    0px 0px 3px 0px #72c02c;
     box-shadow:         0px 0px 3px 0px #72c02c;
@@ -46,7 +46,7 @@ a {
 }
 .btn-u {
     white-space: nowrap;
-    border: 0;
+
     color: #fff;
     font-size: 14px;
     cursor: pointer;
@@ -58,7 +58,7 @@ a {
     text-decoration: none;
 }
 .input-group-addon {
-    border-right: 0;
+
     /*color: #b3b3b3;*/
     font-size: 14px;
     background: #fff;
@@ -69,8 +69,8 @@ a {
     color: #555;
     text-align: center;
     background-color: #eee;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+
 }
 .input-group .form-control {
     float: left;
@@ -90,8 +90,8 @@ a {
     color: #555;
     background-color: #fff;
     background-image: none;
-    border: 1px solid  #72c02c !important;
-    border-radius: 4px;
+
+
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
