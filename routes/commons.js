@@ -1,12 +1,35 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Member = require('../models/member');
 var crypto = require('crypto');
 var secret = 'h0M@A<weAre>T0WV0!a#&';
 
 
 router.get('/signup', function(req, res, next) {
   res.render('commons/signup', { title: 'Sign Up' , msg:''});
+});
+
+router.get('/member', function(req, res, next) {
+  res.render('commons/add-member', { title: 'Member'});
+});
+
+router.post('/member', function (req,res) {
+   var member =new Member();
+      member.name = req.body.name;
+      member.rfid = req.body.rfid;
+      member.options = req.body.options;
+      member.save(function(err,rtn){
+        if(err) throw err;
+        res.redirect('/commons/list');
+      });
+});
+
+router.get('/list', function(req, res) {
+    Member.find({},function(err,rtn){
+      if(err) throw err;
+      res.render('commons/list-member', { title: 'Member List', member : rtn});
+    });
 });
 
 router.get('/signin', function(req, res, next) {
@@ -56,4 +79,13 @@ router.get('/signout', function(req, res, next) {
       req.session.destroy();
       res.redirect('/');
 });
+
+router.get('/delete/:id', function (req, res) {
+     Member.findByIdAndRemove(req.params.id, function (err, rtn) {
+          if(err) throw err;
+          res.redirect('/commons/list');
+     });
+
+});
+
 module.exports = router;

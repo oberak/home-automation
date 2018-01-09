@@ -97,3 +97,90 @@ a {
     -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+.on-off.active {
+    background: #7BB712;
+}
+
+.on-off {
+    width: 130px;
+    padding: 10px;
+    position: relative;
+}
+
+.on-off-word {
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 22px;
+}
+
+.radio-dot:before, .radio-dot:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.radio-dot:before {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    top: 10px;
+    left: 16px;
+}
+
+.radio-dot:after {
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    top: 14px;
+    left: 20px;
+}
+
+.on-off.active .on-off-word {
+    color: #fff;
+}
+
+.on-off.active .radio-dot:after {
+    background: #426C2A;
+}
+
+.on-off.active .radio-dot:before {
+    background: #fff;
+    border-color: #699D17;
+}
+
+.on-off:hover .radio-dot:before {
+    border-color: #adadad;
+}
+
+.on-off.active:hover .radio-dot:before {
+    border-color: #699D17;
+}
+
+
+.on-off.active .radio-dot:after {
+    background: #426C2A;
+}
+
+.on-off:hover .radio-dot:after {
+    background: #e6e6e6;
+}
+
+.on-off.active:hover .radio-dot:after {
+    background: #426C2A;
+
+}
+
+@media (max-width: 400px) {
+
+    .mobile-br {
+        display: none;
+    }
+
+    .on-off {
+        width: 49%;
+        padding: 10px;
+        position: relative;
+    }
+}

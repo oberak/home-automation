@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <% include ../partials/head.ejs %>
+  </head>
+  <body>
+      <% include ../partials/nav.ejs %>
+
+      <div class="container">
+          <form class="form-horizontal" role="form" method="POST" action="/commons/member">
+              <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-9">
+                      <h2>Adding New Family</h2>
+                      <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="name">Family Name</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                <input type="text" name="name" class="form-control" id="name"
+                                       placeholder="eg. Mg Mg" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3 field-label-responsive">
+                          <label for="name">RFID Number</label>
+                      </div>
+                      <div class="col-md-9">
+                          <div class="form-group">
+                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                                  <input type="text" name="rfid" class="form-control" id="rfid"
+                                         placeholder="xxxx-xxx-xx" required autofocus>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="name">Options(use or not use)</label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <div class="on-off-group" id="on-off-group" data-toggle="buttons">
+                                       <label class="btn btn-default on-off">
+                                           <input type="radio" name="options" id="option1" value="use" autocomplete="off">
+                                           <span class="radio-dot"></span>
+                                           <span class="on-off-word">Active</span>
+                                       </label>
+
+                                       <label class="btn btn-default on-off">
+                                           <input type="radio" name="options" id="option2" value="not use" autocomplete="off">
+                                           <span class="radio-dot"></span>
+                                           <span class="on-off-word">Not Active</span>
+                                       </label>
+                                </div>
+                            </div>
+                        </div>
+
+                      </div>
+
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-9">
+                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+          </div>
+        </div>
+        </form>
+      </div>
+  </body>
+  <script type="text/javascript">
+                  $(window).resize(function() {
+                if ($(window).width() <= 600) {
+                $('#prop-type-group').removeClass('btn-group');
+                $('#prop-type-group').addClass('btn-group-vertical');
+                } else {
+                $('#prop-type-group').addClass('btn-group');
+                $('#prop-type-group').removeClass('btn-group-vertical');
+                }
+                });
+  </script>
+</html>

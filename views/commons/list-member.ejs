@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+      <% include ../partials/nav.ejs %>
+      <div class="container">
+
+  <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Family Name</th>
+      <th scope="col">RFID No</th>
+      <th scope="col">Options</th>
+      <th scope="col">Update date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if(member.length == 0){
+      %>
+          <tr>
+              <td colspan="6">Data Not Found</td>
+          </tr>
+  <%  } %>
+  <% for(var i=0; i < member.length; i++){
+    %>
+    <tr>
+        <td><%= i+1 %></td>
+        <td> <a href="javascript:del('<%= member[i]._id%>')">
+              <%= member[i].name %>
+            </a>
+        </td>
+        <td><%= member[i].rfid %></td>
+        <td><%= member[i].options %></td>
+      <td><%= member[i].updated_date %></td>
+    </tr>
+<%  } %>
+  </tbody>
+</table>
+
+     </div>
+  </body>
+  <script type="text/javascript">
+  function del(id) {
+    
+            if(confirm('Are you sure?')) location.href = '/commons/delete/'+id;
+  }
+  </script>
+</html>

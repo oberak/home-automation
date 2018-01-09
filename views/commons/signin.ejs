@@ -3,6 +3,7 @@
   <head>
       <% include ../partials/head.ejs %>
       <link rel="stylesheet" href="/stylesheets/bg.css">
+      <script src="/javascripts/jquery.cookie.js" charset="utf-8"></script>
   </head>
   <body>
         <% include ../partials/nav.ejs %>
@@ -14,7 +15,7 @@
   			    	<h3 class="panel-title">Please sign in</h3>
   			 	</div>
   			  	<div class="panel-body">
-  			    	<form accept-charset="UTF-8" role="form" action="/commons/signin" method="post">
+  			    	<form accept-charset="UTF-8" role="form" action="/commons/signin" method="post" name="frm">
                       <fieldset>
   			    	  	<div class="form-group">
   			    		    <input class="form-control" placeholder="E-mail" name="email" type="text">
@@ -40,5 +41,20 @@
   <% if(msg) {%>
                        alert('<%= msg %>')
   <%}%>
+
+  $(document).ready(function () {
+          if($.cookie("email")){
+            frm.email.value = $.cookie("email");
+            frm.remember.checked = true;
+          }
+  });
+  frm.onsubmit = function(){
+    if(frm.remember.checked){
+          $.cookie("email",frm.email.value,{expires : 7});
+          console.log('active cookie');
+    }else{
+      $.removeCookie("email");
+    }
+  }
   </script>
 </html>
