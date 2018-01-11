@@ -75,13 +75,13 @@
                       <div class="panel panel-primary" data-stateful="true"  data-inner-id="lobipanel-parent-primary">
                           <div class="panel-heading">
                               <div class="panel-title">
-                                  <h4>Humanity Sensor</h4>
+                                  <h4>Humidity Sensor</h4>
                               </div>
                           </div>
                           <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                        <div id="humanity"></div>
+                                        <div id="humidity"></div>
                                 </div>
 
                                 <div class="media-right">
@@ -532,12 +532,12 @@ socket.on('control', function (data) { //get button status from client
       .render();
     });
 
-    var humanity = new JustGage({
-      id: "humanity",
+    var humidity = new JustGage({
+      id: "humidity",
       value: getRandomInt(0, 100),
       min: 0,
       max: 100,
-      title: "Humanity temperature",
+      title: "Humidity temperature",
       label: "Celsius",
       startAnimationTime: 2000,
       startAnimationType: ">",
@@ -546,7 +546,7 @@ socket.on('control', function (data) { //get button status from client
     });
 
     setInterval(function() {
-            humanity.refresh(getRandomInt(0, 100));
+            humidity.refresh(getRandomInt(0, 100));
           }, 2500);
 
   </script>
