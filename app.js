@@ -48,9 +48,10 @@ db.on('error', console.error.bind(console,'mongoDB connection error:'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('404 file Not Found');
   err.status = 404;
-  next(err);
+  res.status(err.status);
+  res.render('commons/err-404', { title: '404 Page Not found', error: err });
 });
 
 // error handler
@@ -62,6 +63,16 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('commons/err-500', { title: '500 Internal Server Error', error: err });
 });
 
 module.exports = app;

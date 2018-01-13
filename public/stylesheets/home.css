@@ -1,0 +1,12 @@
+body{
+  background-color: lightcyan;
+}
+h2{
+  color: blue;
+
+  font-weight: bold;
+  text-shadow: 2px 2px 2px gray;
+}
+a button{
+  margin-top: 5%;
+}

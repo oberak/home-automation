@@ -3,12 +3,10 @@ IoT based Web Controlled Home Automation using Raspberry Pi
 
 ## Project members
 * PM: Ye Thu Aung
-* TA: Han Htun Aung
 * PL : Nay Linn Oo (Hardware Installation)
 * PL : Aye Thet Khaing (Home Building)
 * PL : Hein Htet Linn (Web Server)
-* Member : Si Thu Aung (Hardware Installation)
 * Member : Yan Aung Shin (Home Building)
-* Member  : Myat Thiri Win Htut (Web Server)
+* Member  : Myat Thiri Win Htut (Web Server)  
 * Member :  Phyo Pyae Sone (Web Server)
 * Member  : Zaw Linn Aung (Home Building)
