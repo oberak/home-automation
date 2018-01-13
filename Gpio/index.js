@@ -27,13 +27,13 @@ function Gpio(server){
     // this.windows = new Windows(fnCallback);
     // this.display = new Display({time:3});
     // this.dht = new Dht(fnCallback, {temp:20, humi: 20});
-    // this.motor = new Motor(fnCallback, {time:2});
 
     board.on('ready', function() {
         // self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         // self.motions = new Motions(five, fnCallback);
+        // self.motor = new Motor(five, fnCallback, {time:2});
     });
 
     this.read = function(){
