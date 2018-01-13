@@ -21,7 +21,7 @@ var board = new five.Board({
  * @param       {Function} callback (type, index, value)
  * @constructor
  */
-function Gpio(callback){
+function Gpio(server){
     var self = this;
     // this.rfid = new Rfid(fnCallback);
     // this.windows = new Windows(fnCallback);
@@ -50,7 +50,10 @@ function Gpio(callback){
         // }
         return rtn;
     };
-
+    this.setSocket = function(socket){
+        this.socket = socket;
+        console.log(this.socket);
+    };
     function btnClick(btnNo){
         if(btnNo == 0){
             // door open/close
@@ -59,30 +62,30 @@ function Gpio(callback){
             console.log('door button');
             // self.display.print('someone','open? close?');
         }else{
-            switch(btnNo){
-                case 1: // living room
-                    self.lamps.toggle(0);
-                    self.lamps.toggle(1);
-                    break;
-                case 2: // room 1
-                    self.lamps.toggle(2);
-                    break;
-                case 3: // room 2
-                    self.lamps.toggle(3);
-                    break;
-            }
-
-            self.lamps.toggle(4); // door lamp
-            self.lamps.toggle(5); // door lock (red)
-            self.lamps.toggle(6); // door unlock (green)
-            self.lamps.toggle(7); // door working (yellow)
+            self.lamps.toggle(btnNo);
             // alarm (all lamp blink)
             fnCallback('LAMPS', btnNo, self.lamps.read(btnNo));
         }
     }
     function fnCallback(type, index, value){
-
-        callback(type, index, value);
+        if(self.socket){
+            self.socket.emit('control', {type:type, no:index, flag:value});
+        }
+        console.log(type, index, value);
     }
+
+    var io = require('socket.io')(server);
+    io.on('connection', function(socket) {
+        self.socket = socket;
+        socket.on('control', function(data) {
+            console.log(data);
+            switch (data.type) {
+                case 'lamp':
+                    if(data.flag) self.lamps.on(data.no);
+                    else self.lamps.off(data.no);
+                    break;
+            }
+        });
+    });
 }
 module.exports = Gpio;

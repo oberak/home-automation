@@ -42,9 +42,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/commons',commons);
 
-mongoose.connect(mongoDB, {
-    useMongoClient: true
-});
+mongoose.connect(mongoDB, {});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console,'mongoDB connection error:'));
 
