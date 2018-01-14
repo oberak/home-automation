@@ -6,7 +6,7 @@ config.stream = {
 };
 config.server = {
     ip: '192.168.123.1',
-    port: 3000
+    port: 80
 };
 
 module.exports = config;
