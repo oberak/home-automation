@@ -9,11 +9,13 @@ var debug = require('debug')('home-automation:server');
 var http = require('http');
 var Status = require('../models/status');
 var Gpio = require('../Gpio');
+var config = require('../config');
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.server.port);
 app.set('port', port);
 
 /**

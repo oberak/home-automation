@@ -17,9 +17,9 @@
 var rc522 = require("rc522");
 
 function Rfid(callback){
-    console.log(rc522);
+    // console.log(rc522);
     rc522(function(rfidSerialNumber){
-        console.log(rfidSerialNumber);
+        // console.log(rfidSerialNumber);
         callback('RFID', 0, rfidSerialNumber);
     });
 }
