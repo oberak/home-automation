@@ -78,9 +78,10 @@ function Gpio(server){
     io.on('connection', function(socket) {
         self.socket = socket;
         socket.on('control', function(data) {
-            console.log(data);
+            console.log('receive',data);
             switch (data.type) {
                 case 'lamp':
+                  if(self.lamps.read(data.no) == data.flag) return;
                     if(data.flag) self.lamps.on(data.no);
                     else self.lamps.off(data.no);
                     break;

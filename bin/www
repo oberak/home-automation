@@ -24,27 +24,9 @@ app.set('port', port);
  var status = new Status();
  var data = {};
   Status.findOne({key:'key'},function (err,rtn) {
-      if(err) throw err;
-      if(rtn == null){
-        status.lamps = [true,true,false,true];
-        status.windows = [true,false,false];
-        status.temp = 122;
-        status.humidity = 134;
-        status.door.status = 1;
-        status.door.isLock = true;
-        status.security.isSet = true;
-        status.security.isDetected = false;
-        status.fire.alarm = false;
-        status.fire.gas = 23;
-        status.fire.flame = 1024;
-        status.key = "key";
-        status.save(function (err,rtn) {
-             if (err) throw err;
-             console.log(rtn);
-        });
-      }else{
+
          data = rtn;
-      }
+      
   });
 
 var server = http.createServer(app);

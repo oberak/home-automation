@@ -360,15 +360,12 @@
       window.addEventListener("load", function(){ //when page loads
         var sData = {};
 
-         var lamp = $('#lamp-gu').first().val();
-        console.log('//////////',lamp);
-        var status = {lamp1 : lamp}
-
     $('#lamp-gu').change(function() {
       sData.type = 'lamp';
       sData.no = 0;
       sData.flag = this.checked;
       socket.emit('control', sData);
+      console.log('it work ');
 });
     $('#lamp-be').change(function() {
       sData.type = 'lamp';
@@ -465,7 +462,20 @@ $.ajax({
 
 
 socket.on('control', function (data) { //get button status from client
+           console.log('from server',data);
+           switch (data.type) {
+             case 'LAMPS':
+                 if(data.no == 3){
+                   $('#lamp-ki').prop('checked', data.flag).change();
+                 }else if (data.no == 2) {
+                   $('#lamp-be').prop('checked', data.flag).change();
+                 }else{
+                   $('#lamp-gu').prop('checked', data.flag).change();
+                 }
+               break;
+             default:
 
+           }
       });
 
       });
