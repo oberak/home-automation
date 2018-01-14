@@ -55,7 +55,7 @@ function Gpio(server){
         console.log(this.socket);
     };
     function btnClick(btnNo){
-        if(btnNo == 0){
+        if(btnNo == 4){
             // door open/close
             // self.motor.toggle();
             // display info to display

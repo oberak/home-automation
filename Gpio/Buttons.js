@@ -9,7 +9,7 @@
              (2) - Resistor 1k Ohm - GND
 @ needed: sudo
 */
-var btnPins = ["P1-31", "P1-33", "P1-35", "P1-37"];
+var btnPins = ["P1-29", "P1-31", "P1-33", "P1-35", "P1-37"];
 
 function Buttons(five, callback){
     var buttons = new five.Buttons({

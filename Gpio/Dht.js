@@ -8,7 +8,7 @@
     - pin4: GND - Ground(-)
 */
 var sensor = require('rpi-dht-sensor');
-var dht = new sensor.DHT11(5);
+var dht = new sensor.DHT11(4);
 function Dht(callback, opt){
     var self = this;
     if(!opt) opt = {temp: 5, humi: 5};

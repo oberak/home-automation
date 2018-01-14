@@ -1,563 +1,569 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ./partials/head.ejs %>
 
-  </head>
-  <body>
-    <% include ./partials/nav.ejs %>
+<head>
+  <% include ./partials/head.ejs %>
 
-      <div id="lobipanel">
+</head>
 
-              <p></p>
+<body>
+  <% include ./partials/nav.ejs %>
+
+    <div id="lobipanel">
+
+      <p></p>
       <div id="lobipanel-multiple">
 
-          <div class="bs-example">
-              <div class="row">
-                  <div id="lobipanel-parent" class="col-md-4 lobipanel-parent">
-                      <div class="panel panel-default" data-stateful="true" data-inner-id="lobipanel-parent-default">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Lamps</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/home.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading">Guest Room</h4>
+        <div class="bs-example">
+          <div class="row">
+            <div id="lobipanel-parent" class="col-md-4 lobipanel-parent">
+              <div class="panel panel-default" data-stateful="true" data-inner-id="lobipanel-parent-default">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Lamps</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/home.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Guest Room</h4>
 
-                                  </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="lamp-gu" data-toggle="toggle"  data-width="70" data-onstyle="success" data-size="small">
-                                  </div>
-                              </div>
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/bed.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading"> Bed Room</h4>
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="lamp-gu" name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/bed.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading"> Bed Room</h4>
 
-                                  </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="lamp-be" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                  </div>
-                              </div>
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/kitchen.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading">Kitchen</h4>
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="lamp-be" name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/kitchen.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Kitchen</h4>
 
-                                  </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="lamp-ki"d data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                  </div>
-                              </div>
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/garden.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading">Garden</h4>
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="lamp-ki" d name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/garden.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Garden</h4>
 
-                                  </div>
-                                  <div class="media-right">
-                                    <input type="checkbox" id="lamp-ga" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="panel panel-primary" data-stateful="true"  data-inner-id="lobipanel-parent-primary">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Humidity Sensor</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                        <div id="humidity"></div>
-                                </div>
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="lamp-ga" name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-primary" data-stateful="true" data-inner-id="lobipanel-parent-primary">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Humidity Sensor</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <div id="humidity"></div>
+                    </div>
 
-                                <div class="media-right">
-                                      <div id="chart-container">FusionCharts will render here</div>
-                                </div>
-
-                            </div>
-                          </div>
-                      </div>
+                    <div class="media-right">
+                      <div id="chart-container">FusionCharts will render here</div>
+                    </div>
 
                   </div>
+                </div>
+              </div>
 
-                  <div class="col-md-4">
-                      <div class="panel panel-success">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>CCTV</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/cctv.png" alt="" width="50px">
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
+            </div>
 
-                                  </div>
-                                </div>
-
-                                <div class="media-right">
-                                      <input type="button" name="cctv" value=" Enter" class="btn btn-primary">
-                                </div>
-
-                            </div>
-                          </div>
-                      </div>
-                      <div class="panel panel-info">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Windows</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/window.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading">Guest Room</h4>
-
-                                  </div>
-                                  <div class="media-body">
-                                        <div class="win-gu">
-
-                                        </div>
-                                  </div>
-                              </div>
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/window.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading"> Bed Room</h4>
-
-                                  </div>
-                                  <div class="media-body">
-                                        <div class="win-be">
-
-                                        </div>
-                                  </div>
-                              </div>
-                              <div class="media">
-                                  <div class="media-left">
-                                    <img src="/images/window.png" alt="" width="50px">
-                                  </div>
-                                  <div class="media-body">
-                                      <h4 class="media-heading">Kitchen</h4>
-
-                                  </div>
-                                  <div class="media-body">
-                                        <div class="win-ki">
-
-                                        </div>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </div>
-                      <div class="panel panel-success">
-                          <div class="panel-heading">
-                              <div class="panel-title">
-                                  <h4>Door</h4>
-                              </div>
-                          </div>
-                          <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                  <img src="/images/door.png" alt="" width="50px">
-                                  <div class="media-body">
-                                      <h4 class="media-heading"></h4>
-
-                                  </div>
-                                </div>
-
-                                <div class="media-right">
-                                      <input type="checkbox" id="door-onoff"data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
-                                      <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
-                                </div>
-
-
-                            </div>
-                          </div>
-                      </div>
+            <div class="col-md-4">
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>CCTV</h4>
                   </div>
-                  <div class="col-md-4">
-                                  <div class="panel panel-info">
-                                      <div class="panel-heading">
-                                          <div class="panel-title">
-                                              <h4>Security</h4>
-                                          </div>
-                                      </div>
-                                      <div class="panel-body">
-                                        <div class="media">
-                                            <div class="media-left">
-                                              <img src="/images/thief.png" alt="" width="50px">
-                                              <div class="media-body">
-                                                  <h4 class="media-heading"></h4>
-                                              </div>
-                                            </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/cctv.png" alt="" width="50px">
+                      <div class="media-body">
+                        <h4 class="media-heading"></h4>
 
-                                              <div class="media-right">
-                                                    <input type="checkbox" id="security" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                                              </div>
-
-                                  </div>
-                                </div>
-                              </div>
-                          <div class="panel panel-info lobipanel">
-                              <div class="panel-heading">
-                                  <div class="panel-title">
-                                      <h4>Alert</h4>
-                                  </div>
-
-                              </div>
-                              <div class="panel-body">
-                                <div class="media-right">
-                                      <input type="checkbox" id="alert" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                                </div>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        <div class="panel-title">
-                                            <h4>Flame Sensor</h4>
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                      <div class="media">
-                                          <div class="media-left">
-                                            <img src="/images/fire.png" alt="" width="50px">
-                                            <div class="media-body">
-                                                <h4 class="media-heading"></h4>
-                                            </div>
-                                          </div>
-                                          <div class="media-body">
-                                              <h4 class="media-heading">Flame</h4>
-                                          </div>
-                                      </div>
-
-                                </div>
-                              </div>
-                                  <div class="panel panel-info">
-                                      <div class="panel-heading">
-                                          <div class="panel-title">
-                                              <h4>Gas Sensor</h4>
-                                          </div>
-                                      </div>
-                                      <div class="panel-body">
-                                        <div class="media">
-                                            <div class="media-left">
-                                              <img src="/images/smoke.png" alt="" width="50px">
-                                              <div class="media-body">
-                                                  <h4 class="media-heading"></h4>
-                                              </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading">Gas</h4>
-                                            </div>
-                                        </div>
-
-                                  </div>
-                              </div>
                       </div>
                     </div>
-</div>
-</div>
+
+                    <div class="media-right">
+                      <input type="button" name="cctv" value=" Enter" class="btn btn-primary">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Windows</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/window.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Guest Room</h4>
+
+                    </div>
+                    <div class="media-body">
+                      <div class="win-gu">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/window.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading"> Bed Room</h4>
+
+                    </div>
+                    <div class="media-body">
+                      <div class="win-be">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/window.png" alt="" width="50px">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Kitchen</h4>
+
+                    </div>
+                    <div class="media-body">
+                      <div class="win-ki">
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Door</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/door.png" alt="" width="50px">
+                      <div class="media-body">
+                        <h4 class="media-heading"></h4>
+
+                      </div>
+                    </div>
+
+                    <div class="media-right">
+                      <input type="checkbox" id="door-onoff" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
+                      <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
+                    </div>
 
 
-  </body>
-  <script>
-      $(function(){
-          var codes = $('.highlight code');
-          codes.each(function (ind, el) {
-              hljs.highlightBlock(el);
-          });
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Security</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/thief.png" alt="" width="50px">
+                      <div class="media-body">
+                        <h4 class="media-heading"></h4>
+                      </div>
+                    </div>
 
-          $('.lobipanel').lobiPanel();
-          $('#demoPanel11').lobiPanel();
-          $('#lobipanel-basic')
-                  .on('beforeUnpin.lobiPanel', function () {
-                      console.log("beforeClose");
-                  })
-                  .on('onClose.lobiPanel', function () {
-                      console.log("onClose");
-                  })
-                  .on('onTitleChange.lobiPanel', function () {
-                      console.log(this, arguments);
+                    <div class="media-right">
+                      <input type="checkbox" id="security" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                    </div>
 
-                  })
-                  .lobiPanel();
-          $('#lobipanel-custom-control').lobiPanel({
-              reload: false,
-              close: false,
-              editTitle: false
-          });
-          $('#lobipanel-stateful').lobiPanel({
-              stateful: true
-          });
-          $('#lobipanel-font-awesome').lobiPanel({
-              reload: {
-                  icon: 'fa fa-refresh'
-              },
-              editTitle: {
-                  icon: 'fa fa-edit',
-                  icon2: 'fa fa-save'
-              },
-              unpin: {
-                  icon: 'fa fa-arrows'
-              },
-              minimize: {
-                  icon: 'fa fa-chevron-up',
-                  icon2: 'fa fa-chevron-down'
-              },
-              close: {
-                  icon: 'fa fa-times-circle'
-              },
-              expand: {
-                  icon: 'fa fa-expand',
-                  icon2: 'fa fa-compress'
-              }
-          });
-          $('#lobipanel-constrain-size').lobiPanel({
-              minWidth: 300,
-              minHeight: 300,
-              maxWidth: 600,
-              maxHeight: 480
-          });
-          $('#lobipanel-from-url').on('loaded.lobiPanel', function (ev, lobiPanel) {
-              var $body = lobiPanel.$el.find('.panel-body');
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-info lobipanel">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Alert</h4>
+                  </div>
 
-              hljs.highlightBlock($body.find('code')[0]);
-          }).lobiPanel({
-              loadUrl: 'bootstrap/dist/css/bootstrap.min.css',
-              bodyHeight: 400
-          });
-          $('#lobipanel-multiple').find('.panel').lobiPanel({
-              sortable: true,
-              beforeTitleChange: function(lobiPanel, title){
-                  console.log("beforeTitleChange", arguments);
-                  if (!title) {
-                      return false;
-                  }
-              }
-          });
+                </div>
+                <div class="panel-body">
+                  <div class="media-right">
+                    <input type="checkbox" id="alert" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
+                  </div>
+                  <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Flame Sensor</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="media-left">
+                          <img src="/images/fire.png" alt="" width="50px">
+                          <div class="media-body">
+                            <h4 class="media-heading"></h4>
+                          </div>
+                        </div>
+                        <div class="media-body">
+                          <h4 class="media-heading">Flame</h4>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Gas Sensor</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="media-left">
+                          <img src="/images/smoke.png" alt="" width="50px">
+                          <div class="media-body">
+                            <h4 class="media-heading"></h4>
+                          </div>
+                        </div>
+                        <div class="media-body">
+                          <h4 class="media-heading">Gas</h4>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+</body>
+<script>
+  $(function() {
+    var codes = $('.highlight code');
+    codes.each(function(ind, el) {
+      hljs.highlightBlock(el);
+    });
+
+    $('.lobipanel').lobiPanel();
+    $('#demoPanel11').lobiPanel();
+    $('#lobipanel-basic')
+      .on('beforeUnpin.lobiPanel', function() {
+        console.log("beforeClose");
+      })
+      .on('onClose.lobiPanel', function() {
+        console.log("onClose");
+      })
+      .on('onTitleChange.lobiPanel', function() {
+        console.log(this, arguments);
+
+      })
+      .lobiPanel();
+    $('#lobipanel-custom-control').lobiPanel({
+      reload: false,
+      close: false,
+      editTitle: false
+    });
+    $('#lobipanel-stateful').lobiPanel({
+      stateful: true
+    });
+    $('#lobipanel-font-awesome').lobiPanel({
+      reload: {
+        icon: 'fa fa-refresh'
+      },
+      editTitle: {
+        icon: 'fa fa-edit',
+        icon2: 'fa fa-save'
+      },
+      unpin: {
+        icon: 'fa fa-arrows'
+      },
+      minimize: {
+        icon: 'fa fa-chevron-up',
+        icon2: 'fa fa-chevron-down'
+      },
+      close: {
+        icon: 'fa fa-times-circle'
+      },
+      expand: {
+        icon: 'fa fa-expand',
+        icon2: 'fa fa-compress'
+      }
+    });
+    $('#lobipanel-constrain-size').lobiPanel({
+      minWidth: 300,
+      minHeight: 300,
+      maxWidth: 600,
+      maxHeight: 480
+    });
+    $('#lobipanel-from-url').on('loaded.lobiPanel', function(ev, lobiPanel) {
+      var $body = lobiPanel.$el.find('.panel-body');
+
+      hljs.highlightBlock($body.find('code')[0]);
+    }).lobiPanel({
+      loadUrl: 'bootstrap/dist/css/bootstrap.min.css',
+      bodyHeight: 400
+    });
+    $('#lobipanel-multiple').find('.panel').lobiPanel({
+      sortable: true,
+      beforeTitleChange: function(lobiPanel, title) {
+        console.log("beforeTitleChange", arguments);
+        if (!title) {
+          return false;
+        }
+      }
+    });
+  });
+  var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ga'];
+  var socket = io(); //load socket.io-client and connect to the host that serves the page
+  window.addEventListener("load", function() { //when page loads
+    var sData = {};
+    for (var i = 0; i < lampIDs.length; i++) {
+      $(lampIDs[i]).change(function() {
+        sData.type = 'lamp';
+        sData.no = lampIDs.indexOf('#' + this.id);
+        sData.flag = this.checked;
+        socket.emit('control', sData);
+        console.log('it work ');
       });
+    }
 
-      var socket = io(); //load socket.io-client and connect to the host that serves the page
-      window.addEventListener("load", function(){ //when page loads
-        var sData = {};
-
-    $('#lamp-gu').change(function() {
-      sData.type = 'lamp';
+    $('#door-onoff').change(function() {
+      sData.type = 'door';
       sData.no = 0;
       sData.flag = this.checked;
       socket.emit('control', sData);
-      console.log('it work ');
-});
-    $('#lamp-be').change(function() {
-      sData.type = 'lamp';
+    });
+    $('#door-lock').change(function() {
+      sData.type = 'door';
       sData.no = 1;
       sData.flag = this.checked;
       socket.emit('control', sData);
-});
-        $('#lamp-ki').change(function() {
-        sData.type = 'lamp';
-        sData.no = 2;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
-        $('#lamp-ga').change(function() {
-        sData.type = 'lamp';
-        sData.no = 3;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
-        $('#door-onoff').change(function() {
-        sData.type = 'door';
-        sData.no = 0;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
+    });
+    $('#security').change(function() {
+      sData.type = 'security';
+      sData.no = 0;
+      sData.flag = this.checked;
+      socket.emit('control', sData);
+    });
+    $('#alert').change(function() {
+      sData.type = 'security';
+      sData.no = 1;
+      sData.flag = this.checked;
+      socket.emit('control', sData);
+    });
+
+    var data = 'key';
+
+    $.ajax({
+      url: "/control/status",
+      data: data,
+      type: 'POST',
+      success: function(result) {
+        console.log('ajax call', result.status);
+        var data = result.status;
+        $('#lamp-gu').prop('checked', data.lamps[0]).change();
+        $('#lamp-be').prop('checked', data.lamps[1]).change();
+        $('#lamp-ki').prop('checked', data.lamps[2]).change();
+        $('#lamp-ga').prop('checked', data.lamps[3]).change();
+
+        $('#door-onoff').prop('checked', data.door.status).change();
+        $('#door-lock').prop('checked', data.door.isLock).change();
+        $('#security').prop('checked', data.security.isSet).change();
+        $('#alert').prop('checked', data.fire.alarm).change();
+
+        if (data.windows[0]) {
+          $(".win-gu").notify(
+            "Window is open", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'error'
+            }
+          );
+        } else {
+          $(".win-gu").notify(
+            "Window is close", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'success'
+            }
+          );
+        }
+
+        if (data.windows[1]) {
+          $(".win-be").notify(
+            "Window is open", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'error'
+            }
+          );
+        } else {
+          $(".win-be").notify(
+            "Window is close", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'success'
+            }
+          );
+        }
+
+        if (data.windows[2]) {
+          $(".win-ki").notify(
+            "Window is open", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'error'
+            }
+          );
+        } else {
+          $(".win-ki").notify(
+            "Window is close", {
+              autoHide: false,
+              clickToHide: true,
+              className: 'success'
+            }
+          );
+        }
+      }
+    });
+
+    socket.on('control', function(data) { //get button status from client
+      console.log('from server', data);
+      switch (data.type) {
+        case 'LAMPS':
+          $(lampIDs[data.no]).prop('checked', data.flag).change();
+          break;
+        default:
+
+      }
+    });
+
   });
-        $('#door-lock').change(function() {
-        sData.type = 'door';
-        sData.no = 1;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
-        $('#security').change(function() {
-        sData.type = 'security';
-        sData.no = 0;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
-        $('#alert').change(function() {
-        sData.type = 'security';
-        sData.no = 1;
-        sData.flag = this.checked;
-        socket.emit('control', sData);
-});
 
-var data = 'key';
-
-$.ajax({
-  url:"/control/status",
-  data: data, type:'POST' ,
-  success: function (result) {
-    console.log('ajax call',result.status);
-    var data = result.status;
-    $('#lamp-gu').prop('checked', data.lamps[0]).change();
-    $('#lamp-be').prop('checked', data.lamps[1]).change();
-    $('#lamp-ki').prop('checked', data.lamps[2]).change();
-    $('#lamp-ga').prop('checked', data.lamps[3]).change();
-
-    $('#door-onoff').prop('checked', data.door.status).change();
-    $('#door-lock').prop('checked', data.door.isLock).change();
-    $('#security').prop('checked', data.security.isSet).change();
-    $('#alert').prop('checked', data.fire.alarm).change();
-
-    if(data.windows[0]){
-      $(".win-gu").notify(
-        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
-      );
-    }else {
-        $(".win-gu").notify(
-        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
-        );
-    }
-
-    if(data.windows[1]){
-      $(".win-be").notify(
-        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
-      );
-    }else {
-      $(".win-be").notify(
-        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
-        );
-    }
-
-    if(data.windows[2]){
-      $(".win-ki").notify(
-        "Window is open",{autoHide: false,clickToHide:true,className:'error'}
-      );
-    }else {
-      $(".win-ki").notify(
-        "Window is close",{autoHide: false,clickToHide:true,className:'success'}
-        );
-    }
-    }
-});
-
-
-socket.on('control', function (data) { //get button status from client
-           console.log('from server',data);
-           switch (data.type) {
-             case 'LAMPS':
-                 if(data.no == 3){
-                   $('#lamp-ki').prop('checked', data.flag).change();
-                 }else if (data.no == 2) {
-                   $('#lamp-be').prop('checked', data.flag).change();
-                 }else{
-                   $('#lamp-gu').prop('checked', data.flag).change();
-                 }
-               break;
-             default:
-
-           }
-      });
-
-      });
-
-      FusionCharts.ready(function () {
-        var updateAnnotation,
-        chart = new FusionCharts({
+  FusionCharts.ready(function() {
+    var updateAnnotation,
+      chart = new FusionCharts({
         type: 'thermometer',
         renderAt: 'chart-container',
-        id  : 'myThm',
+        id: 'myThm',
         width: '160',
         height: '210',
         dataFormat: 'json',
         dataSource: {
-            "chart": {
-                "caption": "Temperature",
-                "subcaption": "In Your Home",
-                "showhovereffect": "1",
-                "thmFillColor": "#008ee4",
-                "showGaugeBorder" : "1",
-                "gaugeBorderColor" :  "#008ee4",
-                "gaugeBorderThickness" :  "2",
-                "gaugeBorderAlpha" :  "30",
-                "thmOriginX": "100",
-                "chartBottomMargin" : "20",
-                "valueFontColor" : "#000000",
-                "theme" : "fint"
-            },
-            "value": "-6",
-            //All annotations are grouped under this element
+          "chart": {
+            "caption": "Temperature",
+            "subcaption": "In Your Home",
+            "showhovereffect": "1",
+            "thmFillColor": "#008ee4",
+            "showGaugeBorder": "1",
+            "gaugeBorderColor": "#008ee4",
+            "gaugeBorderThickness": "2",
+            "gaugeBorderAlpha": "30",
+            "thmOriginX": "100",
+            "chartBottomMargin": "20",
+            "valueFontColor": "#000000",
+            "theme": "fint"
+          },
+          "value": "-6",
+          //All annotations are grouped under this element
 
         },
-        "events" :{
-            "initialized": function (evt, arg) {
-                var dataUpdate = setInterval(function () {
-                      //your temperature is here insert and remove math.random
-                      mainTemp = (Math.random()*100),
-                    FusionCharts.items["myThm"].feedData("&value="+mainTemp);
-                }, 1000);
-                updateAnnotation = function (evtObj, argObj){
-                    var code,
-                        chartObj = evtObj.sender,
-                        val = chartObj.getData(),
-                        annotations = chartObj.annotations;
+        "events": {
+          "initialized": function(evt, arg) {
+            var dataUpdate = setInterval(function() {
+              //your temperature is here insert and remove math.random
+              mainTemp = (Math.random() * 100),
+                FusionCharts.items["myThm"].feedData("&value=" + mainTemp);
+            }, 1000);
+            updateAnnotation = function(evtObj, argObj) {
+              var code,
+                chartObj = evtObj.sender,
+                val = chartObj.getData(),
+                annotations = chartObj.annotations;
 
-                    if(val >= -4.5){
-                        code = "#00FF00";
-                    }else if(val < - 4.5 && val > -6){
-                        code = "#ff9900";
-                    }else{
-                        code = "#ff0000";
-                    }
-                    annotations.update("background", {"fillColor": code});
-                };
-            },
-            "renderComplete" : function (evt, arg) {
-                updateAnnotation(evt, arg);
-            },
-            "realtimeUpdateComplete" : function (evt, arg) {
-                updateAnnotation(evt, arg);
-            }
+              if (val >= -4.5) {
+                code = "#00FF00";
+              } else if (val < -4.5 && val > -6) {
+                code = "#ff9900";
+              } else {
+                code = "#ff0000";
+              }
+              annotations.update("background", {
+                "fillColor": code
+              });
+            };
+          },
+          "renderComplete": function(evt, arg) {
+            updateAnnotation(evt, arg);
+          },
+          "realtimeUpdateComplete": function(evt, arg) {
+            updateAnnotation(evt, arg);
+          }
         }
       })
       .render();
-    });
+  });
 
-    var humidity = new JustGage({
-      id: "humidity",
-      value: getRandomInt(0, 100),
-      min: 0,
-      max: 100,
-      title: "Humidity temperature",
-      label: "Celsius",
-      startAnimationTime: 2000,
-      startAnimationType: ">",
-      refreshAnimationTime: 1000,
-      refreshAnimationType: "bounce"
-    });
+  var humidity = new JustGage({
+    id: "humidity",
+    value: getRandomInt(0, 100),
+    min: 0,
+    max: 100,
+    title: "Humidity temperature",
+    label: "Celsius",
+    startAnimationTime: 2000,
+    startAnimationType: ">",
+    refreshAnimationTime: 1000,
+    refreshAnimationType: "bounce"
+  });
 
-    setInterval(function() {
-            humidity.refresh(getRandomInt(0, 100));
-          }, 2500);
+  setInterval(function() {
+    humidity.refresh(getRandomInt(0, 100));
+  }, 2500);
+</script>
 
-  </script>
 </html>
