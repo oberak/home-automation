@@ -229,9 +229,6 @@
 
                 </div>
                 <div class="panel-body">
-                  <div class="media-right">
-                    <input type="checkbox" id="alert" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
-                  </div>
                   <div class="panel panel-info">
                     <div class="panel-heading">
                       <div class="panel-title">
@@ -239,16 +236,8 @@
                       </div>
                     </div>
                     <div class="panel-body">
-                      <div class="media">
-                        <div class="media-left">
-                          <img src="/images/fire.png" alt="" width="50px">
-                          <div class="media-body">
-                            <h4 class="media-heading"></h4>
-                          </div>
-                        </div>
-                        <div class="media-body">
-                          <h4 class="media-heading">Flame</h4>
-                        </div>
+                      <div id="flame">
+
                       </div>
 
                     </div>
@@ -260,16 +249,8 @@
                       </div>
                     </div>
                     <div class="panel-body">
-                      <div class="media">
-                        <div class="media-left">
-                          <img src="/images/smoke.png" alt="" width="50px">
-                          <div class="media-body">
-                            <h4 class="media-heading"></h4>
-                          </div>
-                        </div>
-                        <div class="media-body">
-                          <h4 class="media-heading">Gas</h4>
-                        </div>
+                      <div id="gas">
+
                       </div>
 
                     </div>
@@ -358,41 +339,43 @@
     });
   });
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ga'];
+  var winIDs = ['.win-gu', '.win-be', '.win-ki'];
+
   var socket = io(); //load socket.io-client and connect to the host that serves the page
   window.addEventListener("load", function() { //when page loads
     var sData = {};
     for (var i = 0; i < lampIDs.length; i++) {
       $(lampIDs[i]).change(function() {
-        sData.type = 'lamp';
-        sData.no = lampIDs.indexOf('#' + this.id);
-        sData.flag = this.checked;
+        sData.type = 'LAMPS';
+        sData.idx = lampIDs.indexOf('#' + this.id);
+        sData.value = this.checked;
         socket.emit('control', sData);
-        console.log('it work ');
+        console.log(sData);
       });
     }
 
     $('#door-onoff').change(function() {
-      sData.type = 'door';
-      sData.no = 0;
-      sData.flag = this.checked;
+      sData.type = 'DOOR';
+      sData.idx = 0;
+      sData.value = this.checked;
       socket.emit('control', sData);
     });
     $('#door-lock').change(function() {
       sData.type = 'door';
-      sData.no = 1;
-      sData.flag = this.checked;
+      sData.idx = 1;
+      sData.value = this.checked;
       socket.emit('control', sData);
     });
     $('#security').change(function() {
       sData.type = 'security';
-      sData.no = 0;
-      sData.flag = this.checked;
+      sData.idx = 0;
+      sData.value = this.checked;
       socket.emit('control', sData);
     });
     $('#alert').change(function() {
       sData.type = 'security';
-      sData.no = 1;
-      sData.flag = this.checked;
+      sData.idx = 1;
+      sData.value = this.checked;
       socket.emit('control', sData);
     });
 
@@ -405,78 +388,75 @@
       success: function(result) {
         console.log('ajax call', result.status);
         var data = result.status;
-        $('#lamp-gu').prop('checked', data.lamps[0]).change();
-        $('#lamp-be').prop('checked', data.lamps[1]).change();
-        $('#lamp-ki').prop('checked', data.lamps[2]).change();
-        $('#lamp-ga').prop('checked', data.lamps[3]).change();
+        for (var i = 0; i < lampIDs.length; i++) {
+          $(lampIDs[i]).prop('checked', lampIDs.indexOf('#' + this.id)).change();
+        }
+
 
         $('#door-onoff').prop('checked', data.door.status).change();
         $('#door-lock').prop('checked', data.door.isLock).change();
         $('#security').prop('checked', data.security.isSet).change();
         $('#alert').prop('checked', data.fire.alarm).change();
-
-        if (data.windows[0]) {
-          $(".win-gu").notify(
-            "Window is open", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'error'
-            }
-          );
-        } else {
-          $(".win-gu").notify(
-            "Window is close", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'success'
-            }
-          );
+        for(var i = 0; i < winIDs.length; i++){
+          if (data.windows[i]) {
+            $(winIDs[i]).notify(
+              "Window is open", {
+                autoHide: false,
+                clickToHide: true,
+                className: 'error'
+              }
+            );
+          } else {
+            $(winIDs[i]).notify(
+              "Window is close", {
+                autoHide: false,
+                clickToHide: true,
+                className: 'success'
+              }
+            );
+          }
         }
 
-        if (data.windows[1]) {
-          $(".win-be").notify(
-            "Window is open", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'error'
-            }
-          );
-        } else {
-          $(".win-be").notify(
-            "Window is close", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'success'
-            }
-          );
-        }
-
-        if (data.windows[2]) {
-          $(".win-ki").notify(
-            "Window is open", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'error'
-            }
-          );
-        } else {
-          $(".win-ki").notify(
-            "Window is close", {
-              autoHide: false,
-              clickToHide: true,
-              className: 'success'
-            }
-          );
-        }
       }
     });
 
     socket.on('control', function(data) { //get button status from client
-      console.log('from server', data);
+      console.log(data);
       switch (data.type) {
         case 'LAMPS':
-          $(lampIDs[data.no]).prop('checked', data.flag).change();
+          $(lampIDs[data.idx]).prop('checked', data.value).change();
           break;
+        case 'DOOR':
+          $('#door-onoff').prop('checked', data.value).change();
+          break;
+        case 'WINDOW':
+        for(var i = 0; i < winIDs.length; i++){
+          if (data.value) {
+            $(winIDs[data.idx]).notify(
+              "Window is close", {
+                autoHide: false,
+                clickToHide: false,
+                className: 'success'
+              }
+            );
+          } else {
+            $(winIDs[data.idx]).notify(
+              "Window is open", {
+                autoHide: false,
+                clickToHide: false,
+                className: 'error'
+              }
+            );
+          }
+        }
+         break;
+         case 'DHT':
+           if(data.idx == 0){
+             FusionCharts.items["myThm"].feedData("&value=" + data.value);
+           }else {
+             humidity.refresh(data.value);
+           }
+           break;
         default:
 
       }
@@ -514,11 +494,7 @@
         },
         "events": {
           "initialized": function(evt, arg) {
-            var dataUpdate = setInterval(function() {
-              //your temperature is here insert and remove math.random
-              mainTemp = (Math.random() * 100),
-                FusionCharts.items["myThm"].feedData("&value=" + mainTemp);
-            }, 1000);
+
             updateAnnotation = function(evtObj, argObj) {
               var code,
                 chartObj = evtObj.sender,
@@ -550,7 +526,7 @@
 
   var humidity = new JustGage({
     id: "humidity",
-    value: getRandomInt(0, 100),
+    value: 0,
     min: 0,
     max: 100,
     title: "Humidity temperature",
@@ -561,9 +537,31 @@
     refreshAnimationType: "bounce"
   });
 
-  setInterval(function() {
-    humidity.refresh(getRandomInt(0, 100));
-  }, 2500);
+  var flame = new JustGage({
+    id: "flame",
+    value: 0,
+    min: 0,
+    max: 100,
+    title: "Flame",
+    label: "Celsius",
+    startAnimationTime: 2000,
+    startAnimationType: ">",
+    refreshAnimationTime: 1000,
+    refreshAnimationType: "bounce"
+  });
+
+  var gas = new JustGage({
+    id: "gas",
+    value: 0,
+    min: 0,
+    max: 100,
+    title: "Gas",
+    label: "Celsius",
+    startAnimationTime: 2000,
+    startAnimationType: ">",
+    refreshAnimationTime: 1000,
+    refreshAnimationType: "bounce"
+  });
 </script>
 
 </html>

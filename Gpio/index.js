@@ -1,15 +1,15 @@
 var five = require('johnny-five');
 var Raspi = require('raspi-io');
 
-// var ADC = require('./ADC');
+var ADC = require('./ADC');
 var Lamps = require('./Lamps');
 var Buttons = require('./Buttons');
-// var Motor = require('./Motor');
+var Motor = require('./Motor');
 // var Rfid = require('./Rfid');
-// var Windows = require('./Windows');
+var Windows = require('./Windows');
 // var Display = require('./Display');
 // var Motions = require('./Motions');
-// var Dht = require('./Dht');
+var Dht = require('./Dht');
 
 var board = new five.Board({
     io: new Raspi()
@@ -24,30 +24,30 @@ var board = new five.Board({
 function Gpio(server){
     var self = this;
     // this.rfid = new Rfid(fnCallback);
-    // this.windows = new Windows(fnCallback);
+    this.windows = new Windows(fnCallback);
     // this.display = new Display({time:3});
-    // this.dht = new Dht(fnCallback, {temp:20, humi: 20});
+    this.dht = new Dht(fnCallback, {temp:20, humi: 20});
 
     board.on('ready', function() {
-        // self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
+         self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         // self.motions = new Motions(five, fnCallback);
-        // self.motor = new Motor(five, fnCallback, {time:2});
+        self.motor = new Motor(five, fnCallback, {time:2});
     });
 
     this.read = function(){
         var rtn = {};
-        // rtn.gas = this.adc.read(0);
-        // rtn.flame = this.adc.read(1);
+        rtn.gas = this.adc.read(0);
+        rtn.flame = this.adc.read(1);
         rtn.lamps = [];
         for(var i=0; i < 8; i++ ){
             rtn.lamps[i] = this.lamps.read(i);
         }
-        // rtn.windows = [];
-        // for(i=0; i < 3; i++ ){
-        //     rtn.windows[i] = this.windows.read(i);
-        // }
+        rtn.windows = [];
+        for(i=0; i < 3; i++ ){
+            rtn.windows[i] = this.windows.read(i);
+        }
         return rtn;
     };
     this.setSocket = function(socket){
@@ -57,7 +57,7 @@ function Gpio(server){
     function btnClick(btnNo){
         if(btnNo == 4){
             // door open/close
-            // self.motor.toggle();
+             self.motor.toggle();
             // display info to display
             console.log('door button');
             // self.display.print('someone','open? close?');
@@ -69,7 +69,8 @@ function Gpio(server){
     }
     function fnCallback(type, index, value){
         if(self.socket){
-            self.socket.emit('control', {type:type, no:index, flag:value});
+
+            self.socket.emit('control', {type:type, idx:index, value:value});
         }
         console.log(type, index, value);
     }
@@ -78,13 +79,14 @@ function Gpio(server){
     io.on('connection', function(socket) {
         self.socket = socket;
         socket.on('control', function(data) {
-            console.log('receive',data);
+            console.log('receive client',data);
             switch (data.type) {
-                case 'lamp':
-                  if(self.lamps.read(data.no) == data.flag) return;
-                    if(data.flag) self.lamps.on(data.no);
-                    else self.lamps.off(data.no);
+                case 'LAMPS':
+                  if(self.lamps.read(data.idx) == data.value) return;
+                    if(data.value) self.lamps.on(data.idx);
+                    else self.lamps.off(data.idx);
                     break;
+
             }
         });
     });

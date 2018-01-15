@@ -56,7 +56,7 @@ function ADC(five, callback, opt){
         var gasLevel = (opt.gasLevel)?opt.gasLevel:600;
         if(this.value!=null && this.value > gasLevel && !onGasAlarm){
             onGasAlarm = true;
-            callback('ALARM', 0, this.value); // ppm  or gas.scaleTo(0, 100)
+            callback('ALARM', 0, this.value); //300ppm to 1000 ppm  or gas.scaleTo(0, 100)
             setTimeout(function(){
                 onGasAlarm = false;
             }, alarmTime * 1000);
@@ -67,7 +67,7 @@ function ADC(five, callback, opt){
         if(this.value!=null && this.value < flameLevel && !onFlameAlarm){
             console.log('Alarm on', alarmTime);
             onFlameAlarm = true;
-            callback('ALARM', 1, this.value); // nm or flame.scaleTo(0, 100)
+            callback('ALARM', 1, this.value); // 760nm to 1100nm or flame.scaleTo(0, 100)
             setTimeout(function(){
                 onFlameAlarm = false;
                 console.log('alarm off');
