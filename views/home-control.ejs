@@ -221,41 +221,30 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-info lobipanel">
+              <div class="panel panel-info">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Alert</h4>
                   </div>
-
                 </div>
                 <div class="panel-body">
-                  <div class="panel panel-info">
-                    <div class="panel-heading">
-                      <div class="panel-title">
-                        <h4>Flame Sensor</h4>
-                      </div>
-                    </div>
-                    <div class="panel-body">
-                      <div id="flame">
-
-                      </div>
-
-                    </div>
-                  </div>
-                  <div class="panel panel-info">
-                    <div class="panel-heading">
-                      <div class="panel-title">
-                        <h4>Gas Sensor</h4>
-                      </div>
-                    </div>
-                    <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
                       <div id="gas">
 
                       </div>
-
                     </div>
+
+                    <div class="media-right">
+                      <div id="flame">
+
+                      </div>
+                    </div>
+
                   </div>
                 </div>
+              </div>
+
               </div>
             </div>
           </div>
@@ -457,6 +446,14 @@
              humidity.refresh(data.value);
            }
            break;
+         case 'ADC':
+            if (data.idx == 0) {
+              gas.refresh(data.value);
+            }else {
+              flame.refresh(data.value);
+            }
+
+           break;
         default:
 
       }
@@ -540,10 +537,10 @@
   var flame = new JustGage({
     id: "flame",
     value: 0,
-    min: 0,
-    max: 100,
+    min: 760,
+    max: 1100,
     title: "Flame",
-    label: "Celsius",
+    label: "NM",
     startAnimationTime: 2000,
     startAnimationType: ">",
     refreshAnimationTime: 1000,
@@ -553,10 +550,10 @@
   var gas = new JustGage({
     id: "gas",
     value: 0,
-    min: 0,
-    max: 100,
+    min: 300,
+    max: 1000,
     title: "Gas",
-    label: "Celsius",
+    label: "PPM",
     startAnimationTime: 2000,
     startAnimationType: ">",
     refreshAnimationTime: 1000,

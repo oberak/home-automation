@@ -7,8 +7,8 @@ var Buttons = require('./Buttons');
 var Motor = require('./Motor');
 // var Rfid = require('./Rfid');
 var Windows = require('./Windows');
-// var Display = require('./Display');
-// var Motions = require('./Motions');
+var Display = require('./Display');
+var Motions = require('./Motions');
 var Dht = require('./Dht');
 
 var board = new five.Board({
@@ -25,14 +25,14 @@ function Gpio(server){
     var self = this;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
-    // this.display = new Display({time:3});
+    this.display = new Display({time:3});
     this.dht = new Dht(fnCallback, {temp:20, humi: 20});
 
     board.on('ready', function() {
-         self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
+        self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
-        // self.motions = new Motions(five, fnCallback);
+        self.motions = new Motions(five, fnCallback);
         self.motor = new Motor(five, fnCallback, {time:2});
     });
 
@@ -60,7 +60,7 @@ function Gpio(server){
              self.motor.toggle();
             // display info to display
             console.log('door button');
-            // self.display.print('someone','open? close?');
+            self.display.print('someone','open? close?');
         }else{
             self.lamps.toggle(btnNo);
             // alarm (all lamp blink)

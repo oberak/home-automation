@@ -184,3 +184,6 @@ a {
         position: relative;
     }
 }
+#flame, #gas{
+  width: 197px;
+}
