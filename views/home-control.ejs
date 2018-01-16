@@ -65,11 +65,11 @@
                       <img src="/images/garden.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading">Garden</h4>
+                      <h4 class="media-heading">Bath Room</h4>
 
                     </div>
                     <div class="media-right">
-                      <input type="checkbox" id="lamp-ga" name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                      <input type="checkbox" id="lamp-ba" name="lamp" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
                     </div>
                   </div>
                 </div>
@@ -209,8 +209,8 @@
                   <div class="media">
                     <div class="media-left">
                       <img src="/images/thief.png" alt="" width="50px">
+
                       <div class="media-body">
-                        <h4 class="media-heading"></h4>
                       </div>
                     </div>
 
@@ -218,6 +218,11 @@
                       <input type="checkbox" id="security" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small">
                     </div>
 
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media" width="50px">
+                      <div class="security"></div>
                   </div>
                 </div>
               </div>
@@ -248,7 +253,10 @@
               </div>
             </div>
           </div>
+      <audio id="song">
 
+        <source src="mp3/01.mp3" type="audio/mpeg">
+      </audio>
 
 </body>
 <script>
@@ -327,9 +335,9 @@
       }
     });
   });
-  var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ga'];
+  var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
-
+  var song = document.getElementById('song');
   var socket = io(); //load socket.io-client and connect to the host that serves the page
   window.addEventListener("load", function() { //when page loads
     var sData = {};
@@ -454,6 +462,32 @@
             }
 
            break;
+        case 'MOTION':
+            if (data.idx == 0) {
+              if (!data.value) {
+                $(".security").notify(
+                  "Your Home Safe", {
+                    autoHide: false,
+                    clickToHide: false,
+                    className: 'success'
+                  }
+                );
+                song.play();
+                console.log("song on");
+              } else {
+                $(".security").notify(
+                  "Your Home Is Not Safe", {
+                    autoHide: false,
+                    clickToHide: false,
+                    className: 'error'
+                  }
+                );
+                song.pause();
+                console.log('song off');
+              }
+            }
+
+          break;
         default:
 
       }
