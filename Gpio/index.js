@@ -6,6 +6,8 @@ var Lamps = require('./Lamps');
 var Buttons = require('./Buttons');
 var Motor = require('./Motor');
 // var Rfid = require('./Rfid');
+var Member = require('../models/member');
+var Log = require('../models/log');
 var Windows = require('./Windows');
 var Display = require('./Display');
 var Motions = require('./Motions');
@@ -86,7 +88,35 @@ function Gpio(server){
                     if(data.value) self.lamps.on(data.idx);
                     else self.lamps.off(data.idx);
                     break;
+                case 'RFID':
+                    Member.findOne({rfid:data.falg},function (err,rtn) {
+                      if(err)throw err;
+                      if(rtn == null){
+                        var log = new Log();
+                        log.name = "Unknow";
+                        log.rfid = data.falg;
+                        log.status = "May be thief";
+                        log.save(function (err,rtn1) {
+                          if(err)throw err;
+                          console.log('rtn1:', rtn1);
+                          console.log("save to logs", rtn1);
+                        });
+                        self.display.print('You Are Not','Family Member');
+                      }else{
+                        var log = new Log();
+                        log.name = rtn.name;
+                        log.rfid = rtn.rfid;
+                        log.status = rtn.status;
+                        log.save(function (err,rtn) {
+                          if(err)throw err;
+                          console.log("save to logs", rtn);
+                        });
+                        console.log('rtn.name',rtn.name);
+                        self.display.print('Welcome   ',rtn.name);
+                      }
+                    });
 
+                  break;
             }
         });
     });
