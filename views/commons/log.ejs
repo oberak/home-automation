@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+      <% include ../partials/nav.ejs %>
+      <div class="container">
+
+  <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">RFID No</th>
+      <th scope="col">Status</th>
+      <th scope="col">Login Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if(log.length == 0){
+      %>
+          <tr>
+              <td colspan="6">Data Not Found</td>
+          </tr>
+  <%  } %>
+  <% for(var i=0; i < log.length; i++){
+    %>
+    <tr>
+        <td><%= i+1 %></td>
+        <td>
+              <%= log[i].name %>
+
+        </td>
+        <td><%= log[i].rfid %></td>
+        <td><%= log[i].status %></td>
+      <td><%= log[i].updated_login %></td>
+    </tr>
+<%  } %>
+  </tbody>
+</table>
+    <div class="col-sm-4"> <a href="commons/logdelete"><button type="button" class="btn btn-success btn-lg ">Delete All Logs</button></a></div>
+     </div>
+  </body>
+
+</html>

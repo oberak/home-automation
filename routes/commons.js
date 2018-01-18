@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Member = require('../models/member');
+var Log = require('../models/log');
 var crypto = require('crypto');
 var secret = 'h0M@A<weAre>T0WV0!a#&';
 
@@ -85,7 +86,17 @@ router.get('/delete/:id', function (req, res) {
           if(err) throw err;
           res.redirect('/commons/list');
      });
-
 });
-
+router.get('/log', function(req, res) {
+    Log.find({},function(err,rtn){
+      if(err) throw err;
+      res.render('commons/log', { title: 'Member List', log : rtn});
+    });
+});
+router.get('/logdelete', function (req, res) {
+     Member.findByIdAndRemove(req.params.id, function (err, rtn) {
+          if(err) throw err;
+          res.redirect('/commons/log');
+     });
+});
 module.exports = router;
