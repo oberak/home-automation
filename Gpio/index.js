@@ -1,6 +1,6 @@
 var five = require('johnny-five');
 var Raspi = require('raspi-io');
-
+//var Sound = require('aplay');
 var ADC = require('./ADC');
 var Lamps = require('./Lamps');
 var Buttons = require('./Buttons');
@@ -60,6 +60,7 @@ function Gpio(server){
         if(btnNo == 4){
             // door open/close
              self.motor.toggle();
+             setTimeout(close,7000);
             // display info to display
             console.log('door button');
             self.display.print('someone','open? close?');
@@ -75,8 +76,29 @@ function Gpio(server){
             self.socket.emit('control', {type:type, idx:index, value:value});
         }
         console.log(type, index, value);
+        if (type == "DOOR") {
+          if (value == 0) {
+            if(self.lamps.read(7) == true) return;
+            self.lamps.on(7);
+            self.lamps.off(6);
+            self.lamps.off(5);
+          }else if (value == 1) {
+            if(self.lamps.read(5) == true) return;
+            self.lamps.on(5);
+            self.lamps.off(6);
+            self.lamps.off(7);
+          }else {
+            if(self.lamps.read(6) == true) return;
+            self.lamps.on(6);
+            self.lamps.off(5);
+            self.lamps.off(7);
+          }
+        }
     }
-
+    function close() {
+      self.motor.toggle();
+      console.log('close the DOOR');
+    }
     var io = require('socket.io')(server);
     io.on('connection', function(socket) {
         self.socket = socket;
@@ -100,6 +122,7 @@ function Gpio(server){
                           if(err)throw err;
                           console.log('rtn1:', rtn1);
                           console.log("save to logs", rtn1);
+                        //  new Sound().play('/home/pi/home-automation/public/mp3/01.wav');
                         });
                         self.display.print('You Are Not','Family Member');
                       }else{
@@ -113,10 +136,20 @@ function Gpio(server){
                         });
                         console.log('rtn.name',rtn.name);
                         self.display.print('Welcome   ',rtn.name);
+                        self.motor.toggle();
+                        setTimeout(close,7000);
                       }
                     });
 
                   break;
+                  case 'DOOR':
+                    if (data.value) {
+                      console.log('open the door');
+                    }else {
+                      console.log('close the door');
+                    }
+
+                    break;
             }
         });
     });

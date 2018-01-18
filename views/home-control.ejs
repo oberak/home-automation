@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="media-right">
-                      <input type="button" name="cctv" value=" Enter" class="btn btn-primary">
+                    <input type="button" name="cctv" onclick="popupcctv()" value=" Enter" class="btn btn-primary"></a>
                     </div>
 
                   </div>
@@ -251,7 +251,7 @@
           </div>
       <audio id="song">
 
-        <source src="mp3/01.mp3" type="audio/mpeg">
+        <source src="mp3/01.wav" type="audio/mpeg">
       </audio>
 
 </body>
@@ -414,10 +414,11 @@
     });
 
     socket.on('control', function(data) { //get button status from client
-      console.log(data);
+      console.log('from server',data);
       switch (data.type) {
         case 'LAMPS':
           $(lampIDs[data.idx]).prop('checked', data.value).change();
+          console.log('lamps are active');
           break;
         case 'DOOR':
           $('#door-onoff').prop('checked', data.value).change();
@@ -459,30 +460,28 @@
 
            break;
         case 'MOTION':
-            if (data.idx == 1) {
-              if (!data.value) {
-                $(".security").notify(
-                  "Your Home Safe", {
-                    autoHide: false,
-                    clickToHide: false,
-                    className: 'success'
-                  }
-                );
-                song.pause();
-                console.log("song off");
-              } else {
-                $(".security").notify(
-                  "Your Home Is Not Safe", {
-                    autoHide: false,
-                    clickToHide: false,
-                    className: 'error'
-                  }
-                );
-                song.play();
-                console.log('song on');
-              }
+          if (data.idx == 0) {
 
+            if (data.value) {
+              $('.security').notify(
+                "Your Home Is Not Save", {
+                  autoHide: false,
+                  clickToHide: false,
+                  className: 'error'
+                }
+              );
+              song.play();
+            }else {
+              $('.security').notify(
+                "Your Home Is Save", {
+                  autoHide: false,
+                  clickToHide: false,
+                  className: 'success'
+                }
+              );
+              song.pause();
             }
+          }
 
           break;
         default:
@@ -590,6 +589,10 @@
     refreshAnimationTime: 1000,
     refreshAnimationType: "bounce"
   });
+
+  function popupcctv() {
+    var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
+  }
 </script>
 
 </html>

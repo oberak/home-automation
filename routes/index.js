@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Status = require('../models/status');
-
+var requestIp  = require('request-ip');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,6 +11,10 @@ router.get('/', function(req, res, next) {
 router.get('/control',function (req,res) {
   if(req.session.user){
     res.render('home-control',{title: 'Home Control System'});
+    var ipMiddleware = function (req,res,next) {
+      var clientIp = requestIp.getClientIp(req);
+      next();
+    }
   }else {
     res.redirect('/commons/signin');
   }
@@ -21,7 +25,7 @@ router.post('/control/status',function (req,res) {
      if(err) throw err;
      console.log(rtn);
      if(rtn != null) res.json({status: rtn});
-    
+
   });
 
 });
