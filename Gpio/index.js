@@ -25,6 +25,8 @@ var board = new five.Board({
  */
 function Gpio(server){
     var self = this;
+    var security = true;
+    var doorStatus = 0;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
     this.display = new Display({time:3});
@@ -60,7 +62,7 @@ function Gpio(server){
         if(btnNo == 4){
             // door open/close
              self.motor.toggle();
-             setTimeout(close,7000);
+             setTimeout(close,10000);
             // display info to display
             console.log('door button');
             self.display.print('someone','open? close?');
@@ -76,7 +78,9 @@ function Gpio(server){
             self.socket.emit('control', {type:type, idx:index, value:value});
         }
         console.log(type, index, value);
-        if (type == "DOOR") {
+        switch (type) {
+          case "DOOR":
+          doorStatus = value;
           if (value == 0) {
             if(self.lamps.read(7) == true) return;
             self.lamps.on(7);
@@ -93,12 +97,26 @@ function Gpio(server){
             self.lamps.off(5);
             self.lamps.off(7);
           }
+            break;
+          case "MOTION":
+            console.log('doorStatus', doorStatus);
+            if(doorStatus < 0) return;
+            if (index == 0 && value) {
+              if (!security) {
+                self.motor.toggle();
+                setTimeout(close,10000);
+              }
+            }
+            break;
+          default:
+
         }
     }
     function close() {
       self.motor.toggle();
       console.log('close the DOOR');
     }
+
     var io = require('socket.io')(server);
     io.on('connection', function(socket) {
         self.socket = socket;
@@ -137,19 +155,22 @@ function Gpio(server){
                         console.log('rtn.name',rtn.name);
                         self.display.print('Welcome   ',rtn.name);
                         self.motor.toggle();
-                        setTimeout(close,7000);
+                        setTimeout(close,10000);
                       }
                     });
 
                   break;
-                  case 'DOOR':
+              case 'DOOR':
                     if (data.value) {
-                      console.log('open the door');
-                    }else {
-                      console.log('close the door');
+                     self.motor.toggle();
+                     setTimeout(close,10000);
+                    return;
                     }
 
-                    break;
+                  break;
+              case 'SECURITY':
+                security =data.value;
+                break;
             }
         });
     });

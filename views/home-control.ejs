@@ -17,7 +17,7 @@
         <div class="bs-example">
           <div class="row">
             <div id="lobipanel-parent" class="col-md-4 lobipanel-parent">
-              <div class="panel panel-default" data-stateful="true" data-inner-id="lobipanel-parent-default">
+              <div class="panel panel-primary" data-stateful="true" data-inner-id="lobipanel-parent-default">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Lamps</h4>
@@ -97,7 +97,7 @@
             </div>
 
             <div class="col-md-4">
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>CCTV</h4>
@@ -120,7 +120,7 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-info">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Windows</h4>
@@ -172,7 +172,7 @@
 
                 </div>
               </div>
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Door</h4>
@@ -189,7 +189,7 @@
                     </div>
 
                     <div class="media-right">
-                      <input type="checkbox" id="door-onoff" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
+                      <input type="checkbox" id="door-openclose" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
                       <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
                     </div>
 
@@ -199,7 +199,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="panel panel-info">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Security</h4>
@@ -222,7 +222,7 @@
                 </div>
 
               </div>
-              <div class="panel panel-info">
+              <div class="panel panel-primary">
                 <div class="panel-heading">
                   <div class="panel-title">
                     <h4>Alert</h4>
@@ -331,6 +331,7 @@
       }
     });
   });
+  var check = false;
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
   var song = document.getElementById('song');
@@ -347,11 +348,13 @@
       });
     }
 
-    $('#door-onoff').change(function() {
+    $('#door-openclose').change(function() {
       sData.type = 'DOOR';
       sData.idx = 0;
       sData.value = this.checked;
       socket.emit('control', sData);
+      if(this.checked== true)setTimeout(doorclose,10000);
+
     });
     $('#door-lock').change(function() {
       sData.type = 'door';
@@ -360,10 +363,12 @@
       socket.emit('control', sData);
     });
     $('#security').change(function() {
-      sData.type = 'security';
+      sData.type = 'SECURITY';
       sData.idx = 0;
       sData.value = this.checked;
       socket.emit('control', sData);
+      check = this.checked;
+      console.log(check);
     });
     $('#alert').change(function() {
       sData.type = 'security';
@@ -371,7 +376,11 @@
       sData.value = this.checked;
       socket.emit('control', sData);
     });
-
+    function doorclose() {
+      $('#door-openclose').prop('checked', false).change()
+      //console.log('close the DOOR');
+      return;
+    }
     var data = 'key';
 
     $.ajax({
@@ -386,7 +395,7 @@
         }
 
 
-        $('#door-onoff').prop('checked', data.door.status).change();
+        $('#door-openclose').prop('checked', data.door.status).change();
         $('#door-lock').prop('checked', data.door.isLock).change();
         $('#security').prop('checked', data.security.isSet).change();
         $('#alert').prop('checked', data.fire.alarm).change();
@@ -420,9 +429,7 @@
           $(lampIDs[data.idx]).prop('checked', data.value).change();
           console.log('lamps are active');
           break;
-        case 'DOOR':
-          $('#door-onoff').prop('checked', data.value).change();
-          break;
+
         case 'WINDOW':
         for(var i = 0; i < winIDs.length; i++){
           if (data.value) {
@@ -460,7 +467,7 @@
 
            break;
         case 'MOTION':
-          if (data.idx == 0) {
+          if (data.idx == 0 && check) {
 
             if (data.value) {
               $('.security').notify(
@@ -484,6 +491,7 @@
           }
 
           break;
+
         default:
 
       }

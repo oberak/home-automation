@@ -1990,14 +1990,8 @@ $(function () {
                          // pinned, unpinned, collapsed, minimized, fullscreen, position among it's siblings
                          // and apply them when you reload the browser
         constrain: 'document', // 'parent', 'document', 'window'
-        unpin: {
-            icon: 'glyphicon glyphicon-move', //You can user glyphicons if you do not want to use font-awesome
-            tooltip: 'Unpin'               //tooltip text, If you want to disable tooltip, set it to false
-        },
-        reload: {
-            icon: 'glyphicon glyphicon-refresh', //You can user glyphicons if you do not want to use font-awesome
-            tooltip: 'Reload'           //tooltip text, If you want to disable tooltip, set it to false
-        },
+        unpin: false,
+        reload: false,
         minimize: {
             icon: 'glyphicon glyphicon-minus', //icon is shown when panel is not minimized
             icon2: 'glyphicon glyphicon-plus', //icon2 is shown when panel is minimized
@@ -2008,19 +2002,12 @@ $(function () {
             icon2: 'glyphicon glyphicon-resize-small', //icon2 is shown when pane is on full screen state
             tooltip: 'Fullscreen'       //tooltip text, If you want to disable tooltip, set it to false
         },
-        changeStyle: {
-            icon: 'glyphicon glyphicon-th', //icon is shown when panel is not on full screen
-            tooltip: 'Style'       //tooltip text, If you want to disable tooltip, set it to false
-        },
+        changeStyle: false,
         close: {
             icon: 'glyphicon glyphicon-remove', //You can user glyphicons if you do not want to use font-awesome
             tooltip: 'Close'            //tooltip text, If you want to disable tooltip, set it to false
         },
-        editTitle: {
-            icon: 'glyphicon glyphicon-pencil',
-            icon2: 'glyphicon glyphicon-floppy-disk',
-            tooltip: 'Edit title'
-        },
+        editTitle: false,
         styles: [
             {
                 bg: '#d9534f',
@@ -2063,4 +2050,3 @@ $(function () {
     var $parent = $('.lobipanel-parent-sortable');
     $parent.lobiPanelParent();
 });
-
