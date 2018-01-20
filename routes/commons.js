@@ -108,9 +108,37 @@ router.post('/modify',function (req,res) {
 
 });
 router.get('/log', function(req, res) {
-    Log.find({},function(err,rtn){
+    var perPage = 5;
+    Log.find({}).limit(perPage).exec(function(err,rtn){
       if(err) throw err;
-      res.render('commons/log', { title: 'All logs', log : rtn});
+      Log.count({},function (err2,cnt) {
+          if(err2) throw err2;
+          var page = {currPage:1,perPage:perPage,total:cnt};
+          var sorting ={sortby:req.body.sortby,sorttype:req.body.sorttype};
+          res.render('commons/log', { title: 'All logs', log : rtn,search:'',page:page,events:'',sort:sorting});
+      });
+
+    });
+});
+router.post('/log',function (req,res) {
+    var q = {
+        $or:[{type: new RegExp(req.body.search,'i')},
+             {src: new RegExp(req.body.search,'i')}
+         ]
+        };
+    if (req.body.events != '') q.events = req.body.events;
+    var currPage = Number(req.body.currPage);
+    var perPage = Number(req.body.perPage);
+    var sort = {};
+    if(req.body.sortby) sort[req.body.sortby] = req.body.sorttype;
+    Log.find(q).skip((currPage-1)*perPage).sort(sort).limit(perPage).exec(function (err,rtn) {
+        if(err) throw err;
+        Log.count(q, function (err2, cnt) {
+            if(err2) throw err2;
+            var page = { currPage: currPage, perPage: perPage, total: cnt};
+            var sorting = { sortby: req.body.sortby, sorttype: req.body.sorttype};
+            res.render('commons/log',{title:'ALL Logs', log:rtn,search: req.body.search,events:req.body.events, page: page, sort: sorting});
+        });
     });
 });
 

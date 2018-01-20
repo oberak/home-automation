@@ -1,5 +1,6 @@
 var five = require('johnny-five');
 var Raspi = require('raspi-io');
+var config = require('../config');
 //var Sound = require('aplay');
 var ADC = require('./ADC');
 var Lamps = require('./Lamps');
@@ -12,6 +13,10 @@ var Windows = require('./Windows');
 var Display = require('./Display');
 var Motions = require('./Motions');
 var Dht = require('./Dht');
+//var player = require('play-sound')(opts = {});
+var ios = require('socket.io-client');
+var streamUrl = 'http://' + config.stream.ip + ':' + config.stream.port;
+var sockets = ios(streamUrl);
 
 var board = new five.Board({
     io: new Raspi()
@@ -28,6 +33,7 @@ function Gpio(server){
     var security = true;
     var doorLock = false;
     var doorStatus = 0;
+    var alarm = false;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
     this.display = new Display({time:3});
@@ -38,7 +44,7 @@ function Gpio(server){
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
-        self.motor = new Motor(five, fnCallback, {time:4.8});
+        self.motor = new Motor(five, fnCallback, {time:4.6});
     });
 
     this.read = function(){
@@ -65,7 +71,7 @@ function Gpio(server){
             // door open/close
             //  self.motor.toggle();
             //  setTimeout(close,10000);
-            // console.log('door button');
+            console.log('door button');
         }else{
             self.lamps.toggle(btnNo);
             // alarm (all lamp blink)
@@ -99,6 +105,9 @@ function Gpio(server){
                     self.motor.toggle();
                     setTimeout(close,10000);
                     saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
+                }else {
+                      sockets.emit('alarm',{alarm:security});
+                      console.log("call stream");
                 }
             }
                     break;
@@ -109,7 +118,11 @@ function Gpio(server){
                         setTimeout(close,10000);
                         saveLog("Door",type,index, value,"Open the door by outer motion","Hardware");
                         console.log('Opening door');
+
                     }
+                    self.lamps.on(4);
+                }else {
+                    self.lamps.off(4);
                 }
                     break;
                 default:
@@ -117,7 +130,7 @@ function Gpio(server){
             }
 
 
-            
+
             break;
             case "ADC":
                 saveLog("Data",type,index, value,"Flame And Gas","Hardware");
@@ -126,7 +139,7 @@ function Gpio(server){
                 saveLog("Data",type,index, value,"Humidity And Temperature","Hardware");
               break;
             case "LAMPS":
-                saveLog("SWITCH",type,index, value,"Lamps ON/OFF","Hardware");
+                saveLog("Switch",type,index, value,"Lamps ON/OFF","Hardware");
                 break;
           default:
 
@@ -136,6 +149,7 @@ function Gpio(server){
       self.motor.toggle();
       console.log('close the DOOR');
     }
+
     function setDoorLamp(i,o,f){
       if(self.lamps.read(i) == true) return;
       self.lamps.on(i);
@@ -171,7 +185,7 @@ function Gpio(server){
                   if(self.lamps.read(data.idx) == data.value) return;
                     if(data.value) self.lamps.on(data.idx);
                     else self.lamps.off(data.idx);
-                    saveLog("SWITCH",data.type,data.idx, data.value,"Lamps ON/OFF","Website");
+                    saveLog("Switch",data.type,data.idx, data.value,"Lamps ON/OFF","Website");
                     break;
                 case 'RFID':
                     Member.findOne({rfid:data.falg},function (err,rtn) {

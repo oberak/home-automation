@@ -2,22 +2,56 @@
 <html>
   <head>
     <% include ../partials/head.ejs %>
+    <style media="screen">
+        .cursor{
+            cursor:pointer;
+        }
+        b{
+            color:blue;
+        }
+    </style>
   </head>
   <body>
       <% include ../partials/nav.ejs %>
       <div class="container">
+          <form class="" name="frm" action="/commons/log" method="post">
+              <input type="hidden" name="sortby" value="<%= sort.sortby %>">
+              <input type="hidden" name="sorttype" value="<%= sort.sorttype %>">
+              <input type="hidden" name="currPage" value="1">
+              per page: <select class="" name="perPage" onchange="go(1);">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+             <label for="search">Search:</label>
+             <input type="search" name="search" value="<%= search %>">
+             <input type="submit" name="btn" value="Search">
+             <select class="" name="events" id="events">
+                 <option value="" selected>All Events</option>
+                 <option value="Door">Door</option>
+                 <option value="Motion">Motion</option>
+                 <option value="Switch">Switch</option>
+                 <option value="Data">Data</option>
+             </select>
 
   <table class="table table-striped">
   <thead class="thead-dark">
+      <%
+            var arrow= {};
+            arrow[sort.sortby] = (sort.sorttype == 1)? '▲':'▼';
+        %>
     <tr>
-      <th scope="col">id</th>
-      <th scope="col">Event</th>
-      <th scope="col">Type</th>
-      <th scope="col">Index</th>
-      <th scope="col">Value</th>
-      <th scope="col">Decription</th>
-      <th scope="col">Source</th>
-      <th scope="col">Time</th>
+      <th scope="col" class="cursor" onclick="sort('id');">id<b><%= arrow.id %></b></th>
+      <th scope="col" class="cursor" onclick="sort('events');">Event<b><%= arrow.events %></b></th>
+      <th scope="col" class="cursor" onclick="sort('type');">Type<b><%= arrow.type %></b></th>
+      <th scope="col" class="cursor" onclick="sort('index');">Index<b><%= arrow.index %></b></th>
+      <th scope="col" class="cursor" onclick="sort('value');">Value<b><%= arrow.value %></b></th>
+      <th scope="col" class="cursor" onclick="sort('description');">Decription<b><%= arrow.description %></b></th>
+      <th scope="col" class="cursor" onclick="sort('source');">Source<b><%= arrow.source %></b></th>
+      <th scope="col" class="cursor" onclick="sort('time');">Time<b><%= arrow.time %></b></th>
     </tr>
   </thead>
   <tbody>
@@ -42,8 +76,48 @@
 <%  } %>
   </tbody>
 </table>
+<div class="">
+  <% var tPages = Math.floor( (page.total-1) / page.perPage) +1;
+     var pSize = 5;
+     var sPage = Math.floor( (page.currPage -1) /pSize) *pSize + 1;
+     var ePage = ( (sPage + pSize -1) > tPages ) ? tPages : (sPage + pSize -1);
+     if(sPage !=1){
+  %>
+          <a href="javascript:go(<%= sPage-1 %>);" > << </a>
+  <%
+     }
+      for(var i=sPage; i <= ePage; i++){
+        if(i == page.currPage){
+  %>
+            [<%= i %>]
+  <%
+        } else {
+  %>
+            <a href="javascript:go(<%= i %>);"><%= i %></a>
+  <%      }
 
-  </body>
+        }
+        if(ePage != tPages){
+  %>
+          <a href="javascript:go(<%= ePage+1 %>);"> >> </a>
+  <%  } %>
 
+  </div>
+ </form>
+</body>
+<script type="text/javascript">
+  document.getElementById('events').value = '<%=log.events%>';
+  frm.perPage.value = '<%= page.perPage %>';
+  function go(page) {
+    frm.currPage.value = page;
+    frm.submit();
+  }
+  function sort(field){
+    if(frm.sortby.value == field) frm.sorttype.value = Number(frm.sorttype.value) * -1;
+    else frm.sorttype.value = '1';
+    frm.sortby.value = field;
+    frm.submit();
+  }
+</script>
 
 </html>

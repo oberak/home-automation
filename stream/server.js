@@ -2,9 +2,17 @@ var LiveCam = require('livecam');
 var io = require('socket.io-client');
 var config = require('../config');
 var Rfid = require('../Gpio/Rfid');
+var Omx = require('node-omxplayer');
+var ios = require('socket.io')(server);
 
 var serverUrl = 'http://' + config.server.ip + ':' + config.server.port;
 var socket = io(serverUrl);
+var player = Omx('/mp3/01.wav');
+
+// var http = require('http');
+// var server = http.createServer(function (req, res) {
+// }).listen(config.stream.socketPort);
+// var serverIo = require('socket.io')(server);
 
 var rfid = new Rfid(readRfid);
 function readRfid(type, index, value){
@@ -12,7 +20,14 @@ function readRfid(type, index, value){
     console.log(type, index, value);
     socket.emit('control', {type:type, no: index, falg:value} );
 }
-
+ios.on('connection', function(sockets) {
+    sockets.on('alarm',function (data) {
+    if(data.alarm){
+        player.play();
+    }
+    console.log("receive from server");
+});
+});
 // livecam
 var webcam_server = new LiveCam({
     // address and port of the webcam UI
