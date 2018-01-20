@@ -15,6 +15,7 @@
       <th scope="col">RFID No</th>
       <th scope="col">Options</th>
       <th scope="col">Update date</th>
+      <th scope="col">Modify/Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -28,13 +29,14 @@
     %>
     <tr>
         <td><%= i+1 %></td>
-        <td> <a href="javascript:del('<%= member[i]._id%>')">
+        <td>
               <%= member[i].name %>
             </a>
         </td>
         <td><%= member[i].rfid %></td>
         <td><%= member[i].options %></td>
       <td><%= member[i].updated_date %></td>
+      <td><a href="javascript:del('<%= member[i]._id%>')"><button name="delete" value = "delete">Delete</button></a><a href="javascript:modify('<%= member[i]._id%>')"><button name="modify" value = "modify">Modify</button></a></td>
     </tr>
 <%  } %>
   </tbody>
@@ -44,8 +46,11 @@
   </body>
   <script type="text/javascript">
   function del(id) {
-    
+
             if(confirm('Are you sure?')) location.href = '/commons/delete/'+id;
+  }
+  function modify(id) {
+      location.href = '/commons/modify/'+id;
   }
   </script>
 </html>

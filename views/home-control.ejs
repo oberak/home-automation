@@ -189,8 +189,8 @@
                     </div>
 
                     <div class="media-right">
-                      <input type="checkbox" id="door-openclose" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small"></br>
-                      <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="lock" data-off="unlock " data-size="small" data-offstyle="success">
+                      <input type="checkbox" id="door-openclose" data-toggle="toggle" data-onstyle="info" data-width="70" data-size="small" data-on="open" data-off="close "></br>
+                      <input type="checkbox" id="door-lock" data-toggle="toggle" data-on="unlock" data-off="lock " data-size="small" data-offstyle="success">
                     </div>
 
 
@@ -359,7 +359,7 @@
 
     });
     $('#door-lock').change(function() {
-      sData.type = 'door';
+      sData.type = 'DOOR';
       sData.idx = 1;
       sData.value = this.checked;
       socket.emit('control', sData);
