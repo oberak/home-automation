@@ -26,6 +26,7 @@ var board = new five.Board({
 function Gpio(server){
     var self = this;
     var security = true;
+    var doorLock = false;
     var doorStatus = 0;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
@@ -91,20 +92,42 @@ function Gpio(server){
           case "MOTION":
             console.log('doorStatus', doorStatus);
             if(doorStatus < 0) return;
-            if (index == 0 && value) {
-              if (!security) {
-                self.motor.toggle();
-                setTimeout(close,10000);
-                saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
-              }
+            switch (index) {
+                case 0:
+                if (value) {
+                  if (!security) {
+                    self.motor.toggle();
+                    setTimeout(close,10000);
+                    saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
+                }
             }
+                    break;
+                case 1:
+                if (value) {
+                    if(doorLock){
+                        self.motor.toggle();
+                        setTimeout(close,10000);
+                        saveLog("Door",type,index, value,"Open the door by outer motion","Hardware");
+                        console.log('Opening door');
+                    }
+                }
+                    break;
+                default:
+
+            }
+
+
+            
             break;
             case "ADC":
-              saveLog("Data",type,index, value,"Flame And Gas","Hardware");
+                saveLog("Data",type,index, value,"Flame And Gas","Hardware");
               break;
             case "DHT":
-              saveLog("Data",type,index, value,"Humidity And Temperature","Hardware");
+                saveLog("Data",type,index, value,"Humidity And Temperature","Hardware");
               break;
+            case "LAMPS":
+                saveLog("SWITCH",type,index, value,"Lamps ON/OFF","Hardware");
+                break;
           default:
 
         }
@@ -148,6 +171,7 @@ function Gpio(server){
                   if(self.lamps.read(data.idx) == data.value) return;
                     if(data.value) self.lamps.on(data.idx);
                     else self.lamps.off(data.idx);
+                    saveLog("SWITCH",data.type,data.idx, data.value,"Lamps ON/OFF","Website");
                     break;
                 case 'RFID':
                     Member.findOne({rfid:data.falg},function (err,rtn) {
@@ -175,12 +199,19 @@ function Gpio(server){
 
                   break;
               case 'DOOR':
-                    if (data.value) {
-                    saveLog("Door",data.type,data.idx, data.falg,"Open door by user","Website");
-                     self.motor.toggle();
-                     setTimeout(close,10000);
-                    return;
+                    if (data.idx == 1) {
+                        console.log("DOOR Unlock Set Data", data.type,data.idx,data.value);
+                        doorLock = data.value;
+                        saveLog("Door",data.type,data.idx, data.falg,"Switch motion by doorLock","Website");
+                    }else {
+                        if (data.value) {
+                        saveLog("Door",data.type,data.idx, data.falg,"Open door by user","Website");
+                         self.motor.toggle();
+                         setTimeout(close,10000);
+                        return;
+                        }
                     }
+
 
                   break;
               case 'SECURITY':

@@ -87,6 +87,26 @@ router.get('/delete/:id', function (req, res) {
           res.redirect('/commons/list');
      });
 });
+router.get('/modify/:id', function (req, res) {
+     Member.findById(req.params.id, function (err, rtn) {
+          if(err) throw err;
+          res.render('commons/modify-member',{title:'Modify Member',modify:rtn});
+     });
+});
+router.post('/modify',function (req,res) {
+    var update = {
+        name:req.body.name,
+        rfid:req.body.rfid,
+        options:req.body.options,
+        last_login:new Date()
+    };
+    Member.findByIdAndUpdate(req.body.id,{$set:update},function (err,rtn) {
+        if(err) throw err;
+        res.redirect('/commons/list');
+    });
+
+
+});
 router.get('/log', function(req, res) {
     Log.find({},function(err,rtn){
       if(err) throw err;
