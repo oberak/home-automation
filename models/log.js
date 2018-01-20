@@ -3,13 +3,16 @@ var dateformat = require('dateformat');
 
 var Schema = mongoose.Schema;
 var LogSchema = new Schema({
-      name: String,
-      rfid : String,
-      status: String,
-      login: { type: Date, default: Date.now},
-
+      events: String,
+      type : String,
+      index: Number,
+      value:String,
+      dec:String,
+      src:String,
+      time: Date,
 });
-LogSchema.virtual('updated_login').get(function () {
-        return dateformat(this.login, 'dddd, mmmm dd, yyyy. HH:MM');
+
+LogSchema.virtual('updated_time').get(function () {
+        return dateformat(this.time, 'dddd, mmmm dd, yyyy. HH:MM');
 });
 module.exports = mongoose.model('logs', LogSchema);

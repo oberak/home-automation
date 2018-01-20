@@ -90,13 +90,8 @@ router.get('/delete/:id', function (req, res) {
 router.get('/log', function(req, res) {
     Log.find({},function(err,rtn){
       if(err) throw err;
-      res.render('commons/log', { title: 'Member List', log : rtn});
+      res.render('commons/log', { title: 'All logs', log : rtn});
     });
 });
-router.get('/logdelete', function (req, res) {
-     Member.findByIdAndRemove(req.params.id, function (err, rtn) {
-          if(err) throw err;
-          res.redirect('/commons/log');
-     });
-});
+
 module.exports = router;

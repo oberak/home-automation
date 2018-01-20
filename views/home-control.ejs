@@ -347,6 +347,8 @@
         console.log(sData);
       });
     }
+    // request all data
+    socket.emit('control', {type: 'ALL'});
 
     $('#door-openclose').change(function() {
       sData.type = 'DOOR';
@@ -381,50 +383,13 @@
       //console.log('close the DOOR');
       return;
     }
-    var data = 'key';
-
-    $.ajax({
-      url: "/control/status",
-      data: data,
-      type: 'POST',
-      success: function(result) {
-        console.log('ajax call', result.status);
-        var data = result.status;
-        for (var i = 0; i < lampIDs.length; i++) {
-          $(lampIDs[i]).prop('checked', lampIDs.indexOf('#' + this.id)).change();
-        }
-
-
-        $('#door-openclose').prop('checked', data.door.status).change();
-        $('#door-lock').prop('checked', data.door.isLock).change();
-        $('#security').prop('checked', data.security.isSet).change();
-        $('#alert').prop('checked', data.fire.alarm).change();
-        for(var i = 0; i < winIDs.length; i++){
-          if (data.windows[i]) {
-            $(winIDs[i]).notify(
-              "Window is open", {
-                autoHide: false,
-                clickToHide: true,
-                className: 'error'
-              }
-            );
-          } else {
-            $(winIDs[i]).notify(
-              "Window is close", {
-                autoHide: false,
-                clickToHide: true,
-                className: 'success'
-              }
-            );
-          }
-        }
-
-      }
-    });
 
     socket.on('control', function(data) { //get button status from client
       console.log('from server',data);
       switch (data.type) {
+        case 'ALL':
+          setInit(data.init);
+          break;
         case 'LAMPS':
           $(lampIDs[data.idx]).prop('checked', data.value).change();
           console.log('lamps are active');
@@ -600,6 +565,37 @@
 
   function popupcctv() {
     var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
+  }
+
+  function setInit(data){
+    console.log(data);
+    humidity.refresh(data.humidity);
+    flame.refresh(data.flame);
+    gas.refresh(data.gas);
+    FusionCharts.items["myThm"].feedData("&value=" + data.temperature);
+    for (var i = 0; i < 3; i++) {
+      if (data.windows[i]) {
+        $(winIDs[i]).notify(
+          "Window is close", {
+            autoHide: false,
+            clickToHide: false,
+            className: 'success'
+          }
+        );
+      } else {
+        $(winIDs[i]).notify(
+          "Window is open", {
+            autoHide: false,
+            clickToHide: false,
+            className: 'error'
+          }
+        );
+      }
+      for (var i = 0; i < 4; i++) {
+        $(lampIDs[i]).prop('checked', data.lamps[i]).change();
+      }
+    }
+
   }
 </script>
 

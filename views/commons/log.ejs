@@ -10,37 +10,40 @@
   <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">RFID No</th>
-      <th scope="col">Status</th>
-      <th scope="col">Login Date</th>
+      <th scope="col">id</th>
+      <th scope="col">Event</th>
+      <th scope="col">Type</th>
+      <th scope="col">Index</th>
+      <th scope="col">Value</th>
+      <th scope="col">Decription</th>
+      <th scope="col">Src</th>
+      <th scope="col">Time</th>
     </tr>
   </thead>
   <tbody>
     <% if(log.length == 0){
       %>
           <tr>
-              <td colspan="6">Data Not Found</td>
+              <td colspan="8">Data Not Found</td>
           </tr>
   <%  } %>
   <% for(var i=0; i < log.length; i++){
     %>
     <tr>
         <td><%= i+1 %></td>
-        <td>
-              <%= log[i].name %>
-
-        </td>
-        <td><%= log[i].rfid %></td>
-        <td><%= log[i].status %></td>
-      <td><%= log[i].updated_login %></td>
+        <td><%= log[i].events %></td>
+        <td><%= log[i].type %></td>
+        <td><%= log[i].index %></td>
+        <td><%= log[i].value %></td>
+        <td><%= log[i].dec %></td>
+        <td><%= log[i].src %></td>
+        <td><%= log[i].updated_time %></td>
     </tr>
 <%  } %>
   </tbody>
 </table>
-    <div class="col-sm-4"> <a href="commons/logdelete"><button type="button" class="btn btn-success btn-lg ">Delete All Logs</button></a></div>
-     </div>
+
   </body>
+  
 
 </html>
