@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('home-automation:server');
 var http = require('http');
 var Status = require('../models/status');
-var Gpio = require('../Gpio');
+//var Gpio = require('../Gpio');
 var config = require('../config');
 
 /**
@@ -26,11 +26,11 @@ app.set('port', port);
   Status.findOne({key:'key'},function (err,rtn) {
 
          data = rtn;
-      
+
   });
 
 var server = http.createServer(app);
-new Gpio(server);
+//new Gpio(server);
 /*
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {// WebSocket Connection

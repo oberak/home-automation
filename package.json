@@ -23,6 +23,7 @@
     "onoff": "^1.1.9",
     "raspi-io": "^8.1.0",
     "rc522": "^0.2.0",
+    "request-ip": "^2.0.2",
     "rpi-dht-sensor": "^0.1.1",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
