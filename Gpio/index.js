@@ -82,7 +82,7 @@ function Gpio(server){
         if(self.socket){
             self.socket.emit('control', {type:type, idx:index, value:value});
         }
-        console.log(type, index, value);
+        //console.log(type, index, value);
         switch (type) {
           case "DOOR":
           doorStatus = value;

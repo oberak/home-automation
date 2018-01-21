@@ -53,6 +53,7 @@ function ADC(five, callback, opt){
     });
 
     gas.on("change", function() { // Gas
+        callback('ADC', 0, this.value);
         var gasLevel = (opt.gasLevel)?opt.gasLevel:600;
         if(this.value!=null && this.value > gasLevel && !onGasAlarm){
             onGasAlarm = true;
@@ -64,6 +65,7 @@ function ADC(five, callback, opt){
     });
     flame.on("change", function() { // Flame
         var flameLevel = (opt.flameLevel)?opt.flameLevel:700;
+        callback('ADC', 1, this.value);
         if(this.value!=null && this.value < flameLevel && !onFlameAlarm){
             console.log('Alarm on', alarmTime);
             onFlameAlarm = true;
@@ -74,20 +76,6 @@ function ADC(five, callback, opt){
             }, alarmTime * 1000);
         }
     });
-    var gasInterval = setInterval(readGas, (opt.gas)?opt.gas*1000:60000);
-    var flameInterval = setInterval(readFlame, (opt.flame)?opt.flame*1000:60000);
-    function readGas(){
-        callback('ADC', 0, gas.value);
-    }
-    function readFlame(){
-        callback('ADC', 1, flame.value);
-    }
-    this.set = function(opt){
-        clearInterval(gasInterval);
-        clearInterval(flameInterval);
-        gasInterval = setInterval(readGas, (opt)?opt.gas*1000:60000);
-        flameInterval = setInterval(readFlame, (opt)?opt.flame*1000:60000);
-    };
     this.read = function(idx){
         switch (idx) {
             case 0:
