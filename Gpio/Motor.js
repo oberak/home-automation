@@ -10,6 +10,7 @@ function Motor(five,callback, opt){
     var servo = new five.Servo({pin: "P1-12", startAt: 0, type: "continuous"});
     var status = 0; // 0: close, 1: open, -1: opening, -2: closing, -3: delay time
     var speed = 0.99; // 0-1
+    var self = this;
     this.toggle = function(){
         if(status < 0) return;
         if(status){ // 1: opened
@@ -27,7 +28,7 @@ function Motor(five,callback, opt){
         }, (opt)?opt.time*1000:2000);
     };
     this.open = function(sec){
-        servo.cw(speed); // 0-1
+        servo.ccw(speed); // 0-1
         status = -1;
         callback('DOOR',0, status);// opening
         setTimeout(function(){
@@ -42,7 +43,7 @@ function Motor(five,callback, opt){
         }
     };
     this.close = function(){
-        servo.ccw(speed); // 0-1
+        servo.cw(speed); // 0-1
         status = -2;
         callback('DOOR',0, status);
         setTimeout(function(){

@@ -33,6 +33,7 @@ function Gpio(server){
     var security = true;
     var doorLock = false;
     var doorStatus = 0;
+    var doorDelay =7;
     var alarm = false;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
@@ -86,12 +87,11 @@ function Gpio(server){
           case "DOOR":
           doorStatus = value;
 
-          if (value == 0) {
-            setDoorLamp(7,6,5);
-          }else if (value == 1) {
-            setDoorLamp(5,6,7);
+          if (value < 1) {
+            setDoorLamp(6,5);
+
           }else {
-            setDoorLamp(6,7,5);
+            setDoorLamp(5,6);
           }
             break;
           case "MOTION":
@@ -101,8 +101,7 @@ function Gpio(server){
                 case 0:
                 if (value) {
                   if (!security) {
-                    self.motor.toggle();
-                    setTimeout(close,10000);
+                    self.motor.open(doorDelay);
                     saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
                 }else {
                       sockets.emit('alarm',{alarm:security,type:"inner"});
@@ -155,11 +154,11 @@ function Gpio(server){
       console.log('close the DOOR');
     }
 
-    function setDoorLamp(i,o,f){
+    function setDoorLamp(i,o){
       if(self.lamps.read(i) == true) return;
       self.lamps.on(i);
       self.lamps.off(o);
-      self.lamps.off(f);
+
     }
     function saveLog(events,type,index,value,dec,src){
       var log = new Log();
@@ -205,8 +204,7 @@ function Gpio(server){
                         saveLog("Door",data.type,data.idx, data.falg,"Open door by RFID(Family Member)","Client");
                           //saveRfidLog("RFID",rtn.name,data.falg,"Family Member");
                           self.display.print('Welcome   ',rtn.name);
-                          self.motor.toggle();
-                          setTimeout(close,10000);
+                          self.motor.open(doorDelay);
                         }else {
                             saveLog("Door",data.type,data.idx, data.falg,"Open door by RFID(Inactive Family Member)","Client");
                          // saveRfidLog("RFID",rtn.name,data.falg,"Inactive Family Member");
@@ -234,7 +232,15 @@ function Gpio(server){
               case 'SECURITY':
                 security =data.value;
                 saveLog("Data",data.type,data.idx, data.falg,"Security set","Website");
-                self.lamps.on(7);
+                if (data.value) {
+                    self.lamps.on(7);
+                }else {
+                    self.lamps.off(7);
+                }
+
+                break;
+            case "DOORBTN":
+                self.motor.open(doorDelay);
                 break;
             }
         });
