@@ -29,7 +29,7 @@
                       <img src="/images/home.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading">Guest Room</h4>
+                      <h4 class="media-heading">Living Room</h4>
 
                     </div>
                     <div class="media-right">
@@ -132,7 +132,7 @@
                       <img src="/images/window.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading">Guest Room</h4>
+                      <h4 class="media-heading">Bath/Toilet Room</h4>
 
                     </div>
                     <div class="media-body">
@@ -355,7 +355,7 @@
       sData.idx = 0;
       sData.value = this.checked;
       socket.emit('control', sData);
-      if(this.checked== true)setTimeout(doorclose,10000);
+
 
     });
     $('#door-lock').change(function() {
@@ -378,11 +378,7 @@
       sData.value = this.checked;
       socket.emit('control', sData);
     });
-    function doorclose() {
-      $('#door-openclose').prop('checked', false).change()
-      //console.log('close the DOOR');
-      return;
-    }
+
 
     socket.on('control', function(data) { //get button status from client
       console.log('from server',data);
@@ -567,36 +563,24 @@
     var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
   }
 
-  function setInit(data){
-    console.log(data);
+function setInit(data){
     humidity.refresh(data.humidity);
     flame.refresh(data.flame);
     gas.refresh(data.gas);
     FusionCharts.items["myThm"].feedData("&value=" + data.temperature);
     for (var i = 0; i < 3; i++) {
-      if (data.windows[i]) {
         $(winIDs[i]).notify(
-          "Window is close", {
+            "Window is "+((data.windows[i])?"close":"open"), {
             autoHide: false,
             clickToHide: false,
-            className: 'success'
-          }
+            className: (data.windows[i])?"success":"error"
+            }
         );
-      } else {
-        $(winIDs[i]).notify(
-          "Window is open", {
-            autoHide: false,
-            clickToHide: false,
-            className: 'error'
-          }
-        );
-      }
-      for (var i = 0; i < 4; i++) {
-        $(lampIDs[i]).prop('checked', data.lamps[i]).change();
-      }
     }
-
-  }
+    for (var i = 0; i < 4; i++) {
+        $(lampIDs[i]).prop('checked', data.lamps[i]).change();
+    }
+}
 </script>
 
 </html>

@@ -37,10 +37,10 @@ function Gpio(server){
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
     this.display = new Display({time:3});
-    this.dht = new Dht(fnCallback, {temp:20, humi: 20});
+    this.dht = new Dht(fnCallback, {temp:1, humi: 1});
 
     board.on('ready', function() {
-        self.adc = new ADC(five, fnCallback, {gas: 20, flame: 20});
+        self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
@@ -68,12 +68,9 @@ function Gpio(server){
     };
     function btnClick(btnNo){
         if(btnNo == 4){
-            // door open/close
-            //  self.motor.toggle();
-            //  setTimeout(close,10000);
+
             sockets.emit('alarm',{alarm:true,type:"bell"});
-            console.log("call stream");
-            console.log('door button');
+
         }else{
             self.lamps.toggle(btnNo);
             // alarm (all lamp blink)
@@ -144,7 +141,7 @@ function Gpio(server){
                 saveLog("Switch",type,index, value,"Lamps ON/OFF","Hardware");
                 break;
             case "WINDOW":
-            if(value == true && security){
+            if(value == false && security){
                 sockets.emit('alarm',{alarm:security,type:"inner"});
                 console.log("call stream");
                 }
@@ -175,7 +172,7 @@ function Gpio(server){
       log.time = Date.now();
       log.save(function (err,rtn) {
         if(err)throw err;
-        console.log("save to logs", rtn);
+
       });
     }
 
@@ -229,16 +226,15 @@ function Gpio(server){
                         if (data.value) {
                         saveLog("Door",data.type,data.idx, data.falg,"Open door by user","Website");
                          self.motor.toggle();
-                         setTimeout(close,10000);
-                        return;
+                     }else {
+                         self.motor.toggle();
+                     }
                         }
-                    }
-
-
                   break;
               case 'SECURITY':
                 security =data.value;
                 saveLog("Data",data.type,data.idx, data.falg,"Security set","Website");
+                self.lamps.on(7);
                 break;
             }
         });

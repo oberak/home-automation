@@ -12,6 +12,21 @@ var server = http.createServer().listen(config.stream.socketPort);
 var serverIo = require('socket.io')(server);
 
 var rfid = new Rfid(readRfid);
+var Gpio = require('pigpio').Gpio,
+    button = new Gpio(4, {
+        mode: Gpio.INPUT,
+        pullUpDown: Gpio.PUD_DOWN,
+        edge: Gpio.FALLING_EDGE
+    });
+
+button.on('interrupt', function (level) {
+    console.log("level btn", level);
+    socket.emit('control', {
+        type: DOORBTN,
+        no: 0,
+        falg: level
+    });
+}
 function readRfid(type, index, value) {
     // send to socket
     console.log(type, index, value);
@@ -30,7 +45,7 @@ serverIo.on('connection', function(socket) {
                 player.quit();
             }, (data.time) ? data.time * 1000 : 5000);
         }
-        
+
     });
 });
 // livecam
