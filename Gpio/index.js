@@ -71,6 +71,8 @@ function Gpio(server){
             // door open/close
             //  self.motor.toggle();
             //  setTimeout(close,10000);
+            sockets.emit('alarm',{alarm:true,type:"bell"});
+            console.log("call stream");
             console.log('door button');
         }else{
             self.lamps.toggle(btnNo);
@@ -106,7 +108,7 @@ function Gpio(server){
                     setTimeout(close,10000);
                     saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
                 }else {
-                      sockets.emit('alarm',{alarm:security});
+                      sockets.emit('alarm',{alarm:security,type:"inner"});
                       console.log("call stream");
                 }
             }
@@ -140,6 +142,12 @@ function Gpio(server){
               break;
             case "LAMPS":
                 saveLog("Switch",type,index, value,"Lamps ON/OFF","Hardware");
+                break;
+            case "WINDOW":
+            if(value == true && security){
+                sockets.emit('alarm',{alarm:security,type:"inner"});
+                console.log("call stream");
+                }
                 break;
           default:
 

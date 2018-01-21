@@ -23,13 +23,38 @@ function readRfid(type, index, value) {
 }
 serverIo.on('connection', function(socket) {
     socket.on('alarm', function(data) {
-        if (data.alarm) {
-            var player = Omx('./public/mp3/01.mp3');
-            setTimeout(
-                function() {
-                player.quit();
-            }, (data.time) ? data.time * 1000 : 5000);
+        switch (data.type) {
+            case "bell":
+                if (data.alarm) {
+                    var player =Omx('./public/mp3/doorbell.wav');
+                    setTimeout(
+                        function() {
+                        player.quit();
+                    }, (data.time) ? data.time * 1000 : 5000);
+                }
+                break;
+                case "inner":
+                if (data.alarm) {
+                    var player = Omx('./public/mp3/inner.mp3');
+                    setTimeout(
+                        function() {
+                        player.quit();
+                    }, (data.time) ? data.time * 1000 : 5000);
+                }
+                    break;
+                case "sec":
+                if (data.alarm) {
+                    var player = Omx('./public/mp3/fire.mp3');
+                    setTimeout(
+                        function() {
+                        player.quit();
+                    }, (data.time) ? data.time * 1000 : 5000);
+                }
+                    break;
+            default:
+
         }
+
     });
 });
 // livecam
