@@ -15,7 +15,7 @@ var Motions = require('./Motions');
 var Dht = require('./Dht');
 //var player = require('play-sound')(opts = {});
 var ios = require('socket.io-client');
-var streamUrl = 'http://' + config.stream.ip + ':' + config.stream.port;
+var streamUrl = 'http://' + config.stream.ip + ':' + config.stream.socketPort;
 var sockets = ios(streamUrl);
 
 var board = new five.Board({
