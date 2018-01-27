@@ -141,5 +141,7 @@ router.post('/log',function (req,res) {
         });
     });
 });
-
+router.get('/temperature',function (req,res) {
+    res.render('commons/temperature', { title: 'Temperature Graph'});
+});
 module.exports = router;
