@@ -101,8 +101,9 @@ function Gpio(server){
                 case 0:
                 if (value) {
                   if (!security) {
-                    self.motor.open(doorDelay);
-                    saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
+                    // self.motor.open(doorDelay);
+                    // saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
+
                 }else {
                       sockets.emit('alarm',{alarm:security,type:"inner"});
                       console.log("call stream");
@@ -143,6 +144,15 @@ function Gpio(server){
             if(value == false && security){
                 sockets.emit('alarm',{alarm:security,type:"inner"});
                 console.log("call stream");
+                }
+                break;
+            case "ALARM":
+                if(index == 1){
+                    console.log("Flame Alarm will on");
+                    sockets.emit('alarm',{alarm:true,type:"sec"});
+                }else {
+                    console.log("Gas Alarm will on");
+                    sockets.emit('alarm',{alarm:true,type:"sec"});
                 }
                 break;
           default:
