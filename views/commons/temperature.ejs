@@ -32,10 +32,19 @@
 
    </body>
    <script>
+          console.log('from temps',temps);
            new Chartist.Line('#humidity', {
-             labels: ['1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM','0AM'],
+             labels: [
+                 <% for (var i=0; i<temps.length;i++) {%>
+                   <%=temps[i].graph_time%>,
+                <% } %>
+             ],
              series: [
-               [50, 49, 55, 41, 78, 66,60, 55, 77, 62, 61, 34,44,55,45,54,34,67,34,45,68,12,55,65]
+               [
+                 <% for (var i=0; i<temps.length;i++) {%>
+                   <%=temps[i].value%>,
+                <% } %>
+               ]
              ]
            }, {
              showArea: true,

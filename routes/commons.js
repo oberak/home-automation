@@ -109,7 +109,7 @@ router.post('/modify',function (req,res) {
 });
 router.get('/log', function(req, res) {
     var perPage = 5;
-    Log.find({}).limit(perPage).exec(function(err,rtn){
+    Log.find({}).sort({time:-1}).limit(perPage).exec(function(err,rtn){
       if(err) throw err;
       Log.count({},function (err2,cnt) {
           if(err2) throw err2;
@@ -129,7 +129,7 @@ router.post('/log',function (req,res) {
     if (req.body.events != '') q.events = req.body.events;
     var currPage = Number(req.body.currPage);
     var perPage = Number(req.body.perPage);
-    var sort = {};
+    var sort = {time:1};
     if(req.body.sortby) sort[req.body.sortby] = req.body.sorttype;
     Log.find(q).skip((currPage-1)*perPage).sort(sort).limit(perPage).exec(function (err,rtn) {
         if(err) throw err;
@@ -142,6 +142,19 @@ router.post('/log',function (req,res) {
     });
 });
 router.get('/temperature',function (req,res) {
-    res.render('commons/temperature', { title: 'Temperature Graph'});
+  var temps;
+  var humi;
+  //var t = { $and: [{type:'DHT'},{index: 0}]};
+  //var h = { $and: [{type:'DHT'},{index: 1}]};
+  Log.find({type:'DHT', index: 1 },function (err,rtn) {
+    if(err) throw err;
+    temps = rtn;
+    console.log('temmmmmm',temps);
+  });
+  Log.find({type:'DHT',index:1},function (err,rtn) {
+    if(err) throw err;
+    humi = rtn;
+  });
+  res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi});
 });
 module.exports = router;

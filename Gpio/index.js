@@ -46,6 +46,16 @@ function Gpio(server){
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
         self.motor = new Motor(five, fnCallback, {time:4.6});
+        setInterval(function(){
+          console.log("Save set Interval");
+          if(self.adc.read(0)) saveLog("Data",'ADC', 0, self.adc.read(0),"Gas","Hardware");
+          if(self.adc.read(1)) saveLog("Data",'ADC', 1,self.adc.read(1),"Flame","Hardware");
+        },60000);
+        setInterval(function(){
+          console.log("Save set Interval humi");
+          if(self.dht.read(0)) saveLog("Data",'DHT',0,self.dht.read(0),"Temperature","Hardware");
+          if(self.dht.read(1))saveLog("Data",'DHT',1,self.dht.read(1),"Humidity","Hardware");
+        },60000);
     });
 
     this.read = function(){
@@ -127,15 +137,10 @@ function Gpio(server){
                 default:
 
             }
-
-
-
             break;
             case "ADC":
-                saveLog("Data",type,index, value,"Flame And Gas","Hardware");
               break;
             case "DHT":
-                saveLog("Data",type,index, value,"Humidity And Temperature","Hardware");
               break;
             case "LAMPS":
                 saveLog("Switch",type,index, value,"Lamps ON/OFF","Hardware");
@@ -179,6 +184,7 @@ function Gpio(server){
       log.dec = dec;
       log.src = src;
       log.time = Date.now();
+      console.log('save log:', log);
       log.save(function (err,rtn) {
         if(err)throw err;
 
