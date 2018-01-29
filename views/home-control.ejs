@@ -26,7 +26,7 @@
                 <div class="panel-body">
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/home.png" alt="" width="50px">
+                      <img src="/images/lamp-gu-off.png" alt="" width="50px" id="lamp-gu-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Living Room</h4>
@@ -38,7 +38,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/bed.png" alt="" width="50px">
+                      <img src="/images/lamp-be-off.png" alt="" width="50px" id="lamp-be-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading"> Bed Room</h4>
@@ -50,7 +50,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/kitchen.png" alt="" width="50px">
+                      <img src="/images/lamp-ki-off.png" alt="" width="50px" id="lamp-ki-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Kitchen</h4>
@@ -62,7 +62,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/garden.png" alt="" width="50px">
+                      <img src="/images/lamp-ba-off.png" alt="" width="50px" id="lamp-ba-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Bath Room</h4>
@@ -129,7 +129,7 @@
                 <div class="panel-body">
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Bath/Toilet Room</h4>
@@ -143,7 +143,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading"> Bed Room</h4>
@@ -157,7 +157,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Kitchen</h4>
@@ -181,7 +181,7 @@
                 <div class="panel-body">
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/door.png" alt="" width="50px">
+                      <img src="/images/door-off.png" alt="" width="50px" id="door-oc-img">
                       <div class="media-body">
                         <h4 class="media-heading"></h4>
 
@@ -208,7 +208,7 @@
                 <div class="panel-body">
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/thief.png" alt="" width="50px" style="display:inline;" >
+                      <img src="/images/security-off.png" alt="" width="50px" style="display:inline;" id="security-img">
 
                     </div>
                     <div class="media-body">
@@ -343,6 +343,9 @@
         sData.type = 'LAMPS';
         sData.idx = lampIDs.indexOf('#' + this.id);
         sData.value = this.checked;
+        document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"off":"on")+".png"
+
+        console.log(document.getElementById(this.id+'-img').src);
         socket.emit('control', sData);
         console.log(sData);
       });
@@ -354,6 +357,11 @@
       sData.type = 'DOOR';
       sData.idx = 0;
       sData.value = this.checked;
+      if (this.checked) {
+        document.getElementById('door-oc-img').src = "/images/door-off.png"
+      }else {
+        document.getElementById('door-oc-img').src = "/images/door-on.png"
+      }
       socket.emit('control', sData);
 
 
@@ -362,12 +370,23 @@
       sData.type = 'DOOR';
       sData.idx = 1;
       sData.value = this.checked;
+      if (this.checked) {
+        document.getElementById('door-oc-img').src = "/images/door-lock.png"
+      }else {
+        document.getElementById('door-oc-img').src = "/images/door-unlock.png"
+      }
       socket.emit('control', sData);
     });
     $('#security').change(function() {
       sData.type = 'SECURITY';
       sData.idx = 0;
       sData.value = this.checked;
+      if (this.checked) {
+        document.getElementById('security-img').src = "/images/security-off.png"
+      }else {
+        document.getElementById('security-img').src = "/images/security-on.png"
+      }
+  //    document.getElementById('security-img').src = "/images/security-on.png"
       socket.emit('control', sData);
       check = this.checked;
       console.log(check);
