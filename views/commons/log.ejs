@@ -76,6 +76,7 @@
 <%  } %>
   </tbody>
 </table>
+
 <div class="">
   <% var tPages = Math.floor( (page.total-1) / page.perPage) +1;
      var pSize = 5;
@@ -104,6 +105,7 @@
 
   </div>
  </form>
+  <a href="/commons/deleteall"><button>Delete All</button></a>
 </body>
 <script type="text/javascript">
   document.getElementById('events').value = '<%=log.events%>';

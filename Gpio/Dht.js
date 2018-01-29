@@ -15,6 +15,7 @@ function Dht(callback, opt){
 
     this.read = function(idx){
         var curr = dht.read();
+        //console.log('DHT read:',  curr);
         switch (idx) {
             case 0:
                 return curr.temperature;
