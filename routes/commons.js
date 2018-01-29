@@ -146,15 +146,25 @@ router.get('/temperature',function (req,res) {
   var humi;
   //var t = { $and: [{type:'DHT'},{index: 0}]};
   //var h = { $and: [{type:'DHT'},{index: 1}]};
-  Log.find({type:'DHT', index: 1 },function (err,rtn) {
+  Log.find({type:'DHT', index: 0 },function (err,rtn) {
     if(err) throw err;
     temps = rtn;
-    console.log('temmmmmm',temps);
+    Log.find({type:'DHT',index:1},function (err,rtn) {
+      if(err) throw err;
+      humi = rtn;
+      console.log('temmmmmm',temps);
+      res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi});
+    });
+
   });
-  Log.find({type:'DHT',index:1},function (err,rtn) {
-    if(err) throw err;
-    humi = rtn;
-  });
-  res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi});
 });
+
+router.get('/deleteall',function (req,res) {
+    Log.remove({},function (err,rtn) {
+        if(err) throw err;
+        console.log('delete all data');
+        res.redirect('/commons/log')
+    });
+
+})
 module.exports = router;

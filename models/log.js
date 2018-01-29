@@ -16,6 +16,6 @@ LogSchema.virtual('updated_time').get(function () {
         return dateformat(this.time, 'dddd, mmmm dd, yyyy. HH:MM');
 });
 LogSchema.virtual('graph_time').get(function () {
-        return dateformat(this.time, 'm/d/yy h:MM TT');
+        return dateformat(this.time, 'h:MM TT');
 });
 module.exports = mongoose.model('logs', LogSchema);

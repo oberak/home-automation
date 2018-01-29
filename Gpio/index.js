@@ -50,7 +50,7 @@ function Gpio(server){
           console.log("Save set Interval");
           if(self.adc.read(0)) saveLog("Data",'ADC', 0, self.adc.read(0),"Gas","Hardware");
           if(self.adc.read(1)) saveLog("Data",'ADC', 1,self.adc.read(1),"Flame","Hardware");
-        },60000);
+         },60000);
         setInterval(function(){
           console.log("Save set Interval humi");
           if(self.dht.read(0)) saveLog("Data",'DHT',0,self.dht.read(0),"Temperature","Hardware");
@@ -116,7 +116,7 @@ function Gpio(server){
 
                 }else {
                       sockets.emit('alarm',{alarm:security,type:"inner"});
-                      console.log("call stream");
+                     // console.log("call stream");
                 }
             }
                     break;

@@ -111,11 +111,11 @@
                         <h4 class="media-heading"></h4>
 
                       </div>
-                    </div>
-
-                    <div class="media-right">
-                    <input type="button" name="cctv" onclick="popupcctv()" value=" Enter" class="btn btn-primary"></a>
-                    </div>
+                  </div>
+                  <div class="media-right">
+                      <input type="button" id="cctv" name="cctv" onclick="popupcctv()" value=" Enter" class="btn btn-primary"></a>
+                  </div>
+                        <iframe hidden="true" src="http://192.168.123.2:8088" id="cctvView" width="400px" height="400px" ></iframe>
 
                   </div>
                 </div>
@@ -344,7 +344,6 @@
         sData.idx = lampIDs.indexOf('#' + this.id);
         sData.value = this.checked;
         socket.emit('control', sData);
-        console.log(sData);
       });
     }
     // request all data
@@ -370,7 +369,6 @@
       sData.value = this.checked;
       socket.emit('control', sData);
       check = this.checked;
-      console.log(check);
     });
     $('#alert').change(function() {
       sData.type = 'security';
@@ -381,6 +379,7 @@
 
 
     socket.on('control', function(data) { //get button status from client
+        if(data.type=="DHT")
       console.log('from server',data);
       switch (data.type) {
         case 'ALL':
@@ -452,6 +451,9 @@
           }
 
           break;
+          case "ALARM":
+                  show();
+              break;
 
         default:
 
@@ -558,9 +560,17 @@
     refreshAnimationTime: 1000,
     refreshAnimationType: "bounce"
   });
+  var off = true;
 
   function popupcctv() {
-    var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
+    //var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
+    document.getElementById('cctvView'). hidden = !off;
+    if(off){
+        document.getElementById('cctv').value = "Close";
+    }else {
+        document.getElementById('cctv').value = "Enter";
+    }
+    off = !off;
   }
 
 function setInit(data){
@@ -581,6 +591,11 @@ function setInit(data){
         $(lampIDs[i]).prop('checked', data.lamps[i]).change();
     }
 }
+        function show() {
+            var set = Lobibox.alert("error",{msg:"Fire Alarm!!! Please Check Your Home"});
+             set.setWidth(1200);
+             set.setPosition(100,300);
+        }
 </script>
 
 </html>
