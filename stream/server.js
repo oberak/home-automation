@@ -21,10 +21,16 @@ var Gpio = require('pigpio').Gpio,
 
 button.on('interrupt', function (level) {
     console.log("level btn", level);
-    socket.emit('control', {
-        type: DOORBTN,
-        no: 0,
-        falg: level
+    // socket.emit('control', {
+    //     type: DOORBTN,
+    //     no: 0,
+    //     falg: level
+    var player =Omx('./public/mp3/bell.wav');
+    setTimeout(
+        function() {
+        player.quit();
+    }, (data.time) ? data.time * 1000 : 5000);
+
     });
 }
 function readRfid(type, index, value) {

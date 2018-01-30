@@ -30,7 +30,7 @@ var board = new five.Board({
  */
 function Gpio(server){
     var self = this;
-    var security = true;
+    var security = false;
     var doorLock = false;
     var doorStatus = 0;
     var doorDelay =7;
@@ -41,7 +41,7 @@ function Gpio(server){
     this.dht = new Dht(fnCallback, {temp:1, humi: 1});
 
     board.on('ready', function() {
-        self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1});
+        self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:700, flameLevel:900});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
@@ -79,8 +79,8 @@ function Gpio(server){
     };
     function btnClick(btnNo){
         if(btnNo == 4){
-
-            sockets.emit('alarm',{alarm:true,type:"bell"});
+            self.motor.open(doorDelay);
+            //sockets.emit('alarm',{alarm:true,type:"bell"});
 
         }else{
             self.lamps.toggle(btnNo);
@@ -97,12 +97,13 @@ function Gpio(server){
           case "DOOR":
           doorStatus = value;
 
-          if (value < 1) {
+          if (value < 0) {
             setDoorLamp(6,5);
 
-          }else {
+        }else{
             setDoorLamp(5,6);
-          }
+            console.log('green led is work');
+        }
             break;
           case "MOTION":
             console.log('doorStatus', doorStatus);
@@ -110,13 +111,8 @@ function Gpio(server){
             switch (index) {
                 case 0:
                 if (value) {
-                  if (!security) {
-                    // self.motor.open(doorDelay);
-                    // saveLog("Door",type,index, value,"Open the door by inner motion","Hardware");
-
-                }else {
-                      sockets.emit('alarm',{alarm:security,type:"inner"});
-                     // console.log("call stream");
+                  if (security) {
+                    sockets.emit('alarm',{alarm:security,type:"inner"});
                 }
             }
                     break;
@@ -154,11 +150,13 @@ function Gpio(server){
             case "ALARM":
                 if(index == 1){
                     console.log("Flame Alarm will on");
-                    sockets.emit('alarm',{alarm:true,type:"sec"});
+                    sockets.emit('alarm',{alarm:true,type:"windows"});
                 }else {
                     console.log("Gas Alarm will on");
-                    sockets.emit('alarm',{alarm:true,type:"sec"});
+                    sockets.emit('alarm',{alarm:true,type:"gas"});
                 }
+                allLampsOn();
+                setInterval(allLampsOff,10000);
                 break;
           default:
 
@@ -167,6 +165,16 @@ function Gpio(server){
     function close() {
       self.motor.toggle();
       console.log('close the DOOR');
+    }
+    function allLampsOn() {
+        for (var i = 0; i < 8; i++) {
+            self.lamps.on(i);
+        }
+    }
+    function allLampsOff() {
+        for (var i = 0; i < 8; i++) {
+            self.lamps.off(i);
+        }
     }
 
     function setDoorLamp(i,o){
@@ -234,12 +242,14 @@ function Gpio(server){
               case 'DOOR':
                     if (data.idx == 1) {
                         console.log("DOOR Unlock Set Data", data.type,data.idx,data.value);
+                        setDoorLamp(5,6);
                         doorLock = data.value;
                         saveLog("Door",data.type,data.idx, data.falg,"Switch motion by doorLock","Website");
                     }else {
                         if (data.value) {
                         saveLog("Door",data.type,data.idx, data.falg,"Open door by user","Website");
                          self.motor.toggle();
+                         self.lamps.off(5);
                      }else {
                          self.motor.toggle();
                      }
@@ -256,7 +266,7 @@ function Gpio(server){
 
                 break;
             case "DOORBTN":
-                self.motor.open(doorDelay);
+                //self.motor.open(doorDelay);
                 break;
             }
         });
