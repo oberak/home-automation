@@ -12,21 +12,35 @@ var server = http.createServer().listen(config.stream.socketPort);
 var serverIo = require('socket.io')(server);
 
 var rfid = new Rfid(readRfid);
-var Gpio = require('pigpio').Gpio,
-    button = new Gpio(4, {
-        mode: Gpio.INPUT,
-        pullUpDown: Gpio.PUD_DOWN,
-        edge: Gpio.FALLING_EDGE
+var Gpio = require('onoff').Gpio,
+    button = new Gpio(4, 'in', 'rising');
+    button.watch(function (err, value) {
+      if (err) {
+        throw err;
+      }
+      console.log("level btn", value);
+      if(!value) return;
+          var player =Omx('./public/mp3/bell.wav');
+          setTimeout(
+              function() {
+              player.quit();
+          }, 5000);
     });
-
-button.on('interrupt', function (level) {
-    console.log("level btn", level);
-    socket.emit('control', {
-        type: DOORBTN,
-        no: 0,
-        falg: level
-    });
-}
+// var Gpio = require('pigpio').Gpio,
+//     button = new Gpio(4, {
+//         mode: Gpio.INPUT,
+//         pullUpDown: Gpio.PUD_DOWN,
+//         edge: Gpio.FALLING_EDGE
+//     });
+//
+// button.on('interrupt', function (level) {
+//     console.log("level btn", level);
+//     socket.emit('control', {
+//         type: DOORBTN,
+//         no: 0,
+//         falg: level
+//     });
+// });
 function readRfid(type, index, value) {
     // send to socket
     console.log(type, index, value);
