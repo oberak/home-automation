@@ -54,7 +54,7 @@ function ADC(five, callback, opt){
 
     gas.on("change", function() { // Gas
         callback('ADC', 0, this.value);
-        var gasLevel = (opt.gasLevel)?opt.gasLevel:600;
+        var gasLevel = (opt.gasLevel)?opt.gasLevel:700;
         if(this.value!=null && this.value > gasLevel && !onGasAlarm){
             onGasAlarm = true;
             callback('ALARM', 0, this.value); //300ppm to 1000 ppm  or gas.scaleTo(0, 100)

@@ -115,7 +115,7 @@
                   <div class="media-right">
                       <input type="button" id="cctv" name="cctv" onclick="popupcctv()" value=" Enter" class="btn btn-primary"></a>
                   </div>
-                        <iframe hidden="true" src="http://192.168.123.2:8088" id="cctvView" width="400px" height="400px" ></iframe>
+                        <iframe hidden="true" src="http://192.168.123.2:8088" id="cctvView" width="90%" style="height:75vh;"></iframe>
 
                   </div>
                 </div>
@@ -129,7 +129,7 @@
                 <div class="panel-body">
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window-off.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px" id="win-gu-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Bath/Toilet Room</h4>
@@ -143,7 +143,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window-off.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px" id="win-be-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading"> Bed Room</h4>
@@ -157,7 +157,7 @@
                   </div>
                   <div class="media">
                     <div class="media-left">
-                      <img src="/images/window-off.png" alt="" width="50px">
+                      <img src="/images/window-off.png" alt="" width="50px" id="win-ki-img">
                     </div>
                     <div class="media-body">
                       <h4 class="media-heading">Kitchen</h4>
@@ -264,18 +264,7 @@
 
     $('.lobipanel').lobiPanel();
     $('#demoPanel11').lobiPanel();
-    $('#lobipanel-basic')
-      .on('beforeUnpin.lobiPanel', function() {
-        console.log("beforeClose");
-      })
-      .on('onClose.lobiPanel', function() {
-        console.log("onClose");
-      })
-      .on('onTitleChange.lobiPanel', function() {
-        console.log(this, arguments);
-
-      })
-      .lobiPanel();
+    $('#lobipanel-basic').lobiPanel();
     $('#lobipanel-custom-control').lobiPanel({
       reload: false,
       close: false,
@@ -334,6 +323,7 @@
   var check = false;
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
+  var win = ['win-gu','win-be','win-ki'];
   var song = document.getElementById('song');
   var socket = io(); //load socket.io-client and connect to the host that serves the page
   window.addEventListener("load", function() { //when page loads
@@ -343,7 +333,7 @@
         sData.type = 'LAMPS';
         sData.idx = lampIDs.indexOf('#' + this.id);
         sData.value = this.checked;
-        document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"off":"on")+".png"
+        document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"on":"off")+".png"
 
         console.log(document.getElementById(this.id+'-img').src);
         socket.emit('control', sData);
@@ -356,7 +346,7 @@
       sData.type = 'DOOR';
       sData.idx = 0;
       sData.value = this.checked;
-      if (this.checked) {
+      if (!this.checked) {
         document.getElementById('door-oc-img').src = "/images/door-off.png"
       }else {
         document.getElementById('door-oc-img').src = "/images/door-on.png"
@@ -369,7 +359,7 @@
       sData.type = 'DOOR';
       sData.idx = 1;
       sData.value = this.checked;
-      if (this.checked) {
+      if (!this.checked) {
         document.getElementById('door-oc-img').src = "/images/door-lock.png"
       }else {
         document.getElementById('door-oc-img').src = "/images/door-unlock.png"
@@ -380,12 +370,11 @@
       sData.type = 'SECURITY';
       sData.idx = 0;
       sData.value = this.checked;
-      if (this.checked) {
+      if (!this.checked) {
         document.getElementById('security-img').src = "/images/security-off.png"
       }else {
         document.getElementById('security-img').src = "/images/security-on.png"
       }
-  //    document.getElementById('security-img').src = "/images/security-on.png"
       socket.emit('control', sData);
       check = this.checked;
     });
@@ -398,8 +387,7 @@
 
 
     socket.on('control', function(data) { //get button status from client
-        if(data.type=="DHT")
-      console.log('from server',data);
+      //console.log('from server',data);
       switch (data.type) {
         case 'ALL':
           setInit(data.init);
@@ -411,7 +399,9 @@
 
         case 'WINDOW':
         for(var i = 0; i < winIDs.length; i++){
+
           if (data.value) {
+              document.getElementById(win[data.idx]+'-img').src = "/images/window-off.png"
             $(winIDs[data.idx]).notify(
               "Window is close", {
                 autoHide: false,
@@ -420,6 +410,7 @@
               }
             );
           } else {
+              document.getElementById(win[data.idx]+'-img').src = "/images/window-on.png"
             $(winIDs[data.idx]).notify(
               "Window is open", {
                 autoHide: false,
@@ -471,7 +462,10 @@
 
           break;
           case "ALARM":
-                  show();
+                    show(data.idx,data.value);
+                    song.play();
+                    console.log('//a/a/a',data);
+
               break;
 
         default:
@@ -610,8 +604,9 @@ function setInit(data){
         $(lampIDs[i]).prop('checked', data.lamps[i]).change();
     }
 }
-        function show() {
-            var set = Lobibox.alert("error",{msg:"Fire Alarm!!! Please Check Your Home"});
+        function show(type,value) {
+            console.log('show',type, value);
+            var set = Lobibox.alert("error",{msg: ((type== 0)? "Gas ": "Flame")+ " Alarm!!! Please Check Your Home Your "+((type== 0)?"Gas":"Flame")+ " Level is "+ value});
              set.setWidth(1200);
              set.setPosition(100,300);
         }

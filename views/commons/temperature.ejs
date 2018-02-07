@@ -37,13 +37,13 @@
 
            new Chartist.Line('#humidity', {
              labels: [
-                 <% for (var i=0; i<temps.length;i++) {%>
+                 <% for (var i=0; i<temps.length;i+=5) {%>
                    '<%=temps[i].graph_time%>',
                 <% } %>
              ],
              series: [
                [
-                 <% for (var i=0; i<temps.length;i++) {%>
+                 <% for (var i=0; i<temps.length;i+=5) {%>
                    '<%=temps[i].value%>',
                 <% } %>
                ]
@@ -61,13 +61,13 @@
            });
            new Chartist.Line('#temperature', {
                labels: [
-                   <% for (var i=0; i<humi.length;i++) {%>
+                   <% for (var i=0; i<humi.length;i+=5) {%>
                      '<%=humi[i].graph_time%>',
                   <% } %>
                ],
                series: [
                  [
-                   <% for (var i=0; i<humi.length;i++) {%>
+                   <% for (var i=0; i<humi.length;i+=5) {%>
                      '<%=humi[i].value%>' ,
                   <% } %>
                  ]
