@@ -35,24 +35,24 @@ function Gpio(server){
     var doorStatus = 0;
     var doorDelay =7;
     var alarm = false;
+    var gasValue = 700;
+    var flameValue = 700;
     // this.rfid = new Rfid(fnCallback);
     this.windows = new Windows(fnCallback);
     this.display = new Display({time:3});
     this.dht = new Dht(fnCallback, {temp:1, humi: 1});
 
     board.on('ready', function() {
-        self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:700, flameLevel:900});
+        //self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:gasValue, flameLevel:flameValue});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
         self.motor = new Motor(five, fnCallback, {time:4.6});
         setInterval(function(){
-          console.log("Save set Interval");
           if(self.adc.read(0)) saveLog("Data",'ADC', 0, self.adc.read(0),"Gas","Hardware");
           if(self.adc.read(1)) saveLog("Data",'ADC', 1,self.adc.read(1),"Flame","Hardware");
          },60000);
         setInterval(function(){
-          console.log("Save set Interval humi");
           if(self.dht.read(0)) saveLog("Data",'DHT',0,self.dht.read(0),"Temperature","Hardware");
           if(self.dht.read(1))saveLog("Data",'DHT',1,self.dht.read(1),"Humidity","Hardware");
         },60000);
@@ -92,21 +92,19 @@ function Gpio(server){
         if(self.socket){
             self.socket.emit('control', {type:type, idx:index, value:value});
         }
-        //console.log(type, index, value);
         switch (type) {
           case "DOOR":
           doorStatus = value;
+          sockets.emit('control',{type:"DOOR",idx:0,value:value});
 
           if (value < 0) {
             setDoorLamp(6,5);
 
         }else{
             setDoorLamp(5,6);
-            console.log('green led is work');
         }
             break;
           case "MOTION":
-            console.log('doorStatus', doorStatus);
             if(doorStatus < 0) return;
             switch (index) {
                 case 0:
@@ -122,7 +120,6 @@ function Gpio(server){
                         self.motor.toggle();
                         setTimeout(close,10000);
                         saveLog("Door",type,index, value,"Open the door by outer motion","Hardware");
-                        console.log('Opening door');
 
                     }
                     self.lamps.on(4);
@@ -144,19 +141,16 @@ function Gpio(server){
             case "WINDOW":
             if(value == false && security){
                 sockets.emit('alarm',{alarm:security,type:"inner"});
-                console.log("call stream");
                 }
                 break;
             case "ALARM":
                 if(index == 1){
-                    console.log("Flame Alarm will on");
                     sockets.emit('alarm',{alarm:true,type:"windows"});
                 }else {
-                    console.log("Gas Alarm will on");
                     sockets.emit('alarm',{alarm:true,type:"gas"});
                 }
-                allLampsOn();
-                setInterval(allLampsOff,10000);
+                // allLampsOn();
+                // setInterval(allLampsOff,10000);
                 break;
           default:
 
@@ -164,7 +158,6 @@ function Gpio(server){
     }
     function close() {
       self.motor.toggle();
-      console.log('close the DOOR');
     }
     function allLampsOn() {
         for (var i = 0; i < 8; i++) {
@@ -192,7 +185,6 @@ function Gpio(server){
       log.dec = dec;
       log.src = src;
       log.time = Date.now();
-      console.log('save log:', log);
       log.save(function (err,rtn) {
         if(err)throw err;
 
@@ -204,7 +196,6 @@ function Gpio(server){
     io.on('connection', function(socket) {
         self.socket = socket;
         socket.on('control', function(data) {
-            console.log('receive client',data);
             switch (data.type) {
               case 'ALL':
               self.socket.emit('control', { type:'ALL', init: self.read()});
@@ -241,7 +232,6 @@ function Gpio(server){
                   break;
               case 'DOOR':
                     if (data.idx == 1) {
-                        console.log("DOOR Unlock Set Data", data.type,data.idx,data.value);
                         setDoorLamp(5,6);
                         doorLock = data.value;
                         saveLog("Door",data.type,data.idx, data.falg,"Switch motion by doorLock","Website");
@@ -265,8 +255,10 @@ function Gpio(server){
                 }
 
                 break;
-            case "DOORBTN":
-                //self.motor.open(doorDelay);
+            case "SETVAL":
+                console.log(data.gasVal,data.flameVal);
+                console.log(typeof(parseInt(data.gasVal)),typeof(parseInt(data.flameVal)));
+                self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:parseInt(data.gasVal), flameLevel:parseInt(data.flameVal)});
                 break;
             }
         });

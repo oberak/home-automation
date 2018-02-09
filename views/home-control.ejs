@@ -113,7 +113,7 @@
                       </div>
                   </div>
                   <div class="media-right">
-                      <input type="button" id="cctv" name="cctv" onclick="popupcctv()" value=" Enter" class="btn btn-primary"></a>
+                      <input type="button" id="cctv" name="cctv" onclick="popupcctv()" value=" Show" class="btn btn-primary"></a>
                   </div>
                         <iframe hidden="true" src="http://192.168.123.2:8088" id="cctvView" width="90%" style="height:75vh;"></iframe>
 
@@ -313,7 +313,6 @@
     $('#lobipanel-multiple').find('.panel').lobiPanel({
       sortable: true,
       beforeTitleChange: function(lobiPanel, title) {
-        console.log("beforeTitleChange", arguments);
         if (!title) {
           return false;
         }
@@ -321,6 +320,7 @@
     });
   });
   var check = false;
+  var evt = null;
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
   var win = ['win-gu','win-be','win-ki'];
@@ -335,7 +335,6 @@
         sData.value = this.checked;
         document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"on":"off")+".png"
 
-        console.log(document.getElementById(this.id+'-img').src);
         socket.emit('control', sData);
       });
     }
@@ -343,6 +342,10 @@
     socket.emit('control', {type: 'ALL'});
 
     $('#door-openclose').change(function() {
+      if(evt){
+        evt = null;
+        return;
+      }
       sData.type = 'DOOR';
       sData.idx = 0;
       sData.value = this.checked;
@@ -352,8 +355,6 @@
         document.getElementById('door-oc-img').src = "/images/door-on.png"
       }
       socket.emit('control', sData);
-
-
     });
     $('#door-lock').change(function() {
       sData.type = 'DOOR';
@@ -387,20 +388,29 @@
 
 
     socket.on('control', function(data) { //get button status from client
-      //console.log('from server',data);
       switch (data.type) {
         case 'ALL':
           setInit(data.init);
           break;
         case 'LAMPS':
           $(lampIDs[data.idx]).prop('checked', data.value).change();
-          console.log('lamps are active');
           break;
-
+        case 'DOOR':
+            evt = true;
+            $('#door-openclose').bootstrapToggle( (data.value)?'on':'off');
+               if(data.value == 1){
+                 console.log("door open state");
+               }else if (data.value == 0) {
+                 console.log("door close state");
+               }
+          break;
         case 'WINDOW':
         for(var i = 0; i < winIDs.length; i++){
 
           if (data.value) {
+              if(check){
+                  song.pause();
+              }
               document.getElementById(win[data.idx]+'-img').src = "/images/window-off.png"
             $(winIDs[data.idx]).notify(
               "Window is close", {
@@ -411,6 +421,9 @@
             );
           } else {
               document.getElementById(win[data.idx]+'-img').src = "/images/window-on.png"
+              if (check) {
+                 song.play();
+              }
             $(winIDs[data.idx]).notify(
               "Window is open", {
                 autoHide: false,
@@ -464,7 +477,6 @@
           case "ALARM":
                     show(data.idx,data.value);
                     song.play();
-                    console.log('//a/a/a',data);
 
               break;
 
@@ -579,9 +591,9 @@
     //var newwindow = window.open('http://192.168.123.2:8088','CCTV','height=500,width=500');
     document.getElementById('cctvView'). hidden = !off;
     if(off){
-        document.getElementById('cctv').value = "Close";
+        document.getElementById('cctv').value = "Hide";
     }else {
-        document.getElementById('cctv').value = "Enter";
+        document.getElementById('cctv').value = "Show";
     }
     off = !off;
   }
@@ -605,7 +617,6 @@ function setInit(data){
     }
 }
         function show(type,value) {
-            console.log('show',type, value);
             var set = Lobibox.alert("error",{msg: ((type== 0)? "Gas ": "Flame")+ " Alarm!!! Please Check Your Home Your "+((type== 0)?"Gas":"Flame")+ " Level is "+ value});
              set.setWidth(1200);
              set.setPosition(100,300);

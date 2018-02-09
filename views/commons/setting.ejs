@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+      <% include ../partials/nav.ejs %>
+      <div class="container">
+        <div class="row">
+                  <div class="col-md-2">
+                    <label for="gas">Gas Label</label>
+                  </div>
+                  <div class="col-md-2">
+                			<div class="input-group number-spinner">
+                				<span class="input-group-btn">
+                					<button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+                				</span>
+                				<input type="text" class="form-control text-center" value="400" max="1000" min="330" id="gas">
+                				<span class="input-group-btn">
+                					<button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+                				</span>
+                			</div>
+                		</div>
+                </div>
+                <br>
+                <br>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="flame">Flame Level</label>
+        </div>
+        <div class="col-md-2">
+              <div class="input-group number-spinner1">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input type="text" class="form-control text-center" value="760" min="760" max="1100" id="flame">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+                </span>
+              </div>
+              </div>
+              </div>
+              <br>
+              <br>
+              <div class="row">
+                      <input type="button" name="setdata" onclick="setdata()" value="Set Data">
+              </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+              $(document).on('click', '.number-spinner1 button', function () {
+                var btn = $(this),
+                oldValue1 = btn.closest('.number-spinner1').find('input').val().trim()
+                if (btn.attr('data-dir') == 'up') {
+                oldValue1 = parseInt(oldValue1) + 1;
+                } else {
+                if (oldValue1 > 1) {
+                oldValue1 = parseInt(oldValue1) - 1;
+                } else {
+                oldValue1 = 1;
+                }
+                }
+                btn.closest('.number-spinner1').find('input').val(oldValue1);
+                console.log('flame value', oldValue1);
+
+                });
+
+            $(document).on('click', '.number-spinner button', function () {
+                  var btn = $(this),
+                  oldValue = btn.closest('.number-spinner').find('input').val().trim()
+                  if (btn.attr('data-dir') == 'up') {
+                  oldValue = parseInt(oldValue) + 1;
+                  } else {
+                  if (oldValue > 1) {
+                  oldValue = parseInt(oldValue) - 1;
+                  } else {
+                  oldValue = 1;
+                  }
+                  }
+                  btn.closest('.number-spinner').find('input').val(oldValue);
+                  console.log('Gas Value', oldValue);
+                  });
+                  var socket = io();
+                  var val = {};
+                  function setdata() {
+                    val.gasVal = document.getElementById('gas').value;
+                    val.flameVal = document.getElementById('flame').value;
+                    val.type = "SETVAL";
+                    socket.emit('control',val);
+                  }
+  </script>
+</html>

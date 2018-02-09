@@ -9,6 +9,7 @@
         b{
             color:blue;
         }
+
     </style>
   </head>
   <body>
@@ -18,24 +19,43 @@
               <input type="hidden" name="sortby" value="<%= sort.sortby %>">
               <input type="hidden" name="sorttype" value="<%= sort.sorttype %>">
               <input type="hidden" name="currPage" value="1">
-              per page: <select class="" name="perPage" onchange="go(1);">
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                        </select>
-             <label for="search">Search:</label>
-             <input type="search" name="search" value="<%= search %>">
-             <input type="submit" name="btn" value="Search">
-             <select class="" name="events" id="events">
-                 <option value="" selected>All Events</option>
-                 <option value="Door">Door</option>
-                 <option value="Motion">Motion</option>
-                 <option value="Switch">Switch</option>
-                 <option value="Data">Data</option>
-             </select>
+              <div class="form-group row">
+                <div class="col-sm-1">
+                  <label for="per">     Per Page:</label>
+              </div>
+              <div class="col-sm-1">
+                <select class="form-control " name="perPage" onchange="go(1);" id="per">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="search">Search:</label>
+                <input type="search" name="search" value="<%= search %>">
+                <input type="submit" class="btn-primary" name="btn" value="Search">
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" name="events" id="events" onchange='frm.submit()'>
+                    <option value="" selected>All Events</option>
+                    <option value="Door">Door</option>
+                    <option value="Switch">Switch</option>
+                    <option value="Data">Data</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" name="type" id="type" onchange='frm.submit()'>
+                    <option value="" selected>All Type</option>
+                    <option value="RFID">RFID</option>
+                    <option value="LAMPS">LAMPS</option>
+                    <option value="DHT">Humidity</option>
+                    <option value="ADC">Flame And Gas</option>
+                </select>
+              </div>
+                </div>
 
   <table class="table table-striped">
   <thead class="thead-dark">
@@ -76,39 +96,48 @@
 <%  } %>
   </tbody>
 </table>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <ul class="pagination pagination-large">
+      <% var tPages = Math.floor( (page.total-1) / page.perPage) +1;
+         var pSize = 5;
+         var sPage = Math.floor( (page.currPage -1) /pSize) *pSize + 1;
+         var ePage = ( (sPage + pSize -1) > tPages ) ? tPages : (sPage + pSize -1);
+         if(sPage !=1){
+      %>
+              <li><a href="javascript:go(<%= sPage-1 %>);" > Prev </a></li>
+      <%
+         }
+          for(var i=sPage; i <= ePage; i++){
+            if(i == page.currPage){
+      %>
+              <li class="active"><a href="#"><%= i %></a></li>
+      <%
+            } else {
+      %>
+              <li><a href="javascript:go(<%= i %>);"><%= i %></a></li>
+      <%      }
 
-<div class="">
-  <% var tPages = Math.floor( (page.total-1) / page.perPage) +1;
-     var pSize = 5;
-     var sPage = Math.floor( (page.currPage -1) /pSize) *pSize + 1;
-     var ePage = ( (sPage + pSize -1) > tPages ) ? tPages : (sPage + pSize -1);
-     if(sPage !=1){
-  %>
-          <a href="javascript:go(<%= sPage-1 %>);" > << </a>
-  <%
-     }
-      for(var i=sPage; i <= ePage; i++){
-        if(i == page.currPage){
-  %>
-            [<%= i %>]
-  <%
-        } else {
-  %>
-            <a href="javascript:go(<%= i %>);"><%= i %></a>
-  <%      }
+            }
+            if(ePage != tPages){
+      %>
+              <li><a href="javascript:go(<%= ePage+1 %>);"> Next </a></li>
+      <%  } %>
 
-        }
-        if(ePage != tPages){
-  %>
-          <a href="javascript:go(<%= ePage+1 %>);"> >> </a>
-  <%  } %>
-
+    </ul>
   </div>
+  <div class="col-sm-4">
+    <a href="/commons/deleteall"><button class="btn btn-primary" style="margin-top:20px">Delete All</button></a>
+  </div>
+</div>
  </form>
-  <a href="/commons/deleteall"><button>Delete All</button></a>
+</div>
+
 </body>
 <script type="text/javascript">
   document.getElementById('events').value = '<%=log.events%>';
+  document.getElementById('type').value = '<%=log.type%>';
   frm.perPage.value = '<%= page.perPage %>';
   function go(page) {
     frm.currPage.value = page;

@@ -123,10 +123,12 @@ router.get('/log', function(req, res) {
 router.post('/log',function (req,res) {
     var q = {
         $or:[{type: new RegExp(req.body.search,'i')},
-             {src: new RegExp(req.body.search,'i')}
+             {src: new RegExp(req.body.search,'i')},
+             {events: new RegExp(req.body.search,'i')}
          ]
         };
     if (req.body.events != '') q.events = req.body.events;
+    if (req.body.type != '') q.type = req.body.type;
     var currPage = Number(req.body.currPage);
     var perPage = Number(req.body.perPage);
     var sort = {time:1};
@@ -166,5 +168,13 @@ router.get('/deleteall',function (req,res) {
         res.redirect('/commons/log')
     });
 
+});
+
+router.get('/setting',function (req,res) {
+  res.render('commons/setting',{title:'Setting'});
+});
+
+router.post('/setting',function (req,res) {
+  res.end('call setting post');
 })
 module.exports = router;
