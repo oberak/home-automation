@@ -23,27 +23,72 @@
                 height: 300px;
               }
     </style>
-
+      <link rel="stylesheet" href="/stylesheets/bootstrap-datetimepicker.min.css">
+      <link rel="stylesheet" href="/stylesheets/bootstrap-select.min.css">
+      <script src="/javascripts/bootstrap-datetimepicker.min.js" charset="utf-8"></script>
+      <script src="/javascripts/bootstrap-select.min.js" charset="utf-8"></script>
+      <script src="/javascripts/bootstrap-datetimepicker.js" charset="utf-8"></script>
+      <script src="/javascripts/moment.js" charset="utf-8"></script>
   </head>
   <body>
       <% include ../partials/nav.ejs %>
-      <h3>Humidity Graph</h3>
-      <div class="ct-chart ct-golden-section" id="humidity"></div>
-      <h3>Temperature Graph</h3>
-      <div class="ct-chart ct-golden-section" id="temperature"></div>
+      <div class="container">
+        <form class="frm" action="/commons/temperature" method="post">
+          <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker1'>
+                          <span class="input-group-addon">From</span>
+                            <input type='text' class="form-control" name="from" value="<%= st %>" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker2'>
+                          <span class="input-group-addon">To</span>
+                            <input type='text' class="form-control" name="to" value="<%= en %> " />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                  <select class="selectpicker show-tick show-menu-arrow" name="lim">
+                          <option data-icon="glyphicon-sort-by-attributes" value="25">Show Items</option>
+                          <option data-icon="glyphicon-search" value="15">15</option>
+                          <option data-icon="glyphicon-search" value="25">25(recommaded)</option>
+                          <option data-icon="glyphicon-search" value="35"> 35</option>
+                          <option data-icon="glyphicon-search" value="45"> 45</option>
+                  </select>
+                </div>
+                <div class="col-sm-1">
+                    <input type="submit" class="btn btn-primary" name="sub" value="Search">
+                </div>
+              </div>
+          <h3>Humidity Graph</h3>
+          <div class="ct-chart ct-golden-section" id="humidity"></div>
+          <h3>Temperature Graph</h3>
+          <div class="ct-chart ct-golden-section" id="temperature"></div>
 
+        </form>
+      </div>
    </body>
    <script>
 
            new Chartist.Line('#humidity', {
              labels: [
-                 <% for (var i=0; i<temps.length;i+=5) {%>
+                 <% for (var i=0; i<temps.length;i++) {%>
                    '<%=temps[i].graph_time%>',
                 <% } %>
              ],
              series: [
                [
-                 <% for (var i=0; i<temps.length;i+=5) {%>
+                 <% for (var i=0; i<temps.length;i++) {%>
                    '<%=temps[i].value%>',
                 <% } %>
                ]
@@ -61,13 +106,13 @@
            });
            new Chartist.Line('#temperature', {
                labels: [
-                   <% for (var i=0; i<humi.length;i+=5) {%>
+                   <% for (var i=0; i<humi.length;i++) {%>
                      '<%=humi[i].graph_time%>',
                   <% } %>
                ],
                series: [
                  [
-                   <% for (var i=0; i<humi.length;i+=5) {%>
+                   <% for (var i=0; i<humi.length;i++) {%>
                      '<%=humi[i].value%>' ,
                   <% } %>
                  ]
@@ -83,6 +128,13 @@
                })
              ]
            });
-
+           $(function () {
+                $('#datetimepicker1').datetimepicker({
+                  dateFormat: 'd-M-y'
+                });
+                $('#datetimepicker2').datetimepicker({
+                  dateFormat: 'd-M-y'
+                });
+            });
  </script>
    </html>

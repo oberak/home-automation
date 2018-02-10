@@ -146,16 +146,34 @@ router.post('/log',function (req,res) {
 router.get('/temperature',function (req,res) {
   var temps;
   var humi;
-  //var t = { $and: [{type:'DHT'},{index: 0}]};
-  //var h = { $and: [{type:'DHT'},{index: 1}]};
-  Log.find({type:'DHT', index: 0 },function (err,rtn) {
+  Log.find({type:'DHT', index: 0 }).limit(25).exec(function (err,rtn) {
     if(err) throw err;
     temps = rtn;
-    Log.find({type:'DHT',index:1},function (err,rtn) {
+    Log.find({type:'DHT',index:1}).limit(25).exec(function (err,rtn) {
       if(err) throw err;
       humi = rtn;
-      console.log('temmmmmm',temps);
-      res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi});
+      res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi,st:'',en:'',li:''});
+    });
+
+  });
+});
+
+router.post('/temperature',function (req,res) {
+  var temps;
+  var humi;
+  var lim = req.body.lim;
+  var start = new Date(req.body.from);
+  var end = new Date(req.body.to);
+  var en = end.toISOString();
+  var st  = start.toISOString();
+  console.log('end date',en);
+  Log.find({type:'DHT', index: 0, time:{$gte:st ,$lt: en} }).limit(parseInt(lim)).exec(function (err,rtn) {
+    if(err) throw err;
+    temps = rtn;
+    Log.find({type:'DHT',index:1, time:{$gte:st ,$lt: en}}).limit(parseInt(lim)).exec(function (err,rtn) {
+      if(err) throw err;
+      humi = rtn;
+      res.render('commons/temperature',{title:'Temperature Graph', temps:temps, humi: humi,st:req.body.from,en:req.body.to,li:lim});
     });
 
   });
@@ -165,7 +183,7 @@ router.get('/deleteall',function (req,res) {
     Log.remove({},function (err,rtn) {
         if(err) throw err;
         console.log('delete all data');
-        res.redirect('/commons/log')
+        res.redirect('/commons/log');
     });
 
 });

@@ -43,7 +43,7 @@ function Gpio(server){
     this.dht = new Dht(fnCallback, {temp:1, humi: 1});
 
     board.on('ready', function() {
-        //self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:gasValue, flameLevel:flameValue});
+        self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:gasValue, flameLevel:flameValue});
         self.lamps = new Lamps(five);
         self.buttons = new Buttons(five, btnClick);
         self.motions = new Motions(five, fnCallback);
