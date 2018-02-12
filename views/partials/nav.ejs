@@ -14,16 +14,16 @@
   </ul>
   <ul class="nav navbar-nav navbar-right">
     <% if(user){%>
-      <li><a href="/commons/list"><span class="fa fa-users"></span>Family List</a></li>
-      <li><a href="/commons/member"><span class="fa fa-user-plus"></span> Add Family</a></li>
-      <li><a href="/commons/log"><span class="fa fa-history"></span> ALL Logs</a></li>
-      <li><a href="/commons/temperature"><span class="fa fa-bar-chart"></span> Temperature Graph</a></li>
-      <li><a href="/commons/setting"><span class="fa fa-cogs"></span> Setting</a></li>
-      <li><a href="/commons/signout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li class="active"><a href="/commons/list"><span class="fa fa-users"></span>Family List</a></li>
+      <li class="active"><a href="/commons/member"><span class="fa fa-user-plus"></span> Add Family</a></li>
+      <li class="active"><a href="/commons/log"><span class="fa fa-history"></span> ALL Logs</a></li>
+      <li class="active"><a href="/commons/temperature"><span class="fa fa-bar-chart"></span> Temperature Graph</a></li>
+      <li class="active"><a href="/commons/setting"><span class="fa fa-cogs"></span> Setting</a></li>
+      <li class="active"><a href="/commons/signout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
 
     <%} else {%>
-    <li><a href="/commons/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-    <li><a href="/commons/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <li class="active"><a href="/commons/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+    <li class="active"><a href="/commons/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
      <%}%>
   </ul>
 </div>

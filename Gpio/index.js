@@ -191,7 +191,6 @@ function Gpio(server){
       });
     }
 
-
     var io = require('socket.io')(server);
     io.on('connection', function(socket) {
         self.socket = socket;
@@ -206,20 +205,26 @@ function Gpio(server){
                     else self.lamps.off(data.idx);
                     saveLog("Switch",data.type,data.idx, data.value,"Lamps ON/OFF","Website");
                     break;
+                case 'ACCESSORIES':
+                  console.log('working Accessories',data);
+                    break;
                 case 'RFID':
+                    self.socket.emit('init', { type:'INIT', value:data.falg});
                     Member.findOne({rfid:data.falg},function (err,rtn) {
                       if(err)throw err;
                       if(rtn == null){
                         saveLog("Door",data.type,data.idx, data.falg,"Open door by RFID(Not Register Member)","Client");
-                        //saveRfidLog("RFID","Unknow",data.falg,"Not Register Member");
-                        //  new Sound().play('/home/pi/home-automation/public/mp3/01.wav');
                         self.display.print('You Are Not','Family Member');
                       }else{
                         if (rtn.options == "use") {
                         saveLog("Door",data.type,data.idx, data.falg,"Open door by RFID(Family Member)","Client");
-                          //saveRfidLog("RFID",rtn.name,data.falg,"Family Member");
                           self.display.print('Welcome   ',rtn.name);
                           self.motor.open(doorDelay);
+
+                          if(security){
+                            self.socket.emit('control',{type:'SC',value:true});
+                          }
+
                         }else {
                             saveLog("Door",data.type,data.idx, data.falg,"Open door by RFID(Inactive Family Member)","Client");
                          // saveRfidLog("RFID",rtn.name,data.falg,"Inactive Family Member");

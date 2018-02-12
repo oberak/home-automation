@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var LiveCam = require('livecam');
 var io = require('socket.io-client');
 var config = require('../config');
@@ -12,114 +11,37 @@ var http = require('http');
 var server = http.createServer().listen(config.stream.socketPort);
 var serverIo = require('socket.io')(server);
 
-var rfid = new Rfid(readRfid);
-var Gpio = require('onoff').Gpio,
-    button = new Gpio(4, 'in', 'rising');
-    button.watch(function (err, value) {
-      if (err) {
-        throw err;
-      }
-      console.log("level btn", value);
-      if(!value) return;
-          var player =Omx('./public/mp3/bell.wav');
-          setTimeout(
-              function() {
-              player.quit();
-          }, 5000);
-    });
-// var Gpio = require('pigpio').Gpio,
-//     button = new Gpio(4, {
-//         mode: Gpio.INPUT,
-//         pullUpDown: Gpio.PUD_DOWN,
-//         edge: Gpio.FALLING_EDGE
-//     });
-//
-// button.on('interrupt', function (level) {
-//     console.log("level btn", level);
-//     socket.emit('control', {
-//         type: DOORBTN,
-//         no: 0,
-//         falg: level
-//     });
-// });
-function readRfid(type, index, value) {
-    // send to socket
-    console.log(type, index, value);
-    socket.emit('control', {
-        type: type,
-        no: index,
-        falg: value
-    });
-}
-serverIo.on('connection', function(socket) {
-    socket.on('alarm', function(data) {
-        if (data.alarm) {
-            var player =Omx('./public/mp3/'+data.type+'.wav');
-            setTimeout(
-                function() {
-                player.quit();
-            }, (data.time) ? data.time * 1000 : 5000);
-        }
+var Gpio = require('onoff').Gpio;
+var LED = new Gpio(2,'out');
+var lampbtn = new Gpio(3,'in', 'falling');
+var fan = new Gpio(17,'out');
+var fanbtn = new Gpio(27,'in','falling');
 
-    });
+lampbtn.watch(function(err, value) {
+  if (err) {
+    console.error('There was an error', err);
+  return;
+  }
+  LED.writeSync(LED.readSync() ^ 1);
 });
-// livecam
-var webcam_server = new LiveCam({
-    // address and port of the webcam UI
-    'ui_addr': config.stream.ip,
-    'ui_port': config.stream.port,
 
-    // address and port of the webcam Socket.IO server
-    // this server broadcasts GStreamer's video frames
-    // for consumption in browser side.
-    'broadcast_addr': config.stream.ip,
-    // 'broadcast_port' : 12000,
-
-    // address and port of GStreamer's tcp sink
-    // 'gst_tcp_addr' : 127.0.0.1,
-    // 'gst_tcp_port' : 10000,
-
-    // callback function called when server starts
-    'start': function() {
-        console.log('WebCam server started!');
-    },
-
-    // webcam object holds configuration of webcam frames
-    'webcam': {
-        // should frames be converted to grayscale (default : false)
-        //'grayscale' : true,
-
-        // should width of the frame be resized (default : 0)
-        // provide 0 to match webcam input
-        'width': 0, // 640, 1024,
-
-        // should height of the frame be resized (default : 0)
-        // provide 0 to match webcam input
-        'height': 0, //360,//768,
-
-        // should a fake source be used instead of an actual webcam
-        // suitable for debugging and development (default : false)
-        'fake': false,
-
-        // framerate of the feed (default : 0)
-        // provide 0 to match webcam input
-        'framerate': 25
-    }
+fanbtn.watch(function(err, value) {
+  if (err) {
+    console.error('There was an error', err);
+  return;
+  }
+  console.log('fan button click');
+  fan.writeSync(fan.readSync() ^ 1);
 });
-webcam_server.broadcast();
-=======
-var LiveCam = require('livecam');
-var io = require('socket.io-client');
-var config = require('../config');
-var Rfid = require('../Gpio/Rfid');
-var Omx = require('node-omxplayer');
-
-var serverUrl = 'http://' + config.server.ip + ':' + config.server.port;
-var socket = io(serverUrl);
-
-var http = require('http');
-var server = http.createServer().listen(config.stream.socketPort);
-var serverIo = require('socket.io')(server);
+function unexportOnClose() {
+  LED.writeSync(0);
+  LED.unexport();
+  lampbtn.unexport();
+  fan.writeSync(0);
+  fan.unexport();
+  fanbtn.unexport();
+};
+process.on('SIGINT', unexportOnClose);
 
 var rfid = new Rfid(readRfid);
 var Gpio = require('pigpio').Gpio,
@@ -208,4 +130,3 @@ var webcam_server = new LiveCam({
     }
 });
 webcam_server.broadcast();
->>>>>>> c2ab7d1b5592096ab226917a426a05cba1cbd295

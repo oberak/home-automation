@@ -88,5 +88,15 @@
                 $('#prop-type-group').removeClass('btn-group-vertical');
                 }
                 });
+          var socket = io();
+          socket.on('init', function(data) {
+              switch (data.type) {
+                case 'INIT':
+                      document.getElementById('rfid').value = data.value;
+                  break;
+                default:
+
+              }
+          });
   </script>
 </html>

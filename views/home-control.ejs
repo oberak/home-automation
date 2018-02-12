@@ -245,12 +245,67 @@
                   </div>
                 </div>
               </div>
+              <div class="panel panel-primary" data-stateful="true" data-inner-id="lobipanel-parent-default">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <h4>Accessories</h4>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/acc-lamps-off.png" alt="" width="50px" id="acc-lamps-img">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Garden Lamps</h4>
 
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="acc-lamps" name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/acc-fan-off.png" alt="" width="50px" id="acc-fan-img">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading"> Fan</h4>
+
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="acc-fan" name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/acc-dec-off.png" alt="" width="50px" id="acc-dec-img">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Decoration Light</h4>
+
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="acc-dec" d name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <img src="/images/acc-pump-off.png" alt="" width="50px" id="acc-pump-img">
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Pump</h4>
+
+                    </div>
+                    <div class="media-right">
+                      <input type="checkbox" id="acc-pump" name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
+                    </div>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
           </div>
       <audio id="song">
-
         <source src="mp3/01.wav" type="audio/mpeg">
       </audio>
 
@@ -322,6 +377,7 @@
   var check = false;
   var evt = null;
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
+  var accIDs = ['#acc-lamps', '#acc-fan', '#acc-dec', '#acc-pump'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
   var win = ['win-gu','win-be','win-ki'];
   var song = document.getElementById('song');
@@ -334,8 +390,17 @@
         sData.idx = lampIDs.indexOf('#' + this.id);
         sData.value = this.checked;
         document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"on":"off")+".png"
-
         socket.emit('control', sData);
+      });
+    }
+
+    for (var i = 0; i < accIDs.length; i++) {
+      $(accIDs[i]).change(function() {
+        sData.type = 'ACCESSORIES';
+        sData.idx = accIDs.indexOf('#' + this.id);
+        sData.value = this.checked;
+        document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"on":"off")+".png"
+        socket.emit('access', sData);
       });
     }
     // request all data
@@ -385,8 +450,6 @@
       sData.value = this.checked;
       socket.emit('control', sData);
     });
-
-
     socket.on('control', function(data) { //get button status from client
       switch (data.type) {
         case 'ALL':
@@ -394,6 +457,9 @@
           break;
         case 'LAMPS':
           $(lampIDs[data.idx]).prop('checked', data.value).change();
+          break;
+        case 'ACCESSORIES':
+          $(accIDs[data.idx]).prop('checked', data.value).change();
           break;
         case 'DOOR':
             evt = true;
@@ -479,6 +545,9 @@
                     song.play();
 
               break;
+          case "SC":
+              $('#security').bootstrapToggle( (data.value)?'off':'on');
+            break;
 
         default:
 
