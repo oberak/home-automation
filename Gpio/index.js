@@ -206,7 +206,8 @@ function Gpio(server){
                     saveLog("Switch",data.type,data.idx, data.value,"Lamps ON/OFF","Website");
                     break;
                 case 'ACCESSORIES':
-                  console.log('working Accessories',data);
+                    sockets.emit('access',{index:data.idx, value:data.value});
+                    console.log('working Accessories sent data',data);
                     break;
                 case 'RFID':
                     self.socket.emit('init', { type:'INIT', value:data.falg});
@@ -267,6 +268,12 @@ function Gpio(server){
                 break;
             }
         });
+        socket.on('access',function (data) {
+            console.log('get from stream');
+                    self.socket.emit('control',{type:data.type,idex:data.no,value:data.falg});
+
+        });
     });
+
 }
 module.exports = Gpio;

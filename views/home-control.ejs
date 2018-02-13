@@ -288,18 +288,7 @@
                       <input type="checkbox" id="acc-dec" d name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
                     </div>
                   </div>
-                  <div class="media">
-                    <div class="media-left">
-                      <img src="/images/acc-pump-off.png" alt="" width="50px" id="acc-pump-img">
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">Pump</h4>
 
-                    </div>
-                    <div class="media-right">
-                      <input type="checkbox" id="acc-pump" name="acc" data-toggle="toggle" data-width="70" data-onstyle="success" data-size="small">
-                    </div>
-                  </div>
                 </div>
               </div>
               </div>
@@ -374,10 +363,9 @@
       }
     });
   });
-  var check = false;
-  var evt = null;
+  var evt = { door:false, sound:false, access: false };
   var lampIDs = ['#lamp-gu', '#lamp-be', '#lamp-ki', '#lamp-ba'];
-  var accIDs = ['#acc-lamps', '#acc-fan', '#acc-dec', '#acc-pump'];
+  var accIDs = ['#acc-lamps', '#acc-fan', '#acc-dec'];
   var winIDs = ['.win-gu', '.win-be', '.win-ki'];
   var win = ['win-gu','win-be','win-ki'];
   var song = document.getElementById('song');
@@ -395,20 +383,27 @@
     }
 
     for (var i = 0; i < accIDs.length; i++) {
+
       $(accIDs[i]).change(function() {
+          console.log('accID change', evt);
+          if(evt.access){
+            evt.access = null;
+            console.log('accID change null', evt);
+            return;
+          }
         sData.type = 'ACCESSORIES';
         sData.idx = accIDs.indexOf('#' + this.id);
         sData.value = this.checked;
         document.getElementById(this.id+'-img').src = "/images/"+this.id+"-"+((this.checked)?"on":"off")+".png"
-        socket.emit('access', sData);
+        socket.emit('control', sData);
       });
     }
     // request all data
     socket.emit('control', {type: 'ALL'});
 
     $('#door-openclose').change(function() {
-      if(evt){
-        evt = null;
+      if(evt.door){
+        evt.door = null;
         return;
       }
       sData.type = 'DOOR';
@@ -442,7 +437,7 @@
         document.getElementById('security-img').src = "/images/security-on.png"
       }
       socket.emit('control', sData);
-      check = this.checked;
+      evt.sound = this.checked;
     });
     $('#alert').change(function() {
       sData.type = 'security';
@@ -459,10 +454,12 @@
           $(lampIDs[data.idx]).prop('checked', data.value).change();
           break;
         case 'ACCESSORIES':
+            console.log('from stream',data.value);
+          evt.access = true;
           $(accIDs[data.idx]).prop('checked', data.value).change();
           break;
         case 'DOOR':
-            evt = true;
+            evt.door = true;
             $('#door-openclose').bootstrapToggle( (data.value)?'on':'off');
                if(data.value == 1){
                  console.log("door open state");
@@ -474,7 +471,7 @@
         for(var i = 0; i < winIDs.length; i++){
 
           if (data.value) {
-              if(check){
+              if(evt.sound){
                   song.pause();
               }
               document.getElementById(win[data.idx]+'-img').src = "/images/window-off.png"
@@ -487,7 +484,7 @@
             );
           } else {
               document.getElementById(win[data.idx]+'-img').src = "/images/window-on.png"
-              if (check) {
+              if (evt.sound) {
                  song.play();
               }
             $(winIDs[data.idx]).notify(
@@ -516,7 +513,7 @@
 
            break;
         case 'MOTION':
-          if (data.idx == 0 && check) {
+          if (data.idx == 0 && evt.sound) {
 
             if (data.value) {
               $('.security').notify(
