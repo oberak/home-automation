@@ -47,8 +47,6 @@
               </div>
     </div>
   </body>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
   <script type="text/javascript">
               $(document).on('click', '.number-spinner1 button', function () {
                 var btn = $(this),
@@ -89,37 +87,10 @@
                     val.flameVal = document.getElementById('flame').value;
                     val.type = "SETVAL";
                     socket.emit('control',val);
+                    alert('Flame And Gas Level Set',val.gasVal,val.flameVal);
                   }
 
 
   </script>
-  <script type="text/javascript">
-  if (annyang) {
-    // Let's define a command.
-    var commands = {
-        'hello': function() {
-            alert('Hello world!');
-        },
-        'open *tag': function(tag) {
-            alert('open ' + tag);
-        },
-        'turn *tag': function(tag) {
-            alert('turn ' + tag);
-        }
-    };
 
-    // Add our commands to annyang
-    annyang.addCommands(commands);
-
-    // Start listening.
-    //annyang.start();
-    SpeechKITT.annyang();
-
-    // Define a stylesheet for KITT to use
-    SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
-
-    // Render KITT's interface
-    SpeechKITT.vroom();
-}
-  </script>
 </html>
