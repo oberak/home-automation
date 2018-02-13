@@ -13,58 +13,57 @@ var serverIo = require('socket.io')(server);
 
 var Gpio = require('onoff').Gpio;
 var LED = new Gpio(2,'out');
-var lampbtn = new Gpio(3,'in', 'falling');
 var fan = new Gpio(17,'out');
-var fanbtn = new Gpio(27,'in','falling');
-
-lampbtn.watch(function(err, value) {
-  if (err) {
-    console.error('There was an error', err);
-  return;
-  }
+var deco = new Gpio(3,'out');
   LED.writeSync(LED.readSync() ^ 1);
-});
+  socket.emit('access',{type:'ACCESSORIES',no:0,falg:LED.readSync()^1});
 
-fanbtn.watch(function(err, value) {
-  if (err) {
-    console.error('There was an error', err);
-  return;
-  }
-  console.log('fan button click');
   fan.writeSync(fan.readSync() ^ 1);
-});
+  socket.emit('access',{type:'ACCESSORIES',no:1,falg:fan.readSync()^1});
+
+  deco.writeSync(deco.readSync() ^ 1);
+  socket.emit('access',{type:'ACCESSORIES',no:2,falg:deco.readSync()^1});
+
 function unexportOnClose() {
   LED.writeSync(0);
   LED.unexport();
-  lampbtn.unexport();
   fan.writeSync(0);
   fan.unexport();
-  fanbtn.unexport();
+  deco.writeSync(0);
+  deco.unexport();
 };
 process.on('SIGINT', unexportOnClose);
 
 var rfid = new Rfid(readRfid);
-var Gpio = require('pigpio').Gpio,
-    button = new Gpio(4, {
-        mode: Gpio.INPUT,
-        pullUpDown: Gpio.PUD_DOWN,
-        edge: Gpio.FALLING_EDGE
+var Gpio = require('onoff').Gpio,
+    button = new Gpio(4, 'in', 'rising');
+    button.watch(function (err, value) {
+      if (err) {
+        throw err;
+      }
+      console.log("level btn", value);
+      if(!value) return;
+          var player =Omx('./public/mp3/bell.wav');
+          setTimeout(
+              function() {
+              player.quit();
+          }, 5000);
     });
-
-button.on('interrupt', function (level) {
-    console.log("level btn", level);
-    // socket.emit('control', {
-    //     type: DOORBTN,
-    //     no: 0,
-    //     falg: level
-    var player =Omx('./public/mp3/bell.wav');
-    setTimeout(
-        function() {
-        player.quit();
-    }, (data.time) ? data.time * 1000 : 5000);
-
-    });
-}
+// var Gpio = require('pigpio').Gpio,
+//     button = new Gpio(4, {
+//         mode: Gpio.INPUT,
+//         pullUpDown: Gpio.PUD_DOWN,
+//         edge: Gpio.FALLING_EDGE
+//     });
+//
+// button.on('interrupt', function (level) {
+//     console.log("level btn", level);
+//     socket.emit('control', {
+//         type: DOORBTN,
+//         no: 0,
+//         falg: level
+//     });
+// });
 function readRfid(type, index, value) {
     // send to socket
     console.log(type, index, value);
@@ -83,7 +82,16 @@ serverIo.on('connection', function(socket) {
                 player.quit();
             }, (data.time) ? data.time * 1000 : 5000);
         }
-
+    });
+    socket.on('access',function (data) {
+      console.log('received from server',data);
+      if(data.index == 0){
+        LED.writeSync((data.value)? 0:1);
+      }else if (data.index == 1) {
+          fan.writeSync((data.value)? 0:1);
+      }else{
+        deco.writeSync((data.value)? 0:1);
+      }
     });
 });
 // livecam
