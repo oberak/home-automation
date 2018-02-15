@@ -65,6 +65,7 @@ function ADC(five, callback, opt){
     });
     flame.on("change", function() { // Flame
         var flameLevel = (opt.flameLevel)?opt.flameLevel:700;
+        // console.log('flame level', opt.flameLevel);
         callback('ADC', 1, this.value);
         if(this.value!=null && this.value < flameLevel && !onFlameAlarm){
             console.log('Alarm on', alarmTime);

@@ -80,7 +80,8 @@ function Gpio(server){
     function btnClick(btnNo){
         if(btnNo == 4){
             self.motor.open(doorDelay);
-            //sockets.emit('alarm',{alarm:true,type:"bell"});
+            sockets.emit('alarm',{alarm:true,type:"bell"});
+            console.log('call open btn');
 
         }else{
             self.lamps.toggle(btnNo);
@@ -95,7 +96,8 @@ function Gpio(server){
         switch (type) {
           case "DOOR":
           doorStatus = value;
-          sockets.emit('control',{type:"DOOR",idx:0,value:value});
+          console.log('DOOR STATUS', doorStatus);
+          //sockets.emit('control',{type:"DOOR",idx:0,value:value});
 
           if (value < 0) {
             setDoorLamp(6,5);
@@ -115,13 +117,17 @@ function Gpio(server){
             }
                     break;
                 case 1:
+                console.log('Door Motion ', value);
+                console.log('Door Lock',doorLock);
                 if (value) {
                     if(doorLock){
                         self.motor.toggle();
                         setTimeout(close,10000);
                         saveLog("Door",type,index, value,"Open the door by outer motion","Hardware");
+                        console.log('open and close by outer motion');
 
                     }
+
                     self.lamps.on(4);
                 }else {
                     self.lamps.off(4);
@@ -195,6 +201,7 @@ function Gpio(server){
     io.on('connection', function(socket) {
         self.socket = socket;
         socket.on('control', function(data) {
+            console.log('control', data);
             switch (data.type) {
               case 'ALL':
               self.socket.emit('control', { type:'ALL', init: self.read()});
@@ -266,6 +273,18 @@ function Gpio(server){
                 console.log(typeof(parseInt(data.gasVal)),typeof(parseInt(data.flameVal)));
                 self.adc = new ADC(five, fnCallback, {gas: 1, flame: 1, gasLevel:parseInt(data.gasVal), flameLevel:parseInt(data.flameVal)});
                 break;
+            case "SPEECH":
+                switch (data.idx) {
+                    case 1:
+                        if (data.value == 'open the door') {
+                            self.motor.open(doorDelay);
+                        }
+                        break;
+                    default:
+
+                }
+                break;
+            default:
             }
         });
         socket.on('access',function (data) {
