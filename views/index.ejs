@@ -4,7 +4,7 @@
     <% include ./partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/home.css">
   </head>
-  <body> 
+  <body>
   <% include ./partials/nav.ejs %>
 <div class="container">
   <div class="row">
@@ -199,18 +199,14 @@
       animation-iteration-count: infinite;
       animation-timing-function: linear;
   }
-
   @keyframes jssorl-009-spin {
       from {
           transform: rotate(0deg);
       }
-
       to {
           transform: rotate(360deg);
       }
   }
-
-
   .jssorb101 .i {position:absolute;cursor:pointer;}
   .jssorb101 .i .ci {fill:#000;}
   .jssorb101 .i .co {fill:#fff;opacity:.3;}
@@ -219,7 +215,6 @@
   .jssorb101 .iav .ci {fill:#fff;stroke-width:0;}
   .jssorb101 .iav .co {fill:#46d1d3;opacity: 1;}
   .jssorb101 .i.idn {opacity:.3;}
-
   .jssora051 {display:block;position:absolute;cursor:pointer;}
   .jssora051 .a {fill:none;stroke:#fff;stroke-width:360;stroke-miterlimit:10;}
   .jssora051:hover {opacity:.8;}
@@ -230,7 +225,6 @@
   </body>
   <script type="text/javascript">
       jQuery(document).ready(function ($) {
-
           var jssor_1_SlideshowTransitions = [
             {$Duration:500,$Delay:80,$Cols:8,$Rows:4,$Clip:15,$SlideOut:true,$Easing:$Jease$.$OutQuad},
             {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
@@ -245,7 +239,6 @@
             {$Duration:500,$Delay:30,$Cols:8,$Rows:4,$Clip:15,$Formation:$JssorSlideshowFormations$.$FormationStraightStairs,$Assembly:2050,$Easing:$Jease$.$InQuad},
             {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
           ];
-
           var jssor_1_SlideoTransitions = [
             [{b:-1,d:1,o:-1},{b:0,d:1200,y:300,o:1,e:{y:24,o:6}},{b:5600,d:800,y:-200,o:-1,e:{y:5}}],
             [{b:-1,d:1,o:-1},{b:400,d:800,x:200,o:1,e:{x:27,o:6}},{b:5600,d:800,x:-200,o:-1,e:{x:5}}],
@@ -329,7 +322,6 @@
             [{b:-1,d:1,o:-1},{b:17100,d:400,y:200,o:1,e:{y:2,o:6}},{b:17500,d:300,y:-28,e:{y:3}},{b:17800,d:300,y:28,e:{y:2}}],
             [{b:-1,d:1,o:-1},{b:17300,d:400,y:200,o:1,e:{y:2,o:6}},{b:17700,d:300,y:-28,e:{y:3}},{b:18000,d:300,y:28,e:{y:2}}]
           ];
-
           var jssor_1_options = {
             $AutoPlay: 1,
             $SlideDuration: 800,
@@ -355,30 +347,21 @@
               $Class: $JssorBulletNavigator$
             }
           };
-
           var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-
           /*#region responsive code begin*/
-
           var MAX_WIDTH = 1024;
-
           function ScaleSlider() {
               var containerElement = jssor_1_slider.$Elmt.parentNode;
               var containerWidth = containerElement.clientWidth;
-
               if (containerWidth) {
-
                   var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
-
                   jssor_1_slider.$ScaleWidth(expectedWidth);
               }
               else {
                   window.setTimeout(ScaleSlider, 30);
               }
           }
-
           ScaleSlider();
-
           $(window).bind("load", ScaleSlider);
           $(window).bind("resize", ScaleSlider);
           $(window).bind("orientationchange", ScaleSlider);
